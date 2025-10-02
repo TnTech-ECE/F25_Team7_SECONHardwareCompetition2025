@@ -1,11 +1,10 @@
 # Project Proposal 
 
-## Introduction  
+## Introduction and Background  
 
 The IEEE (Institute of Electrical and Electronics Engineers) holds a conference every year for the southeastern region (SoutheastCon – Which is also known as SECON). This conference brings together members of IEEE (Electrical Engineers, Computer Engineers, Computer Scientists, etc.) to discuss research in various areas of each department. At this conference, there are several competitions ranging from circuit design to website design, which include a hardware competition [1]. Tennessee Tech has been entering these competitions yearly, showing up with the skills of students and future engineers. This year, students are tasked with creating an autonomous robot and UAV that are able to communicate with each other to complete a series of tasks. Our score is determined by how many “Astro-Ducks” we rescue, as well as restarting the antennas and launching a satellite within a time limit. This gives students a unique and interesting set of problems to work through, including automated control of a robot and UAV, wireless communication between them, and designing the robots to complete each task [2]. Our team is looking to work with students from the Mechanical Engineering department and several professors to help us along the way. Using their skills to construct the practice arena, help with designing the final robot, and ensure that we are doing the best we can. 
-### Background 
 
-Provide context and details necessary to define the problem clearly and delineate its boundaries. 
+
 
 ### Specifications and Constraints
 
