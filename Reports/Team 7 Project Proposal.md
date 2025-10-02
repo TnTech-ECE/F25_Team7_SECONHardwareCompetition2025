@@ -331,7 +331,7 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 
   - Angela Nde – MATLAB, wireless communication, signal processing, and embedded systems 
 
-  - John Land 
+  - John Land - CAD, Controls Systems, Interface Implementation/Design, Networking  
 
   - Atra-Niese 
 
