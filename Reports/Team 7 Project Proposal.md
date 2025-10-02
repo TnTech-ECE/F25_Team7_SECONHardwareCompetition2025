@@ -315,11 +315,11 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 
   - Trevor Snyder - Electrical Engineering major. Proficient in C++, MATLAB, LtSpice, Digital Systems, and Circuit Design. Some familiarity in machine learning, PLCs, C, Assembly, and Embedded Systems. 
 
-  - Angela Nde –Electrical Engineering major. Proficient in digital logic and circuitry, technical writing, professional presentation, and power. Some familiarity in Python, Microcontrollers, and controls. 
+  - Angela Nde – Electrical Engineering major. Proficient in digital logic and circuitry, technical writing, professional presentation, and power. Some familiarity in Python, Microcontrollers, and controls. 
 
   - John Land 
 
-  - Atra-Niese 
+  - Atra-Niese - Electrical Engineering Major. Proficient or experienced in C++, Matlab, LtSpice, Assembly, Microcontrollers, Shapr3D (3-D Design) and Digital systems
 
   - Aiden Mullins – Electrical Engineering with a concentration in mechatronics. Proficient in C++, Assembly, Control Systems, and Arduino IDE. 
 
@@ -333,7 +333,7 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 
   - John Land - CAD, Controls Systems, Interface Implementation/Design, Networking  
 
-  - Atra-Niese 
+  - Atra-Niese - Wireless communication, Control Systems Analysis, Robotic/UAV Automation 
 
   - Aiden Mullins – Networking, Data Processing 
 
@@ -449,7 +449,7 @@ The design shall uphold professional standards by acknowledging accountability o
 
   - Aiden Mullins – Worked on the “Intro & Background” section
 
-  - Atra-Niese - 
+  - Atra-Niese - Worked on the “Measures of Success” and “Wireless Communication” section under “Survey of Existing Solutions”. Defined the expectations of IEEE and University of Alabama Huntsville (UAH) as well as the metrics used to define success. Detailed the establishment of wireless communication between the UAV and robot. 
 
 
 
