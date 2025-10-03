@@ -317,7 +317,7 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 
   - Angela Nde – Electrical Engineering major. Proficient in digital logic and circuitry, technical writing, professional presentation, and power. Some familiarity in Python, Microcontrollers, and controls. 
 
-  - John Land 
+  - John Land - Electrical Engineering major. Proficient in C++, LtSpice, Digital Systems, and Circuit Design
 
   - Atra-Niese - Electrical Engineering Major. Proficient or experienced in C++, Matlab, LtSpice, Assembly, Microcontrollers, Shapr3D (3-D Design) and Digital systems
 
