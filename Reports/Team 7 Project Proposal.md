@@ -20,7 +20,7 @@ The IEEE 2026 SoutheastCon Hardware Competition Ruleset lays out the specificati
 4. Teams shall rescue a total of 6 Astro-Ducks with one duck located at the top of an antenna.  [2] 
 5. Teams shall rescue all 6 Astro-Ducks and shall return them to the "Lunar Landing Area". [2] 
 6. Teams shall establish power to the 4 antennas throughout the course. Power shall be restored differently for each antenna. Once power is restored to the antenna, a randomly colored LED shall light up (red, blue, green, and purple).[2] 
-7. Teams shall plant their school flag. The flag must shall on the robot and be deployed outside of the starting area [2] 
+7. Teams shall plant their school flag. The flag shall be on the robot and be deployed outside of the starting area [2] 
 
 
 ##### ***Vehicle Specifications:*** 
@@ -46,10 +46,10 @@ The IEEE 2026 SoutheastCon Hardware Competition Ruleset lays out the specificati
 2. The arena border walls shall be assembled with three 1” x 8” x 8’ square edged Unfinished Whitewood Boards. [2] 
 3. The arena shall be supported by utilizing two 1” x 6” x 8’ square edged Unfinished Whitewood Board and 1-1/4" interior wood screws. [2] 
 4. A single stabilizing joint shall be placed between the center 2 legs of the arena board and shall be assembled with one 1” x 6” x 6’ square edged Unfinished Whitewood Board and 1-1/4". [2] 
-5. Two starting white LED bars shall be placed on top of the arena wall, one on each side of the 12”x12” starting area. [2] 
+5. Two starting white LED bars shall be placed on top of the arena wall, one on each side of the 12” x 12” starting area. [2] 
 6. The Earth arm shall utilize a single 2” x 2” x 8’ wood post. [2] 
-7. The Crater shall be 2’ in diameter with a downward slope into an 8” diameter flat area. It will be fully 3D printed and affixed to the playing field. It will also be supported by a sheet of plywood attached underneath the playing field. [2] 
-8. The competition playing field shall be divided into 4 main areas. The areas will feature 1 antenna and 1 Astro-Duck in areas 1, 2 and 4, and 3 Astro-Ducks in area 3. Six Astro-Ducks in total will be distributed across the playing field. [2] 
+7. The Crater shall be 2’ in diameter with a downward slope into an 8” diameter flat area. The Crater shall be fully 3D printed and affixed to the playing field. The Crater shall also be supported by a sheet of plywood attached underneath the playing field. [2] 
+8. The competition playing field shall be divided into 4 main areas. The areas shall feature 1 antenna and 1 Astro-Duck in areas 1, 2 and 4, and 3 Astro-Ducks in area 3. Six Astro-Ducks in total shall be distributed across the playing field. [2] 
 9. Area #1 shall be located in the lower left quadrant of the arena and shall account for 25% of the playing field. [2]
 10. Area #2 shall be located in the upper left quadrant of the arena and shall account for 25% of the playing field. [2]
 11. Area #3 shall be the right half of the arena which shall account for 40% of the playing field. [2]
@@ -88,7 +88,7 @@ The IEEE 2026 SoutheastCon Hardware Competition Ruleset lays out the specificati
 9. The robots shall be disassembled into as many units as desired, but they shall begin assembled together in a 12” cube. [2] 
 10. All units, particularly flying units, shall not move outside of the netted playing field. [2] 
 11. Teams shall not use explosive, pyrotechnic, toxic, or corrosive materials. [2] 
-12. The robot shall not present any danger to the judges, spectators, playing arena, or area surrounding the arena [2] 
+12. The robot shall not present any danger to the judges, spectators, playing arena, or area surrounding the arena. [2] 
 
 ##### ***IEEE Standard Constraints:*** 
 
