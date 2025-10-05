@@ -15,47 +15,55 @@ The IEEE 2026 SoutheastCon Hardware Competition Ruleset lays out the specificati
 
  ##### ***Objective Specifications:*** 
 
-1. Teams may build a micro UAV to work alongside the robot. [2] 
-2. Teams must establish communication with Earth via infrared receiver. [2] 
-3. Teams will have a maximum of 3 minutes to earn points. [2] 
-4. There is a total of 6 total Astro-Ducks to rescue in the course with one duck located at the top of one of the antennas.  [2] 
-5. All 6 ducks must be located and returned to the "Lunar Landing Area" on the board. [2] 
-6. Teams must establish power to the 4 antennas throughout the course. Power will be restored differently for each antenna. Once power is restored to the antenna, a randomly colored LED will light up (red, blue, green, and purple).[2] 
-7. Teams must plant their school flag. The flag must start on the robot and be deployed outside of the starting area [2] 
+1. Teams shall build a micro UAV to work alongside the robot. [2] 
+2. Teams shall establish communication with Earth via infrared receiver. [2] 
+3. Teams shall have a maximum of 3 minutes to earn points. [2] 
+4. Teams shall rescue a total of 6 Astro-Ducks with one duck located at the top of an antenna.  [2] 
+5. Teams shall rescue all 6 Astro-Ducks and shall return them to the "Lunar Landing Area". [2] 
+6. Teams shall establish power to the 4 antennas throughout the course. Power shall be restored differently for each antenna. Once power is restored to the antenna, a randomly colored LED shall light up (red, blue, green, and purple).[2] 
+7. Teams shall plant their school flag. The flag must shall on the robot and be deployed outside of the starting area [2] 
 
 
 ##### ***Vehicle Specifications:*** 
 
-1. Both the robot and UAV (UAV optional) must be completely autonomous. [2] 
-2. Vehicles must fit in the 12" by 12" by 12" starting area. [2] 
-3. If the UAV is built, the UAV and robot must start as one unit. The two systems are not required to end as one unit. [2] 
-4. The robot must not weigh more than 25 pounds. [2] 
-5. The UAV must not weigh more than 0.55 pounds or 250 grams. [2] 
-6. The robot may extend its arm or appendages to complete the challenges in the course. [2] 
-7. The robot may expand horizontally without restrictions but cannot extend more than 3" outside if the border wall. [2] 
-8. The robot may extend vertically, but its height cannot be more than 18" from the playing surface. [2] 
-9. The robots may disassemble into as many units are desired but must begin assembled together in a 12" cube. [2] 
-10. It is strongly recommended that the robot and the micro UAV include an emergency stop button. [2] 
-11. There is no limitation on the hardware development, embedded systems utilized, sensors, or assembly. [2] 
-12. The robot and UAV must have a clearly labeled start switch. [2] 
-13. Teams are required to handle any accidental interference from other robots or noise sources (Infrared rangefinders for example). [2] 
-14. The robot is encouraged to be decorated to the conference theme and display a school logo or mascot, flag, ...etc. [2] 
+1. Both the robot and UAV (UAV optional) shall be completely autonomous. [2] 
+2. Vehicles shall fit in the 12" by 12" by 12" starting area. [2] 
+3. If the UAV is built, the UAV and robot shall start as one unit. The two systems shall not end as one unit if desired. [2] 
+4. The robot shall not weigh more than 25 pounds. [2] 
+5. The UAV shall not weigh more than 0.55 pounds or 250 grams. [2] 
+6. The robot shall extend its arm or appendages to complete the challenges in the course. [2] 
+7. The robot shall expand horizontally without restrictions but shall not extend more than 3" outside if the border wall. [2] 
+8. The robot shall extend vertically, but its height shall not be more than 18" from the playing surface. [2] 
+9. The robots shall be disassembled into as many units as desired but shall begin assembled together in a 12" cube. [2] 
+10. Teams shall incorporate a stop button for both the robot and UAV. [2] 
+11. Teams shall have no limitation on the hardware development, embedded systems utilized, sensors, or assembly. [2] 
+12. The robot and UAV shall have a clearly labeled start switch. [2] 
+13. Teams shall be required to handle any accidental interference from other robots or noise sources (Infrared rangefinders for example). [2] 
+14. The robot shall be decorated to the conference theme and display a school logo or mascot, flag, ...etc. [2] 
 
 ##### ***Board Specifications:*** 
 
-1. The competition arena is rectangular sheet of plywood with exterior size of 4' x 8' and 5mm" thickness. This sheet will be attached to the border walls using 1" cabinet screws. [2] 
-2. The arena border walls will be assembled with three 1” x 8” x 8’ square edged Unfinished Whitewood Boards. [2] 
-3. The arena will be supported by utilizing two 1” x 6” x 8’ square edged Unfinished Whitewood Board and 1-1/4" interior wood screws. [2] 
-4. A single stabilizing joint will be placed between the center 2 legs of the arena board and will be assembled with one 1” x 6” x 6’ square edged Unfinished Whitewood Board and 1-1/4". [2] 
-5. Two starting white LED bars will be placed on top of the arena wall, one on each side of the 12”x12” starting area. [2] 
-6. The Earth arm will utilize a single 2” x 2” x 8’ wood post. [2] 
-7. The Crater will be 2’ in diameter with a downward slope into an 8” diameter flat area. It will be fully 3D printed and affixed to the playing field. It will also be supported by a sheet of plywood attached underneath the playing field. [2] 
-8. The competition playing field will be divided into 4 main areas. The areas will feature 1 antenna and 1 Astro-Duck in areas 1, 2 and 4, and 3 Astro-Ducks in area 3. Six Astro-Ducks in total will be distributed across the playing field. [2] 
-9. Area #1 is located in the lower left quadrant of the arena and accounts for 25% of the playing field. Area #2 is located in the upper left quadrant of the arena and accounts for 25% of the playing field. Area #3 is the right half of the arena which accounts for 40% of the playing field. Area #4 is on the right side of the arena inside Area #3. This area is where the crater is which accounts for 10% of the playing field. [2] 
-10. All Astro-Duck placements will be placed face up and not within 2" of the separation line between zones. [2] 
-11. There will be a total of 4 antennas placed on the board with one being in each arena. Each antenna will be different designs with the base remaining the same. [2] 
-12. Antenna #1 will be located in Area #2 with a button task. Antenna #2 will be located in Area #3 with a crank task. Antenna #3 will be located in Area #4 with a pressure plate task. Antenna #4 will be located in Area #1 with a keypad task. [2] 
-13. The Earth will be 3D printed using grey filament with all electronic parts besides the IR receiver placed inside. [2] 
+1. The competition arena shall be rectangular sheet of plywood with exterior size of 4' x 8' and 5mm" thickness. This sheet shall be attached to the border walls using 1" cabinet screws. [2] 
+2. The arena border walls shall be assembled with three 1” x 8” x 8’ square edged Unfinished Whitewood Boards. [2] 
+3. The arena shall be supported by utilizing two 1” x 6” x 8’ square edged Unfinished Whitewood Board and 1-1/4" interior wood screws. [2] 
+4. A single stabilizing joint shall be placed between the center 2 legs of the arena board and shall be assembled with one 1” x 6” x 6’ square edged Unfinished Whitewood Board and 1-1/4". [2] 
+5. Two starting white LED bars shall be placed on top of the arena wall, one on each side of the 12”x12” starting area. [2] 
+6. The Earth arm shall utilize a single 2” x 2” x 8’ wood post. [2] 
+7. The Crater shall be 2’ in diameter with a downward slope into an 8” diameter flat area. It will be fully 3D printed and affixed to the playing field. It will also be supported by a sheet of plywood attached underneath the playing field. [2] 
+8. The competition playing field shall be divided into 4 main areas. The areas will feature 1 antenna and 1 Astro-Duck in areas 1, 2 and 4, and 3 Astro-Ducks in area 3. Six Astro-Ducks in total will be distributed across the playing field. [2] 
+9. Area #1 shall be located in the lower left quadrant of the arena and shall account for 25% of the playing field. [2]
+10. Area #2 shall be located in the upper left quadrant of the arena and shall account for 25% of the playing field. [2]
+11. Area #3 shall be the right half of the arena which shall account for 40% of the playing field. [2]
+12. Area #4 shall be on the right side of the arena inside Area #3. This area shall be where the crater is, which shall account for 10% of the playing field. [2] 
+13. Astro-Duck placements shall be placed face up and not within 2" of the separation line between zones. [2] 
+14. 4 antennas shall be placed on the board with one being in each arena. [2]
+15. Each antenna shall be a differnt design with the base remaining the same. [2]
+16. Antenna #1 shall be located in Area #2 with a button task. [2]
+17. Antenna #2 shall be located in Area #3 with a crank task. [2]
+18. Antenna #3 shall be located in Area #4 with a pressure plate task. [2]
+19. Antenna #4 shall be located in Area #1 with a keypad task. [2] 
+20. The Earth shall be 3D printed using grey filament.
+21. All electronic parts besides the IR receiver shall be placed inside the Earth. [2] 
 
  
 
@@ -63,44 +71,53 @@ The IEEE 2026 SoutheastCon Hardware Competition Ruleset lays out the specificati
 
 ##### ***Objective Constraints:*** 
 
-1. Teams will have a maximum of 3 minutes to earn points. [2] 
-2. Points will be lost every time the robot or micro UAV has an unintentional collision with the antennas. [2] 
-3. Points will be lost for each improper antenna LED identification sent to earth. [2] 
+1. Teams shall have a maximum of 3 minutes to earn points. [2] 
+2. Points shall be lost every time the robot or micro UAV has an unintentional collision with the antennas. [2] 
+3. Points shall be lost for each improper antenna LED identification sent to earth. [2] 
 
  
 ##### ***Vehicle Constraints:*** 
 
-1. All vehicles must be completely autonomous. [2]  
-2. All vehicles when combined must fit inside the 12" by 12" by 12" starting area. [2] 
-3. The robots must begin as one unit when starting. [2] 
-4. The robot must not weigh more than 25 pounds. [2] 
-5. The UAV must not weigh more than 0.55 pounds (250 grams). [2] 
-6. A robot with appendages must fold/constrict and otherwise fit within the 12” cube robot size restriction before a run begins. [2] 
-7. The robot may expand horizontally without any restrictions other than it cannot extend more than 3” outside of the border wall of the playing area. [2] 
-8. The robot may expand vertically, but its height must not exceed 18” (not counting the micro UAV) from the playing surface. [2] 
-9. The robots may disassemble into as many units as desired, but they must begin assembled together in a 12” cube. [2] 
-10. All units, particularly flying units, must not move outside of the netted playing field 
-11. No explosive, pyrotechnic, toxic, or corrosive materials. Flammable liquids or gasses are prohibited. [2] 
-12. No modifications including padding will be allowed to or around the game board and floor. [2] 
-13. The robot shall not present any danger to the judges, spectators, playing arena, or area surrounding the arena [2] 
+1. All vehicles shall be completely autonomous. [2]  
+2. All vehicles when combined shall fit inside the 12" by 12" by 12" starting area. [2] 
+3. The robot and UAV shall begin as one unit when starting. [2] 
+4. The robot shall not weigh more than 25 pounds. [2] 
+5. The UAV shall not weigh more than 0.55 pounds (250 grams). [2] 
+6. A robot with appendages shall fold/constrict and otherwise fit within the 12” cube robot size restriction before a run begins. [2] 
+7. The robot shall expand horizontally without any restrictions other than it shall not extend more than 3” outside of the border wall of the playing area. [2] 
+8. The robot shall expand vertically, but its height shall not exceed 18” (not counting the micro UAV) from the playing surface. [2] 
+9. The robots shall be disassembled into as many units as desired, but they shall begin assembled together in a 12” cube. [2] 
+10. All units, particularly flying units, shall not move outside of the netted playing field. [2] 
+11. Teams shall not use explosive, pyrotechnic, toxic, or corrosive materials. [2] 
+12. The robot shall not present any danger to the judges, spectators, playing arena, or area surrounding the arena [2] 
 
 ##### ***IEEE Standard Constraints:*** 
 
 1. Electrical Safety & Wiring 
-    - IEEE 602 – National Electrical Safety Code (NESC) [3] 
-    - IEEE 1184 – Electrical System for Mobile Units [4] 
+    - IEEE 602 – National Electrical Safety Code (NESC) [3]
+      - Establishes safety standars for the installation, operation, and maintenance of electric power and communication utility systems. This standard helps protect against electrical hazards.
+    - IEEE 1184 – Electrical System for Mobile Units [4]
+      - Defines safety and performance requirements for electrical systems used in mobile and transportable units such as trailers or vehicles containing electrical equipment.  
 2. Wireless Communication 
-    - IEEE 802.11 for Wi-Fi [5] 
-    - IEEE 802.15.1 for Bluetooth [6] 
+    - IEEE 802.11 for Wi-Fi [5]
+      -  Specifies wireless local area network (WLAN) communication protocols that define how devices connect and communicate over radio waves within a local network.
+    - IEEE 802.15.1 for Bluetooth [6]
+      -  Defines short-range wireless communication for personal area networks (PANs), enabling data exchange between devices like phones, computers, and embedded electronics.
 3. Battery & Energy Safety 
-    - IEEE 1725 – Rechargeable Batteries for Portable Devices [7] 
-    - IEEE 1625 – Rechargeable Battery Systems for Portable Computing [8] 
+    - IEEE 1725 – Rechargeable Batteries for Portable Devices [7]
+      -  Provides design, testing, and qualification standards for lithium-ion batteries used in portable electronics to ensure safety, reliability, and performance. 
+    - IEEE 1625 – Rechargeable Battery Systems for Portable Computing [8]
+      -  Focuses on the entire battery system (cell, pack, and host device) used in laptops and similar computing devices, emphasizing system-level safety and reliability.
 4. Reliability 
-    - IEEE 1228 – Software Safety Plans [9] 
-    - IEEE 1012 – Verification and Validation [22] 
+    - IEEE 1228 – Software Safety Plans [9]
+      -  Defines the processes and documentation required to plan and manage software safety throughout a system’s lifecycle.
+    - IEEE 1012 – Verification and Validation [22]
+      -  Establishes the framework for verifying and validating software and system performance to ensure they meet specified requirements and function as intended.
 5. Ethical & Operational Standards 
-    - IEEE Code of Ethics [23] 
-    - IEEE 12207 – Software Lifecycle Processes [24] [25] 
+    - IEEE Code of Ethics [23]
+      -  Outlines professional and ethical responsibilities for engineers and technologists, emphasizing integrity, honesty, safety, and fairness in engineering practice.
+    - IEEE 12207 – Software Lifecycle Processes [24] [25]
+      -  Provides a standardized framework for software development and maintenance, defining processes for requirements, design, implementation, testing, and management.
 
 
 ## Formulating the Problem 
@@ -279,6 +296,19 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 |Spare Buck|~$5|1|~$5|
 |Total|||~$538|
 
+**Robot BOM Justification:**
+  - *Ultrasonic Sensors*: Used for short-range obstacle detection and navigation. Multiple sensors (five total) are placed around the chassis to ensure 360° awareness and prevent collisions during autonomous movement.
+  - *LiDAR Sensors*: Provides high-resolution distance measurements for mapping and object detection, improving path-planning accuracy beyond the ultrasonic sensors’ range limits.
+  - *Lithium Battery*: Serve as the primary power source for the robot’s motors, sensors, and microcontrollers. Multiple batteries are used to extend runtime and maintain voltage stability under heavy load.
+  - *Mircocontroller*: Act as the main control units responsible for sensor data processing, decision-making, and motor actuation. Two are used with one for core control logic and another for dedicated sensor interfacing or communications.
+  - *Motor Drivers*: Interface between the microcontrollers and the brushed motors, providing the necessary current and direction control to drive the robot’s wheels safely and efficiently.
+  - *Brushed Motors*: Provide the mechanical motion for the ground robot’s drivetrain. They are chosen for simplicity, durability, and cost-effectiveness compared to brushless alternatives.
+  - *Encoders*: Measure wheel rotation and speed, allowing precise feedback control for navigation and distance estimation.
+  - *IMU*: Provides orientation and acceleration data for stability control and motion correction, essential for autonomous balance and path tracking.
+  - *Power Distribution PCB*: Distributes power safely across all subsystems, simplifying wiring and improving reliability by using a central distribution point.
+  - *Spare Buck*: Regulates voltage levels to ensure microcontrollers and sensors receive stable power, preventing brownouts during peak loads.
+
+
 **UAV BOM:**
 
 |Item|Cost Per Iteam|Quantity|Total Cost for Item|
@@ -291,6 +321,15 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 |Forward ToF Sensor|~$15|1|~$15|
 |Inline Power Switch|~$8|1|~$8|
 |Total|||~$206|
+
+**UAV BOM Justification:**
+- *Brushless Motors*: Provide efficient and high-speed thrust generation required for lift and flight stability. Four motors allow for quadrotor configuration.
+- *AIO FC + ESC*: Combines control processing and motor power regulation in a lightweight unit. Enables compact design and precise motor control with integrated IMU and stabilization algorithms.
+- *Propellors*: Convert motor rotation into lift and thrust. Four propellers match the quadrotor setup for balanced flight dynamics.
+- *Lithium Battery*: Serves as the main UAV power source, optimized for high current discharge and low weight to meet the 250 g limit.
+- *Mirco GPS*: Provides position data for autonomous navigation, waypoint tracking, and return-to-home functionality.
+- *Forward ToF Sensor*: Measures precise distance to nearby objects for obstacle avoidance during flight.
+- *Inline Power Switch*: Provides a quick and safe means of disconnecting power to the UAV system during testing or emergencies.
 
 **Shared BOM:**
 
@@ -305,6 +344,15 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 |Assorted LEDs|~$5|1|~$5|
 |Buzzers|~$5|1|~$5|
 |Total|||~$210|
+
+**Shared BOM Justifications**
+- *Lithium Battery Charger*: Charges all Li-ion and LiPo batteries used across both platforms safely and efficiently, preventing overcharging and ensuring battery longevity.
+- *Silicon Wire Kit*: Provides flexible, high-current wiring for both robot and UAV electrical connections, improving reliability and safety.
+- *Heat-Shrink*: Used for electrical insulation and wire protection to prevent shorts and improve assembly durability.
+- *Connectors*: Enables modular connections between components, facilitating maintenance, upgrades, and replacements.
+- *E-Stop Switches*: Safety-critical components allowing immediate system shutdown to prevent damage or injury during operation.
+- *Assorted Resistors and LEDs*: Used for signal indication, debugging, and voltage/current control within circuits.
+- *Buzzers*: Provide audible alerts for system states such as power-on, low battery, or error conditions.
 
 **Final BOM Cost:** ~$954
 
