@@ -377,7 +377,7 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 
   - Trevor Snyder - CAD software, wireless communication, CubeIDE/STM32 HAL, and Autopilot firmware 
 
-  - Angela Nde – MATLAB, wireless communication, signal processing, and embedded systems 
+  - Angela Nde – Individual time will be alloted to strengthen expertise in MATLAB, wireless communication, signal processing, and embedded systems by consistently engaging with credible materials such as manuals, textbooks, software, and knowledgable peers to improve profieciency.
 
   - John Land - CAD, Controls Systems, Interface Implementation/Design, Networking  
 
