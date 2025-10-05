@@ -374,18 +374,21 @@ Our team will leverage a wide range of resources to ensure a successful design, 
 
 ##### Skills Needed: 
 
-  - Trevor Snyder - CAD software, wireless communication, CubeIDE/STM32 HAL, and Autopilot firmware 
+  - Trevor Snyder - CAD Software, Wireless Communication, CubeIDE/STM32 HAL, and Autopilot Firmware 
 
-  - Angela Nde – Individual time will be alloted to strengthen expertise in MATLAB, wireless communication, signal processing, and embedded systems by consistently engaging with credible materials such as manuals, textbooks, software, and knowledgable peers to improve proficiency.
+  - Angela Nde – MATLAB, Wireless Communication, Signal Processing, and Embedded Systems
 
   - John Land - CAD, Controls Systems, Interface Implementation/Design, Networking  
 
-  - Atra-Niese - Wireless communication, Control Systems Analysis, Robotic/UAV Automation 
+  - Atra-Niese - Wireless Communication, Control Systems Analysis, Robotic/UAV Automation 
 
   - Aiden Mullins – Networking, Data Processing 
 
-  - Jane Vassar – Control Systems, Programming for Robotics, Arduino programing, wireless communication, building/using AI/ML/CV tools
+  - Jane Vassar – Control Systems, Programming for Robotics, Arduino Programing, Wireless Communication, Building/Using AI/ML/CV Tools
 
+##### Plan to Address Skills Needed:
+
+  - The team has identified areas where additional technical skills are needed. To address these, each member will dedicate weekly learning sessions focused on their assigned subsystem. The team will utilize a combination of online tutorials, research videos, software manuals, and practical simulations to strengthen their understanding. To ensure consistent progress, members will present their learning outcomes and updates during weekly meetings and provide assistance to one another when needed. This collaborative approach enables the team to effectively manage the learning process while maintaining alignment with project milestones.
 
 
 The team's supervisor is Dr. Stephen Canfield Ph.D. He was chosen as the project’s advisor for his nationally recognized expertise in robotics and autonomous systems.  
