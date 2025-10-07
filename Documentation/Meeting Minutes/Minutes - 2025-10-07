@@ -9,24 +9,27 @@ Goal:
 
 Subsystems:
 
-Drone: (Make or buy???)
+Drone:
   -Flight Control
   -Vision (we can use a camera)
   -Image Processing
     -Autonomous Pathing
   -Wireless Comms
   -IR Transmitter
+  -Safety System
 
 Robot:
   -Motor Control
   -Chasis
-  -Duck Collection
+  -Duck Collection & Distribution
   -Keypad Mechanism
   -Crank Mechanism
-  -Wireless Comms
   -Display
-  -Safety Circuit
   -Buttons (To control)
   -Vision System (for alignment)
+  -Drone attachment system
+  -Wireless Comms
+  -Safety System
 
-Camfield Question?
+Camfield Question:
+  Buy or make a Drone?
