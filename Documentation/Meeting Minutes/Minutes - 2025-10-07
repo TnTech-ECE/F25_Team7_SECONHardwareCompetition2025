@@ -6,30 +6,65 @@ Goal:
   Work on Conceptual Design
   Develop Subsystems and Assign Them
 
-
-Subsystems:
+Low-Level Systems:
 
 Drone:
-  -Flight Control
-  -Vision (we can use a camera)
-  -Image Processing
-    -Autonomous Pathing
-  -Wireless Comms
-  -IR Transmitter
-  -Safety System
+  -Flight Control                   
+  -Vision (we can use a camera)     (Trevor)
+  -Image Processing                 (Trevor)
+  -Autonomous Pathing               (Trevor)
+  -Wireless Comms                   (Aiden)
+  -IR Transmitter                   (Aiden)
+  -Safety System                    (Torsten)
 
 Robot:
-  -Motor Control
-  -Chasis
+  -Master Control
+  -Motor Control                    
+  -Chassis                          (ME)
+  -Duck Collection & Distribution   (ME)
+  -Keypad Mechanism                 (ME)
+  -Crank Mechanism                  (ME)
+  -Display                          ()
+  -Vision System (for alignment)    (Trevor)
+  -Drone attachment system          (ME)
+  -Wireless Comms                   (Aiden)
+  -Safety System                    (Torsten)
+
+
+Subsystems:
+  -Power Subsystem              (Probably Handled) (Maybe Torsten)
+
+  -Safety Subsystem             (Torsten)
+    -Safety System (Drone)
+    -Safety System (Robot)
+
+  -Motor Control Subsystem      (Angela)
+    -Motor Control
+
+  -Master Control Subsystem
+    -Flight Control
+    -Display
+    -Communication between systems
+
+  -Communication Subsystem      (Aiden)
+    -Wireless Comms
+    -IR Transmitter
+
+  -Navigation Subsystem         (Atra-Niese)
+    -Flight Control
+    -Autonomous Pathing
+
+  -Object Detection Subsystem   (Trevor)
+    -Vision (drone)
+    -Vision (robot)
+    -Image Processing
+
+ME's:
+  -Chassis
   -Duck Collection & Distribution
   -Keypad Mechanism
   -Crank Mechanism
-  -Display
-  -Buttons (To control)
-  -Vision System (for alignment)
-  -Drone attachment system
-  -Wireless Comms
-  -Safety System
+
 
 Camfield Question:
   Buy or make a Drone?
