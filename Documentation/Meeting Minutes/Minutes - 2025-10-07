@@ -3,33 +3,8 @@ We were unable to meet with Dr. Camfield, and Atra-Niese is absent from this mee
 Updates: Completion of Project Proposal!!!
 
 Goal: 
-  Work on Conceptual Design
-  Develop Subsystems and Assign Them
-
-Low-Level Systems:
-
-Drone:
-  -Flight Control                   
-  -Vision (we can use a camera)     (Trevor)
-  -Image Processing                 (Trevor)
-  -Autonomous Pathing               (Trevor)
-  -Wireless Comms                   (Aiden)
-  -IR Transmitter                   (Aiden)
-  -Safety System                    (Torsten)
-
-Robot:
-  -Master Control
-  -Motor Control                    
-  -Chassis                          (ME)
-  -Duck Collection & Distribution   (ME)
-  -Keypad Mechanism                 (ME)
-  -Crank Mechanism                  (ME)
-  -Display                          ()
-  -Vision System (for alignment)    (Trevor)
-  -Drone attachment system          (ME)
-  -Wireless Comms                   (Aiden)
-  -Safety System                    (Torsten)
-
+  -Work on Conceptual Design
+    -Develop Subsystems and Assign Them
 
 Subsystems:
   -Power Subsystem              (Probably Handled) (Maybe Torsten)
@@ -41,7 +16,7 @@ Subsystems:
   -Motor Control Subsystem      (Angela)
     -Motor Control
 
-  -Master Control Subsystem
+  -Master Control Subsystem     (Jane)
     -Flight Control
     -Display
     -Communication between systems
