@@ -34,11 +34,11 @@ Subsystems:
     -Vision (robot)
     -Image Processing
 
-ME's:
-  -Chassis
-  -Duck Collection & Distribution
-  -Keypad Mechanism
-  -Crank Mechanism
+  -Mechanical Subsystem (Designated to the ME team and 
+    -Chassis
+    -Duck Collection & Distribution
+    -Keypad Mechanism
+    -Crank Mechanism
 
 
 Camfield Question:
