@@ -43,3 +43,37 @@ Subsystems:
 
 Camfield Question:
   Buy or make a Drone?
+
+
+Camfield Meeting:
+
+Maybe add a Sensor Subsystem
+Does the architecture subsystem need to be different?
+Localization
+Path Planning (Global and Local)
+  -Planning initial Path
+Navigation
+Control?
+High-level planner vs low-level planner
+Global planner sees and organizes movement
+Low-level planner does the dirty work (and small things)
+Master control could be the Global Planner
+
+Master Control: (Global decision-maker) [ROS]
+and Localization, Path Planning, and mobile control in a continuous loop
+but also Sensors
+
+Make or Buy a drone?
+  -Depends on time and resources
+  -Also, how customized do we want?
+  -Should probably buy a drone instead of creating one.
+
+Do you have any tips on this big project?
+  -Go to ROS (maybe a little overkill, and a learning curve)
+    -Inherit stuff others do and use multithreading and communication
+    -multithreading -> like using real-time interrupts and multiple activities happening at once
+  -Make that decision soon and get a simulation running
+  -Look at past examples
+
+
+    
