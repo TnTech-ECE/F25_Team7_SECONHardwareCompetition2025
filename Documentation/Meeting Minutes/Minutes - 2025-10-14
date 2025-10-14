@@ -1,0 +1,41 @@
+
+Goals for the Meeting:
+Finalize subsystems and assign them
+Assign ME person and get in touch
+
+Subsystems:
+  -Global Controller (previously called Master Controller) (will also have sensors) (Jane)
+    -inputs: Sensor Data
+    -output: coords of each object (NAV) & motor controls to motor controller
+
+  -Low-level Controller (previously called Low Level Controller)  (Angela & Torsten)
+
+  -Communication (Same as previously)        (Aiden)
+    -input: camera data from UAV
+    -output: camera data from UAV (but to robot) & IR data to earth
+
+  -Navigation                          (Atra-Niese)
+    -Inputs: coords for each object
+    -Output: path to follow
+
+  -Power (same as previously)          (Torsten)
+
+  -Object detection                    (Trevor)
+    -input: sensor data
+    -output: object coords
+
+  -Mechanical (same as previously)     (Angela & Jane in comms with ME)
+
+
+DRONE REQUIREMENTS:
+  -camera
+  -remotely controllable
+  -weight limit
+  -IR transmitter?? (probably not)
+  -Wifi Streaming
+  -open source?
+
+
+Next Meeting Goals: 
+  -Have rough draft of subsystems
+  -Potential Submission due Wednesday
