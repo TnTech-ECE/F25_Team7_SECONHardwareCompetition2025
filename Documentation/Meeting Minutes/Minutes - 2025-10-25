@@ -1,0 +1,26 @@
+
+10/21/25
+
+GOALS: Finish (Again) subsystems
+
+Updates:
+Storm threw back the deadline by a week
+Aiden: The Comms system is mostly done for us; we can attach a Xiao esp32c3 to help out with IR transmission. Wifi will be built in and done with the given API/IP Address
+Atra-Niese: Nav systems collect data and process it using ROS, sending data to the local motor controller.
+Angela: Lower Level Controller Subsystem is almost done - has a draft block diagram and written explanation
+Jane: Sticking with the Jetson Nano, NVIDIA has a ROS directory that has AI processes built exactly for what we need.  TX2 is like the Jetson Nano, but twice as good (but not sure it's something that we need)
+Torsten: Can't really work on safety without knowing how the robot works :(
+Trevor: Object Detection - incredibly complicated and ingrained in other subsystems
+
+Meeting: ME Meeting went well. They are taking care of all the board stuff, but they are still trying to find out what they are doing :(
+-Looked through last year's conceptual design doc, and they did pretty good :)
+
+Drone:
+  -Definitely needs to see color
+  -work through wifi and waypoints
+
+We will meet with Camfield next week with a completed Conceptual Design Draft
+
+GOALS FOR NEXT TIME: -As close to the final draft as possible
+
+Q for Storm: Do we need Camfield to sign off on the Conceptual Design?
