@@ -155,6 +155,21 @@ At the beginning of the competition, the robot and drone shall start automatical
 
 
 
+### Communications Subsystem
+This subsystem deals with transferring information between the UAV, the Robot, and the Earth. We find it’s best to deal with communication between the UAV and robot to be done mostly through Wifi, which the drone will have and we will be able to connect to with an adapter attached to the JetSon Nano, where the robot will connect to the UAV.  This will allow the robot to send commands for where to go and the UAV to send a stream of data for the camera sensor. The UAV has to transmit data to the earth about the colors of certain satellites, and this needs to be done with infrared LEDs. To ensure that we are able to use the LEDs how we want to on the UAV, we will put in a small microcontroller with access to low power bluetooth that is connected to IR LEDs.  This will mean that the Jetson Nano will also need bluetooth capabilities. In summary, the Robot is connected to the UAV through wifi (for control and data) and bluetooth (to send IR commands), and the UAV will have IR LEDs to send data to the earth.
+
+
+### Autonomous Navigation Subsystem
+According to IEEE SECON guidelines, our team will create a fully autonomous ground robot that can accurately navigate the board and complete given tasks. This will be done without any collisions with obstacles on the board. Our team will use Robot Operating System 2 Navigation Stack (ROS 2 Nav2) in order for our ground robot to autonomously navigate. ROS 2 is a system that allows the robot to move from point A to point B in a space. The usage of Localization and Mapping helps the robot understand its position while creating a real-time map of the environment within the space and moving without hitting obstacles. 
+
+1. Transform Frames and Spatial Coordination:
+    - ROS 2 uses Transform Frames (called TF2 - the transform library) in order to develop an understanding of the robot's constituents and track coordinate frames over time. These frames are broken down into the map, odom, base_link and LiDAR sensor. A Transformation Matrix is then used to convert the position of the Map reference frame to the Odometer reference frame, base_link and then the LiDAR reference frame. During this process, timestamping will be used to ensure synchronization of the data and tell the navigation that the time that the input is taken. 
+
+2. Localization and Mapping:
+    - ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This keeps an updated transform of the Map to the Odom. Local methods (Odometry or IMU) will be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This will provide an accurate evaluation of motion. The team will be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board).
+
+3. Perception, Costmaps, Path Planning and Motion Control:
+    - Nav2 will use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This is done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This is sent via linear and angular velocities of the robot actuators (convert energy into motion). 
 
 ## Ethical, Professional, and Standards Considerations
 
