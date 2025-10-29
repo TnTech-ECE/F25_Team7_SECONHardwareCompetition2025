@@ -54,6 +54,10 @@ In the block diagram, each subsystem should be depicted by a single block. For e
 
 The end result should present a comprehensive view of a well-defined system, delegating all atomic responsibilities necessary to accomplish the project scope to their respective subsystems.
 
+#### Power and Drivetrain: 
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Power_and_Drivetrain__Hardware_Block_Diagram.png)
+
 
 ### Operational Flow Chart
 
