@@ -177,8 +177,62 @@ In the project proposal, each team must evaluate the broader impacts of the proj
 
 
 ## Resources
+Our team will leverage a comprehensive set of resources to ensure a successful design, build, and competition run.
 
-You have already estimated the resources needed to complete the solution. Now, let's refine those estimates.
+#### Human Resources:
+
+Our project is supported by Dr. Canfield (faculty advisor), who provides technical oversight and design feedback, and Dr. Johnson (customer/sponsor), who ensures alignment with the competition’s objectives. Each team member contributes specialized skills in mechanical design, electronics, printed circuit board design, and software development. We also benefit from the experience of Dakota, a previous year’s contestant, who provides insight into competition strategy, and Dr. Tristan Hill, who contributes his expertise in the Robot Operating System (ROS) for robot programming
+
+#### Subsystem Responsibilities and Estimated Time for Completion: 
+
+| **Subsystem**             | **Lead(s)**                                | **Est. Time** |
+|----------------------------|--------------------------------------------|----------------|
+| **Global Controller**      | Jane                                       | 4–9 weeks |
+| **Low-Level Controller**   | Angela & Torsten                           | 4–9 weeks |
+| **Communication**          | Aiden                                      | 4–9 weeks |
+| **Navigation**             | Atra-Niese                                 | 4–9 weeks |
+| **Power**                  | Torsten                                    | 4–9 weeks |
+| **Object Detection**       | Trevor                                     | 4–9 weeks |
+| **Mechanical**             | Angela & Jane (in coordination with ME team) | 4–9 weeks |
+
+#### Facilities and Support
+We will utilize the Capstone Lab for prototyping, fabrication, and testing, including access to 3D printing, soldering, and electronic diagnostic equipment. Additional support will come from official practice boards, hardware rooms, and staging areas provided by the IEEE SoutheastCon competition for final validation and calibration. 
+
+#### Material & Hardware Resources 
+The project will use materials outlined in the official Bill of Materials (BOM), including arena construction supplies, mechanical components, and 3D-printed parts such as antennas, craters, and the Earth module. The electronics foundation will include Arduino boards, LEDs, sensors, batteries, and wiring kits. Our team has elected to purchase an open-source drone to serve as the UAV platform, allowing for modular integration with our communication and navigation subsystems. We also have access to previous years’ BOMs and IEEE competition resources, providing reference data for cost estimates, component sourcing, and system optimization. 
+
+#### Documentation & Knowledge Resources 
+We will utilize the official competition ruleset, CAD models, wiring diagrams, and assembly guides as primary design references. Access to KiCAD will support schematic and PCB design, while NEC and IEEE standards will ensure compliance with safety, electrical, and professional engineering practices. 
+
+#### Budget and Early Prototyping
+We will develop a budget by estimating costs for each subsystem. Early prototyping will focus on the Global Controller, Communication, and Object Detection subsystems, as these represent the most complex integration points. Critical unknowns include sensor calibration accuracy, UAV-to-robot data transfer reliability, and autonomous navigation precision—these will be addressed through iterative prototyping and testing in the Capstone Lab. 
+
+| **Subsystem**        | **Est. Cost** |
+|----------------------|---------------|
+| Global Controller    | $250–$500     |
+| Low-Level Controller | $220–$440     |
+| Communication        | $100–$200     |
+| Navigation           | $120–$240     |
+| Object Detection     | $80–$200      |
+| Power                | $250–$500     |
+| **Total**            | **$1020–$2080** |
+
+#### Timeline
+
+| **Task**               | **Project Lead**     | **Start Date** | **End Date** | **Days** |
+|------------------------|----------------------|----------------|---------------|-----------|
+| Project Proposal       | Team                 | 9/13/2025      | 10/6/2025     | 23 |
+| Conceptual Design      | Team                 | 10/5/2025      | 10/27/2025    | 22 |
+| Detailed Design        | Team                 | 10/20/2025     | 12/3/2025     | 44 |
+| Design Presentation    | Team                 | 12/1/2025      | 12/8/2025     | 7 |
+| Global Controller      | Jane                 | 10/18/2025     | 12/6/2025     | 49 |
+| Low-Level Controller   | Angela & Torsten     | 11/1/2025      | 12/13/2025    | 42 |
+| Communication          | Aiden                | 10/18/2025     | 12/6/2025     | 49 |
+| Navigation             | Atra-Niese           | 11/1/2025      | 12/13/2025    | 42 |
+| Power                  | Torsten              | 11/1/2025      | 12/13/2025    | 42 |
+| Object Detection       | Trevor               | 10/18/2025     | 12/6/2025     | 49 |
+| Mechanical             | Angela & Jane        | 11/1/2025      | 12/13/2025    | 42 |
+
 
 ### Budget
 
