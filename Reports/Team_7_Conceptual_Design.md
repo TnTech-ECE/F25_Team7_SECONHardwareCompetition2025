@@ -173,7 +173,97 @@ According to IEEE SECON guidelines, our team will create a fully autonomous grou
     - ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This keeps an updated transform of the Map to the Odom. Local methods (Odometry or IMU) will be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This will provide an accurate evaluation of motion. The team will be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board).
 
 3. Perception, Costmaps, Path Planning and Motion Control:
-    - Nav2 will use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This is done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This is sent via linear and angular velocities of the robot actuators (convert energy into motion). 
+    - Nav2 will use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This is done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This is sent via linear and angular velocities of the robot actuators (convert energy into motion).
+
+
+### Power Subsystem
+
+##### *Purpose and Functions:*
+The Power Subsystem stores, switches, conditions, distributes, and monitors electrical energy for the robot. It: 
+  - Receives energy from the main battery pack.
+  - Implements a hard Emergency Stop (E-Stop) and a soft Start/Stop control path.
+  - Distributes raw VBAT to high-power loads (H-bridges / drivetrain) via a protected Power Bus.
+  - Generates regulated rails for compute and auxiliaries (Jetson/global controller, sensors, servos, actuators).
+  - Monitors voltage, current, temperature, and faults; reports power-health to the Global Controller; enforces safe shutdown.
+
+##### *Operating Modes:*
+1. Off – No rails energized; only charger/measurement (if fitted) alive.
+2. E-Stop – Mechanical/electrical isolation of all outbound power; stored energy safely discharged to below safe levels.
+3. Pre-Charge/Arming – Controller rail up; buses checked (OV/UV/OC/short) before enabling high-power bus.
+4. Run – All required rails enabled, with continuous communications and protections.
+5. Fault – Any latched fault disables affected rail(s); posts fault code to controller; requires operator reset. 
+
+##### *Power Architecture:*
+  - Source: Battery pack (TBD exact capacity)
+  - High-Power Bus (VBUS_HI): VBAT through main fuse, E-Stop, and Start/Stop switch to H-bridges.
+  - Regulated Rails:
+    - +5 V Compute (5V_SYS): for Jetson Nano/Global Controller (10–25 W; Jetson peak ~5 V @ 4–5 A.
+    - +5 V Aux (5V_AUX): for sensors and low-power peripherals (budget 1–2 A).
+    - +6–7.4 V Servo Rail (SERVO_V): or +5–6 V depending on servo spec.
+    - +12 V Aux. if needed for fans/relays (budget 1–2 A).
+    - Step-Down Stages: buck converters from VBAT to rails above.
+    - Return: Single-point star ground near battery negative; high-current returns separated from signal grounds.
+
+##### *Interfaces:*
+###### Power Interfaces
+  - BAT_IN – Power; input; VBAT. Connector: SB50/XT60 (TBD).
+  - VBUS_HI_OUT – Power; output to H-bridges. Max continuous current TBD (size for drivetrain peak + 30% headroom).
+  - 5V_SYS_OUT – Power; output to Jetson & Global Controller; 5 V regulated, ripple <50 mVp-p @ 1 A; transient load step 2 A/µs compliant.
+  - 5V_AUX_OUT / 12V_AUX_OUT / SERVO_V_OUT – Power; outputs; currents per budget.
+
+###### Control
+  - EN_HI_BUS – Logic; input from Global Controller; enables high-power contactor/FET (active-high, 3.3/5 V tolerant).
+  - PG_5V_SYS / PG_SERVO / PG_HI_BUS – Logic; outputs; power-good for each rail (open-drain, active-low).
+  - ESTOP_CHAIN – Safety loop; series circuit through mushroom E-Stop; opens to force hard disconnect.
+  - I²C_PWR  – Digital comms to Global Controller for communications and configuration (address/protocol map below).
+    - Communication topics: VBAT, rail voltages, rail currents, temperatures, fault codes, energy used (coulomb count).
+    - Commands: enable/disable rails, clear faults, set soft-start/limits.
+
+##### *Power Budget:*
+  - Drivetrain (via H-bridges): TBD per motor.
+  - Jetson Nano: 5–20 W typical; short peaks to ~25 W depending on peripherals and mode.
+  - Sensors: 1–5 W.
+  - Servos/actuators: highly variable, TBD.
+
+
+##### *Protections & Safety:*
+  - Input fuse sized to protect wiring from fault.
+  - Reverse-polarity protection at BAT_IN(Diode).
+  - E-Stop performs isolation of VBUS_HI and disables all regulators (except optional always-on monitor) within ≤50 ms.
+  - Soft-start / inrush limiting for each rail; pre-charge for bulk caps on VBUS_HI.
+  - OV/UV/OC/OTP on every regulator; short-circuit proof on aux rails.
+  - Brown-out handling: on VBAT < threshold, assert PG low, signal controller, and perform staged shutdown (compute → servos → drivetrain).
+  - EMC: input LC filter, layout segregation, TVS on external connectors.
+
+##### *Environmental & Mechanical:*
+  - Operating temp: TBD (target -10 °C to +50 °C); reduce the power currents at elevated temps.
+  - Connectors; rails labeled; color-coded wiring; serviceable fuses.
+
+##### *Verification & Test:*
+  - Bench bring-up with programmable load: validate regulation, ripple, efficiency across load/temperature.
+  - Fault injection (shorts/overloads) to confirm OC trip and recovery.
+  - E-Stop timing test (scope PG lines vs. supply collapse).
+  - EMI check (conducted ripple on VBAT; sensor bus integrity during motor switching).
+
+##### *Shall Statements:*
+1. The subsystem shall accept a battery input in the range TBD (e.g., 10–25 V) and provide isolation of high-power outputs when E-Stop is activated.
+2. The subsystem shall provide a 5 V_SYS rail capable of ≥5 A continuous.
+3. The subsystem shall provide a SERVO_V rail (voltage TBD per servo spec) rated for ≥10 A peak with independent over-current limiting and brown-out isolation from 5 V_SYS.
+4. The subsystem shall distribute VBUS_HI to the drivetrain H-bridges with a current capacity ≥ (sum of motor peak currents × 1.3) and include pre-charge/inrush control.
+5. The subsystem shall implement OV, UV, OC, and OTP protections on all regulated rails and shall latch-off or fold-back according to the documented table of limits.
+6. The subsystem shall expose Power-Good (PG) signals for VBUS_HI, 5 V_SYS, and SERVO_V, and these PG signals shall stop within ≤50 ms of any fault or E-Stop.
+7. The subsystem shall publish VBAT voltage, battery current, rail currents/voltages, temperatures, and fault codes at ≥10 Hz over I²C (400 kHz) to the Global Controller.
+8. The subsystem shall support a software-controlled enable for each rail and a hardware Start/Stop input; hardware controls shall override software.
+9. The subsystem shall maintain compute power long enough for an orderly shutdown: ≥2 s hold-up on 5 V_SYS at 2 A after brown-out detection.
+10. The subsystem shall meet wire gauge and connector ratings for the specified continuous and peak currents with ≥20% thermal margin.
+11. The subsystem shall be serviceable: fuses accessible, connectors  and all rails clearly labeled.
+
+##### *Open Items / To-Be-Determined:*
+  - Final battery, voltage, and capacity.
+  - Exact Jetson Nano SKU and max load (sets 5 V_SYS rating).
+  - Servo and actuator quantity and type, TBD mechanical application.
+  - Connector part numbers; fuse ratings; wire gauges; thermal solution. 
+
 
 ## Ethical, Professional, and Standards Considerations
 
