@@ -97,79 +97,89 @@ Using these two sensor types together shall allow the robot to know its exact po
 
 
 ## Object Detection Subsystem
+
+Customer: Dr. Johnson
+
+Designer: Trevor Snyder
+
+
 The drone shall act as an overhead observer while the robot acts as the main ground unit. The drone’s job is to locate and keep track of the robot while navigating it throughout the course.  
 
-By doing this the drone and robot shall do the following: 
+### *Specifications:*
+
 1. The drone shall create a SLAM map of the competition within 20 seconds  
 2. The drone shall locate and navigate the robot 
 3. The drone and robot shall both locate the Astro-Ducks and antennas 
 4. The drone and robot shall both identify the specific task of the antennas 
 5. The drone shall determine the color of the antennas’ LEDs 
-6. The drone and robot shall automatically starting using the LED bar on the competition board 
+6. The drone and robot shall automatically starting using the LED bar on the competition board
+
+
+### *Comparative Analysis of Potential Solutions:*
 
 #### *Creating a SLAM Map:*
-To achieve reliable localization and mapping within the strict three-minute match limit, the drone shall utilize a geometry-based SLAM initialization approach using the specification given by the competition ruleset. According to the official ruleset, the field consist of a rectangular 4’ by 8’ plywood base surrounded by 1” by 8” by 8’ border walls. This playing surface also includes a 2’ diameter crater with an 8” flat area near the center of the arena which provides a distinct landmark for visual recognition. These fixed dimensions enable the drone to initialize SLAM instantaneously using a pre-defined arena model. Thus, eliminating the need for extended exploration that would take up more time than necessary.  Below are the steps for which this quick and efficient SLAM map shall be created within the first 20 seconds of the run. 
+To achieve reliable localization and mapping within the strict three-minute match limit, the drone shall utilize a geometry-based SLAM initialization approach using the specification given by the competition ruleset [27]. According to the official ruleset, the field consist of a rectangular 4’ by 8’ plywood base surrounded by 1” by 8” by 8’ border walls. This playing surface also includes a 2’ diameter crater with an 8” flat area near the center of the arena which provides a distinct landmark for visual recognition. These fixed dimensions enable the drone to initialize SLAM instantaneously using a pre-defined arena model. Thus, eliminating the need for extended exploration that would take up more time than necessary. Below are the steps for which this quick and efficient SLAM map shall be created within the first 20 seconds of the run. 
 
 1. Pre-Run Setup
-    -  A prior map of the arena shall be generated from the published arena specifications. This map shall encodes the outer 4’ by 8’ boundary, crater footprint and any other static features that have a fixed location. Since the rules allow full autonomy and unrestricted use of sensors and software, this pre-built model is fully allowed.
+    -  A prior map of the arena shall be generated from the published arena specifications [27]. This map shall encodes the outer 4’ by 8’ boundary, crater footprint and any other static features that have a fixed location. Since the rules allow full autonomy and unrestricted use of sensors and software, this pre-built model is fully allowed.
 
 2. Initialization and Instant Localization (0-3 seconds)
-    - The drone shall instantly take off from the robot and shall position itself at the bottom left corner of the arena where the staring area is. Using the drone’s camera, the system shall detect the wall and floor boundaries then compute a camera-to-floor homography. This geometric fitting aligns the drone’s camera frame with the pre-defined	global coordinate frame of the map, providing instantaneous metric scale and orientation without any markers.
+    - The drone shall instantly take off from the robot and shall position itself at the bottom left corner of the arena where the staring area is. Using the drone’s camera, the system shall detect the wall and floor boundaries then compute a camera-to-floor homography [35]. This geometric fitting aligns the drone’s camera frame with the pre-defined	global coordinate frame of the map, providing instantaneous metric scale and orientation without any markers.
 
 3. Arena Mapping (3-12 seconds)
-    - After alignment, the drone shall make a single high-speed pass along the perimeter of the competition arena followed by a figure-eight pass near the center. Visual-inertial odometry (VIO) shall combine the camera and IMU to track the motion between the frames captured by the camera. At the same time, the onboard SLAM system shall triangulate limited 3D points and updates a occupancy grid with around 5 cm of resolution. Due to the pre-defined arena geometry, this step focuses on the refining accuracy and identifying small environmental variations.
+    - After alignment, the drone shall make a single high-speed pass along the perimeter of the competition arena followed by a figure-eight pass near the center. Visual-inertial odometry (VIO) shall combine the camera and IMU to track the motion between the frames captured by the camera [35]. At the same time, the onboard SLAM system shall triangulate limited 3D points and updates a occupancy grid with around 5 cm of resolution [32]. Due to the pre-defined arena geometry, this step focuses on the refining accuracy and identifying small environmental variations.
 
 4. Drift Correction and Map Closure (12-18 seconds)
-    - Once returning to the starting corner, the drone shall re-observe the same arena walls and perform a layout-based loop closure. This is to align the live map back to the known rectangular competition field. This correction shall ensure that positional drift accumulated during the short flight is reduced within centimeters of the real scale.
+    - Once returning to the starting corner, the drone shall re-observe the same arena walls and perform a layout-based loop closure. This is to align the live map back to the known rectangular competition field [32]. This correction shall ensure that positional drift accumulated during the short flight is reduced within centimeters of the real scale.
 
 5. Map Output (18-20 seconds)
-    - Finally within 20 seconds, the drone shall produce a rough but globally accurate map. The mapping shall continue in the background as the run goes along, increasing map density while maintaining localization for coordination with the robot.
+    - Finally within 20 seconds, the drone shall produce a rough but globally accurate map. The mapping shall continue in the background as the run goes along, increasing map density while maintaining localization for coordination with the robot [28] [32].
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/SLAM_Map_FLowchart.png)
 
 #### *Locating and Navigating the Robot:*
-After the initial SLAM map is generated by the drone, the robot shall perform autonomous localization and navigation within that map while identifying objects inside the competition arena. Objects such as the Astro-Ducks and antennas shall be identified using vision-based object detection algorithms. Below are the steps using algorithms for the robot to locate itself and start making its way through the course.
+After the initial SLAM map is generated by the drone, the robot shall perform autonomous localization and navigation within that map while identifying objects inside the competition arena [28]. Objects such as the Astro-Ducks and antennas shall be identified using vision-based object detection algorithms. Below are the steps using algorithms for the robot to locate itself and start making its way through the course [33] [34].
 
 1. Initialization and Localization
-    - At the start of the run, the robot shall be deployed inside the 12” by 12” by 12” staring cube. The robot shall use the SLAM map generated by the drone to establish its initial position. This shall be done by using the onboard LiDAR sensors and vision camera to compare the nearby walls with those of the known 4’ by 8’ board dimensions. By using a Pose Graph Optimization algorithm, the robot’s local coordinate frame shall be aligned with the SLAM map. This localization state is maintained through sensor fusion in an Extended Kalman Filter (EKF) that shall combine the data from the wheel encoders, IMU, and LiDAR sensors. This maintains a true position of the robot even if the data is imperfect.
+    - At the start of the run, the robot shall be deployed inside the 12” by 12” by 12” staring cube. The robot shall use the SLAM map generated by the drone to establish its initial position. This shall be done by using the onboard LiDAR sensors and vision camera to compare the nearby walls with those of the known 4’ by 8’ board dimensions [28] [30]. By using a Pose Graph Optimization algorithm, the robot’s local coordinate frame shall be aligned with the SLAM map. This localization state is maintained through sensor fusion in an Extended Kalman Filter (EKF) that shall combine the data from the wheel encoders, IMU, and LiDAR sensors. This maintains a true position of the robot even if the data is imperfect [35] [38].
 
 2. Landmark-Detection Algorithm
-    - A CNN-based object detection model shall be implemented using similar architecture to the YOLOv5-nano. The robot’s camera shall capture frames which are resized and normalized. The YOLOv5-nano shall perform bounding-box predictions with labels for the Astro-Ducks, antennas, and the crater edge. Suppression shall help eliminate duplicate detections which centroid coordinates shall then be projected into the world space. The detected objects shall then be fed into the localization module as landmarks.
+    - A CNN-based object detection model shall be implemented using similar architecture to the YOLOv5-nano. The robot’s camera shall capture frames which are resized and normalized [33] [34]. The YOLOv5-nano shall perform bounding-box predictions with labels for the Astro-Ducks, antennas, and the crater edge. Suppression shall help eliminate duplicate detections which centroid coordinates shall then be projected into the world space. The detected objects shall then be fed into the localization module as landmarks [34].
   
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Robot_Localization_Navigation_Flowachart.png)
 
 #### *Locating Astro-Ducks and Antennas:*
-To efficiently locate the Astro-Ducks and antennas, a dual-layer detection algorithm shall be used that shall combine the drone’s aerial scanning with the robot’s ground level conformation. Together the drone and robot shall maintain the shared SLAM map that is continuously evolving.
+To efficiently locate the Astro-Ducks and antennas, a dual-layer detection algorithm shall be used that shall combine the drone’s aerial scanning with the robot’s ground level conformation. Together the drone and robot shall maintain the shared SLAM map that is continuously evolving [34].
 
 1. Drone-Based Aerial Scanning
-    - During the beginning SLAM mapping in the first 20 seconds of the run, the drone shall run a lightweight version of the YOLOv5-Nano model tuned for overhead imagery. The drone shall be able to observe the entire field from above and recognize objects based off their characteristics. The Astro-Ducks shall appear as small, bright circular blobs with soft edges while the antennas shall appear as taller structures with clear circular dishes. Each time the drone detects an object, it shall estimate its approximate center pixel and convert them into real-world coordinates relative to the arena. 
+    - During the beginning SLAM mapping in the first 20 seconds of the run, the drone shall run a lightweight version of the YOLOv5-Nano model tuned for overhead imagery [34]. The drone shall be able to observe the entire field from above and recognize objects based off their characteristics. The Astro-Ducks shall appear as small, bright circular blobs with soft edges while the antennas shall appear as taller structures with clear circular dishes. Each time the drone detects an object, it shall estimate its approximate center pixel and convert them into real-world coordinates relative to the arena. 
 
 2. Robot-Based Close-Range Confirmation
-    - As the robot drives towards the coordinates received from the drone, it shall activate the front facing camera and short-range sensors to begin detailed inspection. The robot shall run the same algorithm as the drone but with a model trained for ground-level perspectives. From this distance, the robot shall clearly identify the shapes and textures of the object. The robot shall detect either short shapes with high color saturation or taller objects with dishes at the top. By combining the shape and colors with the object’s height, the robot shall eliminate the chances of a misclassification.
+    - As the robot drives towards the coordinates received from the drone, it shall activate the front facing camera and short-range sensors to begin detailed inspection. The robot shall run the same algorithm as the drone but with a model trained for ground-level perspectives. From this distance, the robot shall clearly identify the shapes and textures of the object. The robot shall detect either short shapes with high color saturation or taller objects with dishes at the top. By combining the shape and colors with the object’s height, the robot shall eliminate the chances of a misclassification [33] [34].
   
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Locating_AstroDucks_and_Antennas.png)
 
 #### *Identifying the Antenna's Task:*
-Each of the four antennas shall have unique task to power the LED associated with them. Antenna #1 shall be located in Area #2 and shall have a button task. Antenna #2 shall be located in Area #3 and shall have a crank task. Antenna #3 shall be located in Area #4 and shall have a pressure plate task. Antenna #4 shall be located in Area #1 and shall have a keypad task. Due to the fixed locations of the antennas, the drone and robot can use the SLAM map to automatically know which antenna is where in the arena. Thus, the robot shall know which task needs to be completed without having to visually identify the task itself.
+Each of the four antennas shall have unique task to power the LED associated with them. Antenna #1 shall be located in Area #2 and shall have a button task. Antenna #2 shall be located in Area #3 and shall have a crank task. Antenna #3 shall be located in Area #4 and shall have a pressure plate task. Antenna #4 shall be located in Area #1 and shall have a keypad task. Due to the fixed locations of the antennas, the drone and robot can use the SLAM map to automatically know which antenna is where in the arena. Thus, the robot shall know which task needs to be completed without having to visually identify the task itself [27].
 
 1. Realignment
-    - Each antenna’s facing direction is stored in the robot’s map data. By using this, the robot shall be able to position itself in the correct compass direction for the task. The robot’s camera shall be used to ensure that the robot’s position is aligned with that of the actuator being used for the task at hand. The robot’s distant sensors (LiDAR or ultrasonic) shall provide feedback to close in until the measured range matches the activation distance. The robot shall then hold its position for half a second to verify its stability.
+    - Each antenna’s facing direction is stored in the robot’s map data. By using this, the robot shall be able to position itself in the correct compass direction for the task. The robot’s camera shall be used to ensure that the robot’s position is aligned with that of the actuator being used for the task at hand. The robot’s distant sensors (LiDAR or ultrasonic) shall provide feedback to close in until the measured range matches the activation distance. The robot shall then hold its position for half a second to verify its stability [28].
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Antenna_Task_Identification.png)
 
 ##### *Determining Color of Antenna LEDs:*
-Once the robot shall complete a task at the antenna and restore power, an LED in the antennas dish illuminates with one of the four colors: red, blue, green, purple. The drone shall identify the color of the LED and transmit that information back to the base station. This process shall take place while the robot and drone are in the same area, ensuring that the robot can associate with the correct LED with the correct antenna.
+Once the robot shall complete a task at the antenna and restore power, an LED in the antennas dish illuminates with one of the four colors: red, blue, green, purple. The drone shall identify the color of the LED and transmit that information back to the base station. This process shall take place while the robot and drone are in the same area, ensuring that the robot can associate with the correct LED with the correct antenna [37].
 
 1. LED Detection Algorithm
-    - The drone’s camera shall be positioned over the antenna’s LED. From there, the drone shall capture high-resolution RGB frames of the antenna dish area. By using the know antenna dimensions, the images shall be cropped around the dish’s location. A circular mask shall then isolate the LED region to remove the surrounding gray and black areas of the antenna. The RGB frames shall be converted to the HSV (High-Saturation-Value) color space, which shall allow color separation under different lighting conditions. The average hue value inside the circular region shall determine the LED color.
+    - The drone’s camera shall be positioned over the antenna’s LED. From there, the drone shall capture high-resolution RGB frames of the antenna dish area. By using the know antenna dimensions, the images shall be cropped around the dish’s location. A circular mask shall then isolate the LED region to remove the surrounding gray and black areas of the antenna. The RGB frames shall be converted to the HSV (High-Saturation-Value) color space, which shall allow color separation under different lighting conditions [37]. The average hue value inside the circular region shall determine the LED color.
 
 2. Validation Filters
-    - To prevent false readings from reflections or mixed lighting, the algorithm shall do three things. First, the algorithm shall check the saturation and brightness within the region of the LED. Second, the algorithm shall take the average hue across five frames. Third, if the hue is inconsistent throughout the five frames, the drone shall reposition and try again.
+    - To prevent false readings from reflections or mixed lighting, the algorithm shall do three things. First, the algorithm shall check the saturation and brightness within the region of the LED. Second, the algorithm shall take the average hue across five frames. Third, if the hue is inconsistent throughout the five frames, the drone shall reposition and try again [37].
   
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LED_Detection.png)
 
 #### *Detecting the Starting LED:*
-At the beginning of the competition, the robot and drone shall start automatically when the arena’s white “Start LED” bar illuminates. To accomplish this, the robot shall be equipped with a photoresistor (LDR) mounted in a small black tube aimed at the “Start LED” region. The black tube shall act as a light baffle, blocking any unnecessary light from overhead fixtures. When the “Start LED” turns on, the brightness in the sensor’s field of view shall sharply increase causes the voltage of the system to change. Once the voltage shall exceed a set threshold, the software shall confirm that the “Start LED” has been detected. To prevent false triggers, the robot shall use a short debounce delay, requiring the signal to stay above the set threshold for a couple hundred milliseconds before starting.
+At the beginning of the competition, the robot and drone shall start automatically when the arena’s white “Start LED” bar illuminates [27]. To accomplish this, the robot shall be equipped with a photoresistor (LDR) mounted in a small black tube aimed at the “Start LED” region. The black tube shall act as a light baffle, blocking any unnecessary light from overhead fixtures. When the “Start LED” turns on, the brightness in the sensor’s field of view shall sharply increase causes the voltage of the system to change. Once the voltage shall exceed a set threshold, the software shall confirm that the “Start LED” has been detected. To prevent false triggers, the robot shall use a short debounce delay, requiring the signal to stay above the set threshold for a couple hundred milliseconds before starting [36].
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Detecting_Starting_LED.png)
 
@@ -435,6 +445,33 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 [25] International Organization for Standardization (ISO). (2015). ISO 13849-1: Safety of Machinery – Safety-related Parts of Control Systems. 
 
 [26] International Electrotechnical Commission (IEC). (2005). IEC 60950-1: Information Technology Equipment – Safety – Part 1: General Requirements. 
+
+[27] IEEE Region 3, IEEE SoutheastCon 2026 Hardware Competition Ruleset, IEEE Region 3, 2025. Available: https://ieee-region3.org/southeastcon 
+
+[28] Open Robotics, Robot Operating System 2 (ROS 2) Documentation – Navigation Stack (Nav2), 2024. Available: https://docs.ros.org/en/foxy/Tutorials/Navigation2.html 
+
+[29] Open Robotics, TF2 Transform Library – ROS 2 Documentation, 2024. Available: https://docs.ros.org/en/rolling/Tutorials/Intermediate/Tf2.html 
+
+[30] Open Robotics, AMCL (Adaptive Monte Carlo Localization) Package Documentation, 2024. Available: https://wiki.ros.org/amcl 
+
+[31] A. Howard, M. Matarić and G. Sukhatme, “Localization for mobile robot teams using maximum likelihood estimation,” Proc. IEEE/RSJ Int. Conf. on Intelligent Robots and Systems, 2002, pp. 434-439. 
+
+[32] G. Grisetti, C. Stachniss and W. Burgard, “Improved techniques for grid mapping with Rao-Blackwellized particle filters,” IEEE Trans. on Robotics, vol. 23, no. 1, pp. 34-46, 2007. 
+
+[33] J. Redmon et al., “You Only Look Once: Unified, Real-Time Object Detection,” Proc. IEEE Conf. on Computer Vision and Pattern Recognition (CVPR), 2016, pp. 779-788. 
+
+[34] G. Jocher, YOLOv5 by Ultralytics: Model Zoo and Documentation, Ultralytics LLC, 2023. Available: https://docs.ultralytics.com 
+
+[35] S. Thrun, W. Burgard and D. Fox, Probabilistic Robotics, MIT Press, Cambridge, MA, 2005. 
+
+[36] NVIDIA, Jetson Nano Developer Kit Documentation, NVIDIA Corp., 2024. Available: https://developer.nvidia.com/embedded/jetson-nano 
+
+[37] OpenMV LLC, OpenMV Cam H7 Plus Documentation and Color Tracking Examples, 2024. Available: https://docs.openmv.io 
+
+[38] R. Smith and P. Cheeseman, “On the representation and estimation of spatial uncertainty,” The International Journal of Robotics Research, vol. 5, no. 4, pp. 56-68, 1986. 
+
+[39] IEEE Code of Ethics, IEEE Policies Section 7 – Professional Ethics, IEEE, 2024. Available: https://www.ieee.org/about/corporate/governance/p7-8.html 
+
 
 
 
