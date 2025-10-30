@@ -15,12 +15,13 @@ The IEEE (Institute of Electrical and Electronics Engineers) holds a conference 
 ## High-Level Solution
 
 
-### Hardware Block Diagram
+### Hardware Block Diagram:
 
 
 
-### Operational Flow Chart
+### Operational Flow Chart:
 
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Operational%20Flow%20Chart.png)
 
 
 
