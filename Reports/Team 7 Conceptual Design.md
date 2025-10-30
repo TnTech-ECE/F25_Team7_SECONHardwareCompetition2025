@@ -11,8 +11,6 @@ The IEEE SECON 2026 competition rules have been deconstructed into the specifica
 
 Design time is a limiting factor as the competition will take place in March of 2026. The team shall construct a strategy that will allow the team to test the robot and UAV as the team works to assemble and implement these components. The rule set incentivizes using the UAV for antenna tower LED identification and communication; thus, the team shall implement one. The team shall prioritize the robot’s ability to identify and complete the listed task. Once the robot can complete these tasks reliably, then the team shall focus on tuning the robot to be able to complete these tasks quickly [game rules]. 
 
-## Comparative Analysis of Potential Solutions
-
 
 ## High-Level Solution
 
@@ -35,6 +33,8 @@ Design time is a limiting factor as the competition will take place in March of 
 Customer: Dr. Johnson
 
 Designer: Jane Vassar
+
+The Global control system can be broken down into two major components: The Global controller itself and the sensors that it relies on in order to collect data the robot needs to make decisions. The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. The robot shall use an NVIDIA Jetson single board computer for this task. These single board computers were designed to efficiently run AI loads which will be essential for the robot’s other subsystems. The robot shall also use a combination of sensors that will allow the robot to perceive its location on the game board and be able to identify objects on the board. The robot shall utilize a camera that can perceive both color and depth in order to identify the objects and obstacles that are located on the game board. The UAV will also be equipped with a camera that will allow it to identify colors, and will allow the UAV to assist the robot in collecting visual data that can be used for creating a virtual map of the game board. Using the technique of sensor fusion, LiDAR sensors and an IMU will be used to help the robot to pinpoint its location on the game board. The robot shall also utilize a photoresistor which will be used to start the robot autonomously. The robot will also have a set of switches that will act as the power and start button respectively. 
 
 ### *Specifications:*
 1. Both the robot and UAV shall be completely autonomous [Vehicle Spec 1]
@@ -119,8 +119,6 @@ The drone shall act as an overhead observer while the robot acts as the main gro
 6. The drone and robot shall automatically starting using the LED bar on the competition board
 
 
-### *Comparative Analysis of Potential Solutions:*
-
 #### *Creating a SLAM Map:*
 To achieve reliable localization and mapping within the strict three-minute match limit, the drone shall utilize a geometry-based SLAM initialization approach using the specification given by the competition ruleset [27]. According to the official ruleset, the field consist of a rectangular 4’ by 8’ plywood base surrounded by 1” by 8” by 8’ border walls. This playing surface also includes a 2’ diameter crater with an 8” flat area near the center of the arena which provides a distinct landmark for visual recognition. These fixed dimensions enable the drone to initialize SLAM instantaneously using a pre-defined arena model. Thus, eliminating the need for extended exploration that would take up more time than necessary. Below are the steps for which this quick and efficient SLAM map shall be created within the first 20 seconds of the run. 
 
@@ -188,6 +186,10 @@ At the beginning of the competition, the robot and drone shall start automatical
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Detecting_Starting_LED.png)
 
 
+### *Comparative Analysis of Potential Solutions:*
+
+
+
 
 ## Communications Subsystem
 This subsystem is responsible for transferring information between the UAV, the ground robot, and the Earth. Communication between the UAV and the robot shall primarily be established through Wi-Fi. The UAV shall serve as the access point, while the robot shall connect using an adapter linked to the Jetson Nano. This setup allows the robot to send navigational commands to the UAV and enables the UAV to transmit a continuous stream of sensor and camera data back to the robot. For communication with Earth, the UAV shall transmit data regarding the colors of specific satellites using infrared (IR) LEDs. To achieve this, the UAV shall incorporate a small microcontroller equipped with low-power Bluetooth capability to control the IR LEDs. Consequently, the Jetson Nano shall also include Bluetooth functionality to interface with this subsystem. In summary, the robot and UAV shall communicate through Wi-Fi for control and data exchange, while Bluetooth is utilized for sending IR commands. The UAV then uses IR LEDs to transmit the necessary information to Earth.
@@ -211,7 +213,7 @@ According to IEEE SECON guidelines, our team shall create a fully autonomous gro
 
 ROS 2 uses Transform Frames (called TF2 - the transform library) in order to develop an understanding of the robot's constituents and track coordinate frames over time. These frames shall be broken down into the map, odom, base_link and LiDAR sensor. A Transformation Matrix shall then be used to convert the position of the Map reference frame to the Odometer reference frame, base_link and then the LiDAR reference frame. During this process, timestamping shall be used to ensure synchronization of the data and tell the navigation the time that the input is taken. 
 
-### * Localization and Mapping:
+### *Localization and Mapping:*
 ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This shall keep an updated transform of the Map to the Odom. Local methods (Odometry or IMU) shall be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This shall provide an accurate evaluation of motion. The team shall be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board).
 
 3. Perception, Costmaps, Path Planning and Motion Control:
@@ -346,7 +348,9 @@ The LLC shall be designed with an emphasis on modularity so that each component 
 
 
 ## Ethical, Professional, and Standards Considerations
-
+  - The design of the UAV-robot integrated system adheres to the professional and ethical standards and responsibilities outlined in the IEEE Code of ethics. These principles emphasize the significance of transparent design reports, environmentally conscientious innovation, and most importantly the safety of the public. In alignment with these standards, each process of the design will be deliberately tested and conducted to uphold these standards.
+  - Environmentally, resource responsibility extends throughout the project through the reuse of components, such as the Pololu motors and Adafruit APDS9960 Sensors in the Low-Level Controllers.  As well as the Jetson Nano family in the Global Controller subsystems.
+  - Safety also remains a central principle throughout the project, as the design implements several different safeguards. The Power subsystem's implementation of an emergency-stop feature allows for the immediate halt of all robot systems, minimizing any danger to equipment, property, and the public. The Low-Level controller preemptively minimizes complications by continuous actuator monitoring and feedback. Similarly, the Navigation subsystem integrates LiDAR-based object detection along with ROS2-based pathway creation into its design to preemptively to prevent collisions with arena obstacles and boundaries.
 
 
 ## Resources
