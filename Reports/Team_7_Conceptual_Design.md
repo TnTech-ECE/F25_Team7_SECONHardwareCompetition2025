@@ -348,7 +348,7 @@ The project shall use materials outlined in the official Bill of Materials (BOM)
 #### Documentation & Knowledge Resources 
 The team shall utilize the official competition ruleset, CAD models, wiring diagrams, and assembly guides as primary design references. Access to KiCAD shall support schematic and PCB design, while NEC and IEEE standards shall ensure compliance with safety, electrical, and professional engineering practices. 
 
-#### Budget and Early Prototyping
+### Budget and Early Prototyping:
 The team shall develop a budget by estimating costs for each subsystem. Early prototyping shall focus on the Global Controller, Communication, and Object Detection subsystems, as these represent the most complex integration points. Critical unknowns include sensor calibration accuracy, UAV-to-robot data transfer reliability, and autonomous navigation precision. These shall be addressed through iterative prototyping and testing in the Capstone Lab. 
 
 | **Subsystem**        | **Est. Cost** |
@@ -361,7 +361,11 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 | Power                | $250–$500     |
 | **Total**            | **$1020–$2080** |
 
-#### Timeline
+
+### Division of Labor:
+
+
+### Timeline:
 
 | **Task**               | **Project Lead**     | **Start Date** | **End Date** | **Days** |
 |------------------------|----------------------|----------------|---------------|-----------|
@@ -376,15 +380,6 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 | Power                  | Torsten              | 11/1/2025      | 12/13/2025    | 42 |
 | Object Detection       | Trevor               | 10/18/2025     | 12/6/2025     | 49 |
 | Mechanical             | Angela & Jane        | 11/1/2025      | 12/13/2025    | 42 |
-
-
-### Budget
-
-
-### Division of Labor
-
-
-### Timeline
 
 
 
