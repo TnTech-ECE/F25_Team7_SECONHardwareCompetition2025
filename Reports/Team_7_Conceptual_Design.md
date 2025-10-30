@@ -56,7 +56,7 @@ The end result should present a comprehensive view of a well-defined system, del
 
 #### Power and Drivetrain: 
 
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Power_and_Drivetrain__Hardware_Block_Diagram.png)
+
 
 
 ### Operational Flow Chart
@@ -80,7 +80,76 @@ Detail the operation of the subsystem:
 
 For all subsystems, formulate detailed "shall" statements. Ensure these statements are comprehensive enough so that an engineer who is unfamiliar with your project can design the subsystem based on your specifications. Assume the role of the customer in this context to provide clear and precise requirements.
 
-### Object Detection Subsystem
+
+## Global Control Subsystem
+
+Customer: Dr. Johnson
+
+Designer: Jane Vassar
+
+### *Specifications:*
+1. Both the robot and UAV shall be completely autonomous [Vehicle Spec 1]
+2. The UAV shall not weigh more than 0.55 pounds or 250 grams [Vehicle spec 5]
+3. The robot and UAV shall have a clearly labeled start switch. [Vehicle Spec 12]
+4. Teams shall have a maximum of 3 minutes to earn points. [Objective Spec 3]
+     - The robot shall have the ability to quickly process sensor data.
+     - The robot shall have the ability to quickly process AI workloads.
+     - The robot shall have the ability to quickly make decisions and communicate them.
+5. Teams shall rescue a total of 6 Astro-Ducks and shall return them to the “Lunar Landing Area.” [Objective Specs 4/5]
+     - The robot shall be able to identify, locate, and navigate to the Astro-Ducks.
+     - The robot shall be able to identify and navigate to the Lunar Landing Area.
+6. Teams shall establish power to the 4 antennas throughout the course. Power shall be restored differently for each antenna. Once power is restored to the antenna, a randomly colored LED shall light up (red, blue, green, and purple). [Objective Spec 6]
+     - The robot shall be able to identify, locate, and navigate to the antenna towers.
+     - The robot must identify and complete the task located on each tower.
+     - The UAV shall identify the color of the LED on each antenna tower.
+     - The UAV shall know which area each antenna tower and their LEDs are located in.
+7. Two starting white LED bars shall be placed on top of the arena wall, one on each side of the 12” x 12” starting area. [Board Spec 5]
+     - The robot shall be able to sense the starting white LEDs in order to begin operation.
+8. Points shall be lost every time the robot or UAV has an unintentional collision [Objective Constrain 2]
+     - The robot and UAV shall be able to detect and avoid obstacles.
+
+### *Comparative Analysis of Potential Solutions:*
+#### Global Contoller
+In order to meet specifications 1, 5, and 6; the robot will need to have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer will send the needed instructions to the low level controller in order to execute those decisions. 
+
+ 
+The robot’s ability to detect objects and handle navigation tasks will depend on its ability to effectively utilize artificial intelligence algorithms. AI algorithms are computationally heavy tasks, meaning that a simple microcontroller will not be enough to control the robot [1]. A single board computer would be more suited for managing the robot’s high level control. A Raspberry Pi 5 is a potential option for this task. The Raspberry Pi 5 doesn’t have specialty hardware for AI processing, but it is powerful enough by itself to run light AI load [2]. It is also possible to purchase an expansion board for the Raspberry Pi 5 called the AI hat+ [3]. This module has built in accelerator cores that allow a Raspberry Pi 5 the ability to handle bigger AI loads. However, the extra component introduces an additional point of failure into the system that could prove difficult to troubleshoot. Instead picking a single board computer that is designed for handling AI loads would be a better option. The Jetson line of single board computers made by NVIDIA were designed with AI processing in mind. Potential candidates include the Nano, TX2, and Orin. The Jetson Nano is more powerful and suited to running AI loads compared to the Raspberry Pi 5 (with out considering the AI hat+) [4] [5], however, the TX2 is approximately 2.5 times more powerful than the Nano [6]. The Jetson Orin is listed as being more powerful than both of the previous boards [7]. All three boards have access to the same set of NVIDIA development tools, and have similar development board configurations.  
+
+
+The robot will also need a software architecture that will allow the robot to handle all its AI loads and sensor integration. The team has the option to continue developing the architecture designed by the previous team. There is a foundation that the team can use to build upon and add on to, including computer vision algorithms [8] [9]. The team can also build a new software architecture using the Robot Operating System (ROS). This architecture is open source and has a set of prebuilt tools for common robot applications. NVIDIA has also built a ROS distribution called Issac which is designed for using AI tools such as object detection and navigation algorithms [10]. This ROS library also makes using a Jetson board more appealing. 
+
+
+The team shall use a NVIDIA Jestion single board computer to handle the sensor intake, AI processing, and decision making for the robot. The team shall utilize ROS as a tool to help implement AI work loads and to control the robot. As the team approaches the detailed design phase, they shall decide which Jeston single board computer will be used. This decision will depend on the computers ability to process the robots AI loads fast enough to meet specification 3. ROS has the capability to run both C++ and Python programs, so the team will consider salvaging programs from the previous team’s robot. 
+
+
+#### Cameras
+In order to meet specifications 1, 5, 6, and 8 the robot will need to be able to visually perceive its environment so it can identify objects and plan paths to those objects. The team shall utilize two cameras; one that will be mounted on the robot’s frame, and one that will be mounted on the UAV. Both cameras will need to be able to detect color, as the previously listed specifications will require the robot and UAV to identify areas like the lunar landing zone and the antenna LEDs based on their colors. Thus both cameras shall, at minimum, be RGB cameras [11]. 
+
+
+The robot mounted camera will need to detect more than just color. The robot’s ability to see and identify objects only meets part of specifications 1, 5, 6, and 8. The robot will need to have the ability to know where those objects are in physical space. This can be done using a software process called 3D reconstruction, where three dimension data can be created from a two dimensional image [12], however, there are cameras that can provide this information. These are called RGBD cameras. RGBD cameras are color detecting cameras that have the means of detecting depth. Stereo cameras (cameras with more than one vision sensor) and cameras with time of flight style sensors are the most common [13]. This information will be necessary for determining how the robot will navigate to objects like the Astro-Ducks. 
+
+
+The robot mounted camera shall be a RGBD camera that can be used to detect objects and provide information about their locations. The UAV camera will at minimum be a RGB camera that will be used to identify LED and area colors. The team shall pick a UAV mounted camera that will help the UAV comply with specification 2. As the team approaches the detailed design phase, the team will further consider the role of the UAV mounted camera. Some cameras have built in tools for processing image data for tasks like object detection. The team shall consider whether or not the drone mounted camera will take a direct role in processing the image data that it will collect or if sending the unprocessed data to the Jeston computer will be more efficient. 
+
+#### General Sensors
+
+In order to complete specifications 1, 3, 4, 5, 6, and 7 the robot will need an array of different sensors that will allow the robot to perceive its environment. The robot shall know its position, its orientation, and have an effective method of tracking its location on the game board. The robot shall also have a means of starting autonomously as defined in specification 1, but also have an auxiliary start switch in case the robot fails to start autonomously.  
+
+
+##### Starting the Robot
+The robot shall have two switches that will be accessible from the robot's chassis; the power switch and the start switch. The power switch will provide power to the robot’s components. The start switch will send a signal to the robot’s computer to begin operating. Specification 7 requires that the robot begin operation without human intervention, however, the inclusion of a manual start switch will allow the robot to begin operation in the event it fails to start autonomously. At the beginning of the competition, the robot and drone shall start automatically when the arena’s white “Start LED” bar illuminates as defined in specification 7. This can be done by using an photoresistor to detect when the LED turns on. This is explained in more detail in a later section. 
+
+##### Navigation Sensors
+The robot will use multiple sensors in order to determine its exact location on the game board. These sensors will also be used to pinpoint the robot on a virtual SLAM map and be used to improve that map. The concept of a SLAM map will be discussed in a later section. A common technique that the team shall utilize will be sensor fusion. This technique will allow the robot to combine the data from different types of sensors in order to create a more accurate representation of the robot's location. A common sensor fusion combination includes the use of LiDAR and IMU sensors which the team plans to utilize. 
+
+LiDAR, or Light Detection and Ranging, sensors use laser pulses to measure distance. They can be used for detecting obstacles, and be used to create virtual maps of the robots surroundings. Their ability to gather high volumes of accurate data in a short time frame makes these sensors a good option. They are also well known for their ability to create three dimensional maps, which will be integral for our navigational strategy as defined in its own subsystem [14] [15]. 
+
+IMUs, or Inertial Measurement Units, are devices that contain an array of sensors like accelerometers, gyroscopes, and potentially magnetometers [16]. These devices are able to track changes in velocity and rotational orientation. These measurements allow the robot to know its exact orientation at a given time. The velocity data can also be integrated over short periods in order to find the robots position data [17]. 
+
+Using these two sensor types together will allow the robot to know its exact position and orientation on the game board. The robot shall use one IMU for position and orientation. As the team continues into the detailed design phase, they shall consider how to implement the LiDAR sensor(s). LiDAR sensors come in various configurations and the team shall consider which configuration is the most cost effective while being able to provide all of the needed information for the robot’s successful operation. 
+
+
+## Object Detection Subsystem
 The drone shall act as an overhead observer while the robot acts as the main ground unit. The drone’s job is to locate and keep track of the robot while navigating it throughout the course.  
 
 By doing this the drone and robot shall do the following: 
@@ -91,7 +160,7 @@ By doing this the drone and robot shall do the following:
 5. The drone shall determine the color of the antennas’ LEDs 
 6. The drone and robot shall automatically starting using the LED bar on the competition board 
 
-##### *Creating a SLAM Map:*
+#### *Creating a SLAM Map:*
 To achieve reliable localization and mapping within the strict three-minute match limit, the drone shall utilize a geometry-based SLAM initialization approach using the specification given by the competition ruleset. According to the official ruleset, the field consist of a rectangular 4’ by 8’ plywood base surrounded by 1” by 8” by 8’ border walls. This playing surface also includes a 2’ diameter crater with an 8” flat area near the center of the arena which provides a distinct landmark for visual recognition. These fixed dimensions enable the drone to initialize SLAM instantaneously using a pre-defined arena model. Thus, eliminating the need for extended exploration that would take up more time than necessary.  Below are the steps for which this quick and efficient SLAM map is created within the first 20 seconds of the run. 
 
 1. Pre-Run Setup
@@ -111,7 +180,7 @@ To achieve reliable localization and mapping within the strict three-minute matc
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/SLAM_Map_FLowchart.png)
 
-##### *Locating and Navigating the Robot:*
+#### *Locating and Navigating the Robot:*
 After the initial SLAM map is generated by the drone, the robot shall perform autonomous localization and navigation within that map while identifying objects inside the competition arena. Objects such as the Astro-Ducks and antennas shall be identified using vision-based object detection algorithms. Below are the steps using algorithms for the robot to locate itself and start making its way through the course.
 
 1. Initialization and Localization
@@ -122,7 +191,7 @@ After the initial SLAM map is generated by the drone, the robot shall perform au
   
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Robot_Localization_Navigation_Flowachart.png)
 
-##### *Locating Astro-Ducks and Antennas:*
+#### *Locating Astro-Ducks and Antennas:*
 To efficiently locate the Astro-Ducks and antennas, a dual-layer detection algorithm shall be used that shall combine the drone’s aerial scanning with the robot’s ground level conformation. Together the drone and robot shall maintain the shared SLAM map that is continuously evolving.
 
 1. Drone-Based Aerial Scanning
@@ -133,7 +202,7 @@ To efficiently locate the Astro-Ducks and antennas, a dual-layer detection algor
   
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Locating_AstroDucks_and_Antennas.png)
 
-##### *Identifying the Antenna's Task:*
+#### *Identifying the Antenna's Task:*
 Each of the four antennas shall have unique task to power the LED associated with them. Antenna #1 shall be located in Area #2 and shall have a button task. Antenna #2 shall be located in Area #3 and shall have a crank task. Antenna #3 shall be located in Area #4 and shall have a pressure plate task. Antenna #4 shall be located in Area #1 and shall have a keypad task. Due to the fixed locations of the antennas, the drone and robot can use the SLAM map to automatically know which antenna is where in the arena. Thus, the robot shall know which task needs to be completed without having to visually identify the task itself.
 
 1. Realignment
@@ -152,18 +221,18 @@ Once the robot shall complete a task at the antenna and restore power, an LED in
   
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LED_Detection.png)
 
-##### *Detecting the Starting LED:*
+#### *Detecting the Starting LED:*
 At the beginning of the competition, the robot and drone shall start automatically when the arena’s white “Start LED” bar illuminates. To accomplish this, the robot shall be equipped with a photoresistor (LDR) mounted in a small black tube aimed at the “Start LED” region. The black tube shall act as a light baffle, blocking any unnecessary light from overhead fixtures. When the “Start LED” turns on, the brightness in the sensor’s field of view shall sharply increase causes the voltage of the system to change. Once the voltage shall exceed a set threshold, the software shall confirm that the “Start LED” has been detected. To prevent false triggers, the robot shall use a short debounce delay, requiring the signal to stay above the set threshold for a couple hundred milliseconds before starting.
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Detecting_Starting_LED.png)
 
 
 
-### Communications Subsystem
+## Communications Subsystem
 This subsystem deals with transferring information between the UAV, the Robot, and the Earth. We find it’s best to deal with communication between the UAV and robot to be done mostly through Wifi, which the drone will have and we will be able to connect to with an adapter attached to the JetSon Nano, where the robot will connect to the UAV.  This will allow the robot to send commands for where to go and the UAV to send a stream of data for the camera sensor. The UAV has to transmit data to the earth about the colors of certain satellites, and this needs to be done with infrared LEDs. To ensure that we are able to use the LEDs how we want to on the UAV, we will put in a small microcontroller with access to low power bluetooth that is connected to IR LEDs.  This will mean that the Jetson Nano will also need bluetooth capabilities. In summary, the Robot is connected to the UAV through wifi (for control and data) and bluetooth (to send IR commands), and the UAV will have IR LEDs to send data to the earth.
 
 
-### Autonomous Navigation Subsystem
+## Autonomous Navigation Subsystem
 According to IEEE SECON guidelines, our team will create a fully autonomous ground robot that can accurately navigate the board and complete given tasks. This will be done without any collisions with obstacles on the board. Our team will use Robot Operating System 2 Navigation Stack (ROS 2 Nav2) in order for our ground robot to autonomously navigate. ROS 2 is a system that allows the robot to move from point A to point B in a space. The usage of Localization and Mapping helps the robot understand its position while creating a real-time map of the environment within the space and moving without hitting obstacles. 
 
 1. Transform Frames and Spatial Coordination:
@@ -176,9 +245,9 @@ According to IEEE SECON guidelines, our team will create a fully autonomous grou
     - Nav2 will use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This is done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This is sent via linear and angular velocities of the robot actuators (convert energy into motion).
 
 
-### Power Subsystem
+## Power Subsystem
 
-##### *Purpose and Functions:*
+#### *Purpose and Functions:*
 The Power Subsystem stores, switches, conditions, distributes, and monitors electrical energy for the robot. It: 
   - Receives energy from the main battery pack.
   - Implements a hard Emergency Stop (E-Stop) and a soft Start/Stop control path.
@@ -186,14 +255,14 @@ The Power Subsystem stores, switches, conditions, distributes, and monitors elec
   - Generates regulated rails for compute and auxiliaries (Jetson/global controller, sensors, servos, actuators).
   - Monitors voltage, current, temperature, and faults; reports power-health to the Global Controller; enforces safe shutdown.
 
-##### *Operating Modes:*
+#### *Operating Modes:*
 1. Off – No rails energized; only charger/measurement (if fitted) alive.
 2. E-Stop – Mechanical/electrical isolation of all outbound power; stored energy safely discharged to below safe levels.
 3. Pre-Charge/Arming – Controller rail up; buses checked (OV/UV/OC/short) before enabling high-power bus.
 4. Run – All required rails enabled, with continuous communications and protections.
 5. Fault – Any latched fault disables affected rail(s); posts fault code to controller; requires operator reset. 
 
-##### *Power Architecture:*
+#### *Power Architecture:*
   - Source: Battery pack (TBD exact capacity)
   - High-Power Bus (VBUS_HI): VBAT through main fuse, E-Stop, and Start/Stop switch to H-bridges.
   - Regulated Rails:
@@ -204,14 +273,14 @@ The Power Subsystem stores, switches, conditions, distributes, and monitors elec
     - Step-Down Stages: buck converters from VBAT to rails above.
     - Return: Single-point star ground near battery negative; high-current returns separated from signal grounds.
 
-##### *Interfaces:*
-###### Power Interfaces
+#### *Interfaces:*
+##### Power Interfaces
   - BAT_IN – Power; input; VBAT. Connector: SB50/XT60 (TBD).
   - VBUS_HI_OUT – Power; output to H-bridges. Max continuous current TBD (size for drivetrain peak + 30% headroom).
   - 5V_SYS_OUT – Power; output to Jetson & Global Controller; 5 V regulated, ripple <50 mVp-p @ 1 A; transient load step 2 A/µs compliant.
   - 5V_AUX_OUT / 12V_AUX_OUT / SERVO_V_OUT – Power; outputs; currents per budget.
 
-###### Control
+##### Control
   - EN_HI_BUS – Logic; input from Global Controller; enables high-power contactor/FET (active-high, 3.3/5 V tolerant).
   - PG_5V_SYS / PG_SERVO / PG_HI_BUS – Logic; outputs; power-good for each rail (open-drain, active-low).
   - ESTOP_CHAIN – Safety loop; series circuit through mushroom E-Stop; opens to force hard disconnect.
@@ -219,14 +288,14 @@ The Power Subsystem stores, switches, conditions, distributes, and monitors elec
     - Communication topics: VBAT, rail voltages, rail currents, temperatures, fault codes, energy used (coulomb count).
     - Commands: enable/disable rails, clear faults, set soft-start/limits.
 
-##### *Power Budget:*
+#### *Power Budget:*
   - Drivetrain (via H-bridges): TBD per motor.
   - Jetson Nano: 5–20 W typical; short peaks to ~25 W depending on peripherals and mode.
   - Sensors: 1–5 W.
   - Servos/actuators: highly variable, TBD.
 
 
-##### *Protections & Safety:*
+#### *Protections & Safety:*
   - Input fuse sized to protect wiring from fault.
   - Reverse-polarity protection at BAT_IN(Diode).
   - E-Stop performs isolation of VBUS_HI and disables all regulators (except optional always-on monitor) within ≤50 ms.
@@ -235,17 +304,17 @@ The Power Subsystem stores, switches, conditions, distributes, and monitors elec
   - Brown-out handling: on VBAT < threshold, assert PG low, signal controller, and perform staged shutdown (compute → servos → drivetrain).
   - EMC: input LC filter, layout segregation, TVS on external connectors.
 
-##### *Environmental & Mechanical:*
+#### *Environmental & Mechanical:*
   - Operating temp: TBD (target -10 °C to +50 °C); reduce the power currents at elevated temps.
   - Connectors; rails labeled; color-coded wiring; serviceable fuses.
 
-##### *Verification & Test:*
+#### *Verification & Test:*
   - Bench bring-up with programmable load: validate regulation, ripple, efficiency across load/temperature.
   - Fault injection (shorts/overloads) to confirm OC trip and recovery.
   - E-Stop timing test (scope PG lines vs. supply collapse).
   - EMI check (conducted ripple on VBAT; sensor bus integrity during motor switching).
 
-##### *Shall Statements:*
+#### *Shall Statements:*
 1. The subsystem shall accept a battery input in the range TBD (e.g., 10–25 V) and provide isolation of high-power outputs when E-Stop is activated.
 2. The subsystem shall provide a 5 V_SYS rail capable of ≥5 A continuous.
 3. The subsystem shall provide a SERVO_V rail (voltage TBD per servo spec) rated for ≥10 A peak with independent over-current limiting and brown-out isolation from 5 V_SYS.
@@ -258,11 +327,29 @@ The Power Subsystem stores, switches, conditions, distributes, and monitors elec
 10. The subsystem shall meet wire gauge and connector ratings for the specified continuous and peak currents with ≥20% thermal margin.
 11. The subsystem shall be serviceable: fuses accessible, connectors  and all rails clearly labeled.
 
-##### *Open Items / To-Be-Determined:*
+#### *Open Items / To-Be-Determined:*
   - Final battery, voltage, and capacity.
   - Exact Jetson Nano SKU and max load (sets 5 V_SYS rating).
   - Servo and actuator quantity and type, TBD mechanical application.
-  - Connector part numbers; fuse ratings; wire gauges; thermal solution. 
+  - Connector part numbers; fuse ratings; wire gauges; thermal solution.
+
+Block Diagram for Power Subsystem: 
+
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Power_and_Drivetrain__Hardware_Block_Diagram.png)
+
+
+## Low-Level Controller (LLC) Subsystem
+The Low-Level Controller (LLC) subsystem executes motion control instructions from the Global Controller and directly manages the electrical components that correspond with the ground robot’s movement. By managing the local controls, the LLC reduces the computational load on the global subsystem and enables the robot’s movement to have a more involved feedback system. The LLC shall receive signals from the power subsystem to operate all circuitry and connections utilized in the system. The power subsystem will also house the emergency stop (E-stop) feature of the ground robot, as required by competition safety regulations.  
+
+Using the information received from the Global Controller and Power subsystems, the LLC shall process different inputs, translate instructions, and calculate appropriate movement commands via an Arduino. Then the microcontroller shall direct the motion of the actuators. A sensor will continuously track real-time performance and return feedback to the controller. The feedback will help mitigate any deviations to ensure efficient and smooth movement.  
+
+The LLC interfaces very closely with the mechanical engineering team. Much of the design’s specifications will depend on the drivetrain, torque, and mechanical layout. The continued coordination between the electrical and mechanical engineering teams will determine distribution, placements, connector types, ultimate electrical components, and safety protocol necessary for a successful UAV-robot design. 
+
+### LLC Connection Block Diagrams: 
+Though each subsystem is a complex and vital part of the UAV-robot integrated system, Diagram 1 only shows each subsystem’s impact on the LLC directly. Diagram 2 focuses on the internal relationships within the LLC subsystem itself. 
+
+
 
 
 ## Ethical, Professional, and Standards Considerations
