@@ -7,7 +7,9 @@ The IEEE (Institute of Electrical and Electronics Engineers) hosts an annual con
 
 
 ## Restating the Fully Formulated Problem
+The IEEE SECON 2026 competition rules have been deconstructed into the specifications and constraints as listed in the next section. In summary, The team shall construct a robot and UAV that will work together in order to complete a set of tasks in order to earn points. The robot shall be able to collect six Astro-Ducks that will be placed semi-randomly on the game board and dispense them into a designated zone. The robot shall be able to restore power to four antenna towers by completing one of four tasks located on each antenna tower. The UAV must be able to identify the color of LEDs located on the top of the antenna towers and communicate that information to earth. These tasks shall be completed in under 3 minutes. The team shall lose points in the event of the robot or UAV unintentionally colliding with the game board and for every incorrectly Identified LED [game rules].  
 
+Design time is a limiting factor as the competition will take place in March of 2026. The team shall construct a strategy that will allow the team to test the robot and UAV as the team works to assemble and implement these components. The rule set incentivizes using the UAV for antenna tower LED identification and communication; thus, the team shall implement one. The team shall prioritize the robot’s ability to identify and complete the listed task. Once the robot can complete these tasks reliably, then the team shall focus on tuning the robot to be able to complete these tasks quickly [game rules]. 
 
 ## Comparative Analysis of Potential Solutions
 
@@ -94,6 +96,8 @@ LiDAR, or Light Detection and Ranging, sensors use laser pulses to measure dista
 IMUs, or Inertial Measurement Units, are devices that contain an array of sensors like accelerometers, gyroscopes, and potentially magnetometers [16]. These devices are able to track changes in velocity and rotational orientation. These measurements shall allow the robot to know its exact orientation at a given time. The velocity data can also be integrated over short periods in order to find the robots position data [17]. 
 
 Using these two sensor types together shall allow the robot to know its exact position and orientation on the game board. The robot shall use one IMU for position and orientation. As the team continues into the detailed design phase, they shall consider how to implement the LiDAR sensor(s). LiDAR sensors come in various configurations and the team shall consider which configuration is the most cost effective while being able to provide all of the needed information for the robot’s successful operation. 
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Global%20Controller%20Block%20Diagram.png)
 
 
 ## Object Detection Subsystem
@@ -188,18 +192,33 @@ At the beginning of the competition, the robot and drone shall start automatical
 ## Communications Subsystem
 This subsystem is responsible for transferring information between the UAV, the ground robot, and the Earth. Communication between the UAV and the robot shall primarily be established through Wi-Fi. The UAV shall serve as the access point, while the robot shall connect using an adapter linked to the Jetson Nano. This setup allows the robot to send navigational commands to the UAV and enables the UAV to transmit a continuous stream of sensor and camera data back to the robot. For communication with Earth, the UAV shall transmit data regarding the colors of specific satellites using infrared (IR) LEDs. To achieve this, the UAV shall incorporate a small microcontroller equipped with low-power Bluetooth capability to control the IR LEDs. Consequently, the Jetson Nano shall also include Bluetooth functionality to interface with this subsystem. In summary, the robot and UAV shall communicate through Wi-Fi for control and data exchange, while Bluetooth is utilized for sending IR commands. The UAV then uses IR LEDs to transmit the necessary information to Earth.
 
+There are a few possible methods of wireless data transfer: 
+
+  - Wifi is the fastest method available to us, and also will likely already be used by the drone that we buy. 
+  - IR will be used by the UAV to transmit the satellite data to Earth, but this method is also more limiting, as not as much data can be transferred, and it requires lining up LEDs and photoresistors. 
+  - Radio (FM/AM) is technically able to be used, but we should probably avoid it for the best. 
+  - Bluetooth is like wifi, but you can send less data, and use less power 
+
+Based on these options, the team shall use wifi to transmit camera data and flight control, and IR on the UAV to transmit data to Earth. Because of the team not knowing which drone shall be bought and whether the team can connect IR LEDs to the microcontroller and have the same library, we think that it’s best to have a second small microcontroller used exclusively to send IR data to the earth. Because of the low range, small use, and high efficiency, we think that Bluetooth will be best for this case. 
+
+In summary, the robot will have Wifi and Bluetooth capabilities to send flight control data and IR control data, and the UAV will have Wifi to send data and receive orders, and a microcontroller on the UAV will have Bluetooth and IR LEDs to transmit satellite data. 
+
 
 ## Autonomous Navigation Subsystem
 According to IEEE SECON guidelines, our team shall create a fully autonomous ground robot that can accurately navigate the board and complete given tasks. This shall be done without any collisions with obstacles on the board. Our team shall use Robot Operating System 2 Navigation Stack (ROS 2 Nav2) in order for our ground robot to autonomously navigate. ROS 2 is a system that allows the robot to move from point A to point B in a space. The usage of Localization and Mapping helps the robot understand its position while creating a real-time map of the environment within the space and moving without hitting obstacles. 
 
-1. Transform Frames and Spatial Coordination:
-    - ROS 2 uses Transform Frames (called TF2 - the transform library) in order to develop an understanding of the robot's constituents and track coordinate frames over time. These frames shall be broken down into the map, odom, base_link and LiDAR sensor. A Transformation Matrix shall then be used to convert the position of the Map reference frame to the Odometer reference frame, base_link and then the LiDAR reference frame. During this process, timestamping shall be used to ensure synchronization of the data and tell the navigation the time that the input is taken. 
+### *Transform Frames and Spatial Coordination:*
 
-2. Localization and Mapping:
-    - ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This shall keep an updated transform of the Map to the Odom. Local methods (Odometry or IMU) shall be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This shall provide an accurate evaluation of motion. The team shall be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board).
+ROS 2 uses Transform Frames (called TF2 - the transform library) in order to develop an understanding of the robot's constituents and track coordinate frames over time. These frames shall be broken down into the map, odom, base_link and LiDAR sensor. A Transformation Matrix shall then be used to convert the position of the Map reference frame to the Odometer reference frame, base_link and then the LiDAR reference frame. During this process, timestamping shall be used to ensure synchronization of the data and tell the navigation the time that the input is taken. 
+
+### * Localization and Mapping:
+ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This shall keep an updated transform of the Map to the Odom. Local methods (Odometry or IMU) shall be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This shall provide an accurate evaluation of motion. The team shall be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board).
 
 3. Perception, Costmaps, Path Planning and Motion Control:
     - Nav2 shall use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This shall be done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This shall be sent via linear and angular velocities of the robot actuators (convert energy into motion).
+  
+
+
 
 
 ## Power Subsystem
