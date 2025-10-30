@@ -349,7 +349,24 @@ The LLC interfaces very closely with the mechanical engineering team. Much of th
 ### LLC Connection Block Diagrams: 
 Though each subsystem is a complex and vital part of the UAV-robot integrated system, Diagram 1 only shows each subsystem’s impact on the LLC directly. Diagram 2 focuses on the internal relationships within the LLC subsystem itself. 
 
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LLC_Block_Diagram_1.png)
 
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LLC_Block_Diagram_2.png)
+
+### Main Sections of the Specific LLC Subsystem:
+This subsection shall delve into the different components present with the LLC subsystem, as depicted in Diagram 2.  
+
+#### (1) Microcontroller: Arduino
+The microcontroller will act as a designated motion controller, or “second brain,” in the robot, directly controlling the motors and all related equipment of the ground robot. An Arduino will be used to receive and interpret commands from the Global Controller, apply any local algorithms, and generate corresponding pulse-width modulation signals. The implemented code shall consider several variables such as resistance, inductance, inertia, friction, voltage (from the power subsystem), and torque to properly account for the speed, direction, and required power output needed to complete the different tasks on varying terrain. For example, navigating flat surfaces of the arena will require different parameters than interacting with the crater. As more collaboration and coordination is achieved with the mechanical engineers, a final decision as to the specific Arduino model will be made. 
+
+#### (2) Actuators: Motors
+The actuators will be motors that convert electrical energy into the mechanical rotation that produces the physical mobility of the robot. In line with the ethical and environmental responsibility of professional engineers, Tennessee Tech’s SECON team will reuse the two Pololu Metal Gearmotors [18] used in the previous year’s design. Since this year’s robot will have four wheels, two more identical Pololu DC motors will be acquired. Each reused motor will be tested to verify it is still within manufacturer specifications. 
+
+#### (3) Sensors: Encoders
+The sensors will be encoders mounted to each motor. The encoders will collect the real-time output and performance of the actuators so that adjustments can be made. The data collected will allow for the correction of discrepancies, such as unequal torque distribution causing drift or veering. In this way, the robot will act as a semi-self-correcting system that can successfully adapt to perform tasks within the three-minute time limit.  
+
+#### Verification and Adaptability
+The LLC shall be designed with an emphasis on modularity so that each component can be tested and independently changed if deemed necessary due to design efficiency or product failure. Early testing shall include verification of proper communication between the Global and Low-Level controllers, as well as the connections within the LLC itself. As collaborative efforts with the mechanical team progress, additional testing will ensure proper integration of the LLC’s electrical systems to its mechanical counterparts, such as the wheels and drivetrain components. 
 
 
 ## Ethical, Professional, and Standards Considerations
@@ -429,10 +446,66 @@ Revise the detailed timeline (Gantt chart) you created in the project proposal. 
 
 
 ## References
+[1] mjs513, “Another T3.5 Rover with a OpenMV Camera (Machine Vision),” Teensy Forum, Aug. 11, 2017. https://forum.pjrc.com/index.php?threads/another-t3-5-rover-with-a-openmv-camera-machine-vision.45741/ (accessed Oct. 29, 2025).
 
-All sources utilized in the conceptual design that are not considered common knowledge must be properly cited. Multiple references should be included.
+[2] R. Mitchell, “Best SBCs for AI Projects in 2024: Comprehensive Guide,” Electromaker.io, Mar. 27, 2024. https://www.electromaker.io/blog/article/the-ultimate-guide-to-single-board-computers-for-ai-applications?srsltid=AfmBOooR42sNiD1Ac8Vz5HhEcTHXqnfuTKQgxJdXuL6CxgFoQY8jOzXm (accessed Oct. 29, 2025).
+
+[3] Raspberry Pi Ltd, “Buy a Raspberry Pi AI HAT+ – Raspberry Pi,” Raspberry Pi, 2024. https://www.raspberrypi.com/products/ai-hat/
+
+[4] G. Velrajan, “Nvidia Jetson Nano vs Raspberry Pi - Which one is better for your project?,” www.socketxp.com, Jan. 30, 2025. https://www.socketxp.com/iot/nvidia-jetson-nano-vs-raspberry-pi-which-one-is-better-for-your-project/ 
+
+[5] NVIDIA, “NVIDIA jetson nano,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-nano/product-development/ 
+
+[6] NVIDIA, “NVIDIA Jetson TX2: High Performance AI at the Edge,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/
+
+[7] NVIDIA, “NVIDIA Jetson AGX Orin,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/ 
+
+[8] “F24_Team1_SECON/Reports/DetailedDesignNavigationAndMasterControl.md at main · TnTech-ECE/F24_Team1_SECON,” GitHub, 2025. https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/DetailedDesignNavigationAndMasterControl.md (accessed Oct. 29, 2025).
+
+[9] TnTech-ECE, “F24_Team1_SECON/Reports/Detailed-Design-Camera.md at main · TnTech-ECE/F24_Team1_SECON,” GitHub, 2025. https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/Detailed-Design-Camera.md 
+
+[10] NVIDIA, “Isaac ROS,” NVIDIA Developer. https://developer.nvidia.com/isaac/ros 
+
+[11] L. Fang, “RGB cameras: Definition, components, and integration,” TechNexion, Oct. 11, 2024. https://www.technexion.com/resources/rgb-cameras/ 
+
+[12] A. Rehman, “Beyond the Surface: Advanced 3D Mesh Generation from 2D Images in Python,” Medium, Feb. 16, 2024. https://medium.com/red-buffer/beyond-the-surface-advanced-3d-mesh-generation-from-2d-images-in-python-0de6dd3944ac (accessed Oct. 29, 2025). 
+
+[13] P. Kumar, “What are RGBD cameras? Why RGBD cameras are preferred in some embedded vision applications? – e-con Systems,” e-con Systems, May 19, 2022. https://www.e-consystems.com/blog/camera/technology/what-are-rgbd-cameras-why-rgbd-cameras-are-preferred-in-some-embedded-vision-applications/ 
+
+[14] A. Szczepaniak, “Leo Rover Blog - How is LiDAR used in Robotic Navigation? Pros and Cons,” www.leorover.tech, Jan. 16, 2023. https://www.leorover.tech/post/how-is-lidar-used-in-robotic-navigation-pros-and-cons 
+
+[15] “How Do Robots Find Their Way? A Deep Dive into Navigation Sensors,” TechNexion, Aug. 08, 2025. https://www.technexion.com/resources/how-do-robots-find-their-way-a-deep-dive-into-navigation-sensors/ 
+
+[16] A. Ayodele, “Types of Sensors in Robotics,” www.wevolver.com, Jan. 16, 2023. https://www.wevolver.com/article/sensors-in-robotics 
+
+[17] A. Szczepaniak, “Leo Rover Blog - Top common ways to localize a mobile robot,” Leorover.tech, 2023. https://www.leorover.tech/post/top-common-ways-to-localize-a-mobile-robot 
+
+[18] “Pololu - 6V High-Power (HP) 25D mm Gearmotors,” Pololu.com, 2025. https://www.pololu.com/category/183/6v-high-power-hp-25d-mm-gearmotors (accessed Oct. 30, 2025). 
+
+[19] Texas Instruments. (2023). Understanding Boost Power Stages in Switch Mode Power Supplies (SLVA372B). 
+
+[20] Texas Instruments. (2022). Handling Regenerative Energy in Motor Drive Systems. 
+
+[21] Texas Instruments. (2023). Power Design Seminar SEM2300 Notes. 
+
+[22] Analog Devices. (2020). Buck, Boost, and Buck-Boost Converter Fundamentals. 
+
+[23] Microchip Technology. (2011). AN1149 – Battery Boost Converter Design Guide. 
+
+[24] Infineon Technologies. (2020). AN 2020-06: Energy Recovery in Motor Control Systems. 
+
+[25] International Organization for Standardization (ISO). (2015). ISO 13849-1: Safety of Machinery – Safety-related Parts of Control Systems. 
+
+[26] International Electrotechnical Commission (IEC). (2005). IEC 60950-1: Information Technology Equipment – Safety – Part 1: General Requirements. 
+
 
 
 ## Statement of Contributions
 
-Each team member is required to make a meaningful contribution to the project proposal. In this section, each team member is required to document their individual contributions to the report. One team member may not record another member's contributions on their behalf. By submitting, the team certifies that each member's statement of contributions is accurate.
+John Land – Resources section, Power Atomic Subsystem Specifications 
+
+Jane Vasar – Global Controller High Level Solution and Subsystem. 
+
+Trevor Snyder - Object Detection Subsystem
+
+
