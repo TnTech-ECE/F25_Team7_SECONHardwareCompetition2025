@@ -30,10 +30,6 @@ Design time is a limiting factor as the competition will take place in March of 
 
 ## Global Control Subsystem
 
-Customer: Dr. Johnson
-
-Designer: Jane Vassar
-
 The Global control system can be broken down into two major components: The Global controller itself and the sensors that it relies on in order to collect data the robot needs to make decisions. The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. The robot shall use an NVIDIA Jetson single board computer for this task. These single board computers were designed to efficiently run AI loads which will be essential for the robot’s other subsystems. The robot shall also use a combination of sensors that will allow the robot to perceive its location on the game board and be able to identify objects on the board. The robot shall utilize a camera that can perceive both color and depth in order to identify the objects and obstacles that are located on the game board. The UAV will also be equipped with a camera that will allow it to identify colors, and will allow the UAV to assist the robot in collecting visual data that can be used for creating a virtual map of the game board. Using the technique of sensor fusion, LiDAR sensors and an IMU will be used to help the robot to pinpoint its location on the game board. The robot shall also utilize a photoresistor which will be used to start the robot autonomously. The robot will also have a set of switches that will act as the power and start button respectively. 
 
 The Jetson computer will be the device that makes all of the control decisions for the robot. The Jetson computer will host the processes for object detection and navigation and based on the data the Jetson receives and computes, it will make decisions and send the necessary commands to the low-level controller that will coordinate the robot’s motion and actuators. Below is a set of block diagrams that illustrate the decisions that the global control computer will make during its operation. 
@@ -117,11 +113,6 @@ Using these two sensor types together shall allow the robot to know its exact po
 
 
 ## Object Detection Subsystem
-
-Customer: Dr. Johnson
-
-Designer: Trevor Snyder
-
 
 The drone shall act as an overhead observer while the robot acts as the main ground unit. The drone’s job is to locate and keep track of the robot while navigating it throughout the course.  
 
