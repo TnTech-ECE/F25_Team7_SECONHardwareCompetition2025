@@ -254,18 +254,18 @@ According to IEEE SECON guidelines, our team shall create a fully autonomous gro
 
 ### *Transform Frames and Spatial Coordination:*
 
-ROS 2 uses Transform Frames (called TF2 - the transform library) in order to develop an understanding of the robot's constituents and track coordinate frames over time. These frames shall be broken down into the map, odom, base_link and LiDAR sensor. A Transformation Matrix shall then be used to convert the position of the Map reference frame to the Odometer reference frame, base_link and then the LiDAR reference frame. During this process, timestamping shall be used to ensure synchronization of the data and tell the navigation the time that the input is taken. 
+ROS 2 uses Transform Frames (called TF2 - the transform library) in order to develop an understanding of the robot's constituents and track coordinate frames over time. These frames shall be broken down into the map, odom, base_link and LiDAR sensor. A Transformation Matrix shall then be used to convert the position of the Map reference frame to the Odometer reference frame, base_link and then the LiDAR reference frame. During this process, timestamping shall be used to ensure synchronization of the data and tell the navigation the time that the input is taken [40][41][42]. 
 
 ### *Localization and Mapping:*
-ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This shall keep an updated transform of the Map to the Odom. Local methods (Odometry or IMU) shall be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This shall provide an accurate evaluation of motion. The team shall be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board).
+ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This shall keep an updated transform of the Map to the Odom. Local methods (Odometry or IMU) shall be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This shall provide an accurate evaluation of motion. The team shall be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board) [40][41][42].
 
 ### *Perception, Costmaps, Path Planning and Motion Control:*
-Nav2 shall use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This shall be done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This shall be sent via linear and angular velocities of the robot actuators (convert energy into motion).
+Nav2 shall use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This shall be done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This shall be sent via linear and angular velocities of the robot actuators (convert energy into motion) [40][41][42].
   
 ### *Comparative Analysis of Existing Solutions:*
-  - There are numerous solutions that can be used for autonomous navigation such as: Mobile Robot Programming Toolkit (MRPT) and Monocular Camera Navigation System besides ROS 2 Nav2. MRPT contains open source, cross-platform libraries, and applications that shall be used to provide mapping, localization, motion planning, SLAM, and obstacle avoidance. MPRT is a great option to use due to its flexibility to implement the systems the team needs. However, because it lacks a fully integrated navigation framework, more programming shall be required to make connections within the Navigation stack. This includes designing the communication, sensor interface, and behavior logic, etc.
-  - Another option to use is the Monocular Camera Navigation System. This system uses a singular camera and deep learning to identify obstacles and objects with increased accuracy in complex environments. This approach uses a navigation algorithm alongside a PID controller to navigate dynamic obstacles and terrain. Unfortunately, due to its high complexity, more computation power and complex calibrations are required to achieve the goal of autonomous navigation.
-  - Though ROS 2 Nav2 has a steep learning curve and issues debugging due to the complexity of the system, its open-source nature and strong documentation provide a reliable resource to develop a strong knowledge framework. Furthermore, ROS 2’s modular architecture enhances the reliability and performance of real-time communication and quality-of-service.
+  - There are numerous solutions that can be used for autonomous navigation such as: Mobile Robot Programming Toolkit (MRPT) and Monocular Camera Navigation System besides ROS 2 Nav2. MRPT contains open source, cross-platform libraries, and applications that shall be used to provide mapping, localization, motion planning, SLAM, and obstacle avoidance. MPRT is a great option to use due to its flexibility to implement the systems the team needs. However, because it lacks a fully integrated navigation framework, more programming shall be required to make connections within the Navigation stack. This includes designing the communication, sensor interface, and behavior logic, etc [44].
+  - Another option to use is the Monocular Camera Navigation System. This system uses a singular camera and deep learning to identify obstacles and objects with increased accuracy in complex environments. This approach uses a navigation algorithm alongside a PID controller to navigate dynamic obstacles and terrain. Unfortunately, due to its high complexity, more computation power and complex calibrations are required to achieve the goal of autonomous navigation [43].
+  - Though ROS 2 Nav2 has a steep learning curve and issues debugging due to the complexity of the system, its open-source nature and strong documentation provide a reliable resource to develop a strong knowledge framework. Furthermore, ROS 2’s modular architecture enhances the reliability and performance of real-time communication and quality-of-service [45].
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/NavPic1.png)
 
@@ -416,6 +416,13 @@ The LLC interfaces very closely with the mechanical engineering team. Much of th
 
 #### *Comparative Analysis of Solutions:*
 
+  - The Arduino Mega 2560 microcontroller shall provide sufficient I/O and processing capacity. If additional connections or demand are required after receiving mechanical input, the Teensy 4.1 will be adopted for higher performance. 
+
+  - Local Voltage regulators provide steady output voltage despite voltage or current variations. The DROK DC Buck is a possible component if the previous year’sTP5565201 is found insufficient for the required tasks.  
+
+  - Motor Drivers interface between a microcontroller and a motor to convert low power command signals into the high-power demand necessary to power motors. The Polulu Dual VNH5019 is a possible component choice for the design. 
+
+  - Bump Sensors are optional, as ideally the Navigation and Object Detection subsystems are intended to find the most optimal path, and, therefore, avoid collisions.  However, to ensure quick error correction and provide a last-resort detection option, a possible bump sensor may be added for collision detection and calibration. The Omron SS-5GL is a possible low-cost, durable, and lightweight option.  
 
 
 
@@ -592,6 +599,18 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 
 [39] IEEE Code of Ethics, IEEE Policies Section 7 – Professional Ethics, IEEE, 2024. Available: https://www.ieee.org/about/corporate/governance/p7-8.html 
 
+[40] Hummingbird, “ROS 2 Navigation - Part 1 (Basic Navigation Concepts),” YouTube, https://www.youtube.com/watch?v=bYTawHgVoRQ (accessed Oct. 30, 2025).  
+
+[41] ROS Navigation Stack Architecture in 4 Minutes || A to Z Basics. Youtube, 2020.  
+
+[42] Hummingbird, “ROS 2 Navigation - Part 2 (ROS 1 Vs ROS 2 Nav Design in detail),” YouTube, https://www.youtube.com/watch?v=q4l_-n4BrKA (accessed Oct. 30, 2025).  
+
+[43] Z. Machkour, D. Ortiz-Arroyo, and P. Durdevic, “Monocular based navigation system for autonomous ground robots using multiple deep learning models,” International Journal of Computational Intelligence Systems, vol. 16, no. 1, May 2023. doi:10.1007/s44196-023-00250-5  
+
+[44] J. L. B. Claraco, Development of Scientific Applications with the Mobile Robot Programming Toolkit, pp. 15–100, Oct. 2010.  
+
+[45] Milvus, “What are the advantages of using ROS (robot operating system) in MAS?,” Milvus, https://milvus.io/ai-quick-reference/what-are-the-advantages-of-using-ros-robot-operating-system-in-mas (accessed Oct. 30, 2025).  
+
 
 
 
@@ -605,8 +624,8 @@ Trevor Snyder - Object Detection Subsystem
 
 Angela Nde – Ethics, Low-Level Controller Subsystem 
 
-Aiden Mullins – Communications subsystem and operational flow chart 
+Aiden Mullins – Operational Flow Chart, Communications Subsystem
 
-Atra-Niese – Navigation Subsystem 
+Atra-Niese – Autonomous Navigation Subsystem
 
 
