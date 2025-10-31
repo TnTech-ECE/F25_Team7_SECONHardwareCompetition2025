@@ -16,7 +16,7 @@ Design time is a limiting factor as the competition will take place in March of 
 
 
 ### Hardware Block Diagram:
-
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Hardware%20Block%20Diagram.png)
 
 
 ### Operational Flow Chart:
@@ -35,6 +35,18 @@ Customer: Dr. Johnson
 Designer: Jane Vassar
 
 The Global control system can be broken down into two major components: The Global controller itself and the sensors that it relies on in order to collect data the robot needs to make decisions. The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. The robot shall use an NVIDIA Jetson single board computer for this task. These single board computers were designed to efficiently run AI loads which will be essential for the robot’s other subsystems. The robot shall also use a combination of sensors that will allow the robot to perceive its location on the game board and be able to identify objects on the board. The robot shall utilize a camera that can perceive both color and depth in order to identify the objects and obstacles that are located on the game board. The UAV will also be equipped with a camera that will allow it to identify colors, and will allow the UAV to assist the robot in collecting visual data that can be used for creating a virtual map of the game board. Using the technique of sensor fusion, LiDAR sensors and an IMU will be used to help the robot to pinpoint its location on the game board. The robot shall also utilize a photoresistor which will be used to start the robot autonomously. The robot will also have a set of switches that will act as the power and start button respectively. 
+
+The Jetson computer will be the device that makes all of the control decisions for the robot. The Jetson computer will host the processes for object detection and navigation and based on the data the Jetson receives and computes, it will make decisions and send the necessary commands to the low-level controller that will coordinate the robot’s motion and actuators. Below is a set of block diagrams that illustrate the decisions that the global control computer will make during its operation. 
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/GlobalControlImage1.png)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/GlobalControlImage2.png)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/GlobalControlImage3.png)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/GlobalControlImage4.png)
+
+
 
 ### *Specifications:*
 1. Both the robot and UAV shall be completely autonomous [Vehicle Spec 1]
@@ -97,7 +109,11 @@ IMUs, or Inertial Measurement Units, are devices that contain an array of sensor
 
 Using these two sensor types together shall allow the robot to know its exact position and orientation on the game board. The robot shall use one IMU for position and orientation. As the team continues into the detailed design phase, they shall consider how to implement the LiDAR sensor(s). LiDAR sensors come in various configurations and the team shall consider which configuration is the most cost effective while being able to provide all of the needed information for the robot’s successful operation. 
 
+#### Global Controller Block Diagram:
+
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Global%20Controller%20Block%20Diagram.png)
+
+
 
 
 ## Object Detection Subsystem
@@ -189,6 +205,33 @@ At the beginning of the competition, the robot and drone shall start automatical
 ### *Comparative Analysis of Potential Solutions:*
 
 
+ ##### For the SLAM map:
+
+  - The decision to implement a geometry-based SLAM initialization rather than a traditional exploration-based SLAM approach is driven by the strict time, accuracy, and autonomy constraints defined by the IEEE SoutheastCon 2026 Hardware Competition ruleset [27]. While the best way to create a SLAM map is to have a lawnmower plot, this solution would take too much of the three minute time frame. In order to still create a basic SLAM map and continuously add to it, the drone shall fly around the perimeter of the arena once then make a figure eight in the middle. The figure eight in the middle of the course is to ensure none of the field is missed due to the peripheral of the drone's camera not picking it up as it goes along the perimeter.
+
+
+##### For locating and navigating the drone:
+
+  - The combined use of pre-mapped SLAM data, LiDAR-assisted EKF localization, and a YOLOv5-nano vision model provides the best balance of speed, accuracy, and hardware efficiency for the SoutheasternCon 2026 autonomous arena challenge. Each element of the algorithm was selected to directly address the unique environmental and time constraints of the competition. While another solution to this is for the robot to "map while driving". Due to time constraints of the competition, the robot needs to have the map data as soon as possible. With the ready-to-use SLAM map created from the drone's intialization phase, the robot instantly has the map data before it even starts moving. In short, this design maximizes performance per watt, accuracy per frame, and time efficiency per match, making it the most competitive and technically sound solution for autonomous navigation in the SoutheasternCon 2026 environment.
+
+
+##### For locating the Astro-Ducks and antennas:
+
+  - The dual-layer detection algorithm, combining drone-based aerial scanning and robot-based close-range confirmation, was chosen because it offers a balanced trade-off between speed, accuracy, and redundancy for locating Astro-Ducks and antennas within the three-minute fully autonomous competition run. While having either the robot or drone solely locating the antennas is a solution, the division of task between the two is the most effecient for time and computaional workload. The drone performs a wide-area, low-detail scanning in the beginning of the match. The robot performs local, high-detail verification of the Astro-Ducks and antennas using refined classification. This cooperative algorithm ensures rapid and accurate object localization in a time critical competition.
+
+##### For identifying task of the antennas:
+
+  - By automatically knowing which antenna is where on the field and the assigned task with it, the team doesn't have to deal with any unnecessary complextiy when completing task. While the robot could visually identify each antenna's task using onboard cameras and sensors, this is unnecessary since the official ruleset gives the exact location of each antenna and the cardinal directing the base is facing. By having this data, the robot instantly knows where to face and how to align itself to complete the antenna's task. In short, the solution of not having to manually identify the specific antenna and task is the most time and workload efficient solution.
+
+##### For determining the color of the LED:
+
+  - The selected drone-based HSV color detection algorithm provides the most efficient, reliable, and competition-ready solution for identifying antenna LED colors under the IEEE SoutheastCon 2026 Hardware Competition constraints. While the robot could identify the LED using a color sensor or photodiode array, using the drone-based HSV algorithm eliminates the need of pointless complexity. With the chosen solution, the drone can simply hover over the LED and determine the color in a matter milliseconds with the worst case being one to two seconds.
+
+##### For detecting the starting LED: 
+
+  - The photoresistor-based trigger is the fastest, simplest, and most robust way to detect the Start LED. It ensures both the drone and robot begin their autonomous routines almost instantly, avoiding computational overhead or misdetections that camera-based solutions would introduce. As previously stated, using the robots camera is a potential solution. If the camera solution was used, the detection would happen through image differencing or frame-intensity thresholding. This option is rejected due to the consumption of computing, suffering of lighting variability, added frame-processing delay, and camera stabilization before starting. In summary, the photoresitor solution is the fastest and reliable method.
+
+
 
 
 ## Communications Subsystem
@@ -216,11 +259,15 @@ ROS 2 uses Transform Frames (called TF2 - the transform library) in order to dev
 ### *Localization and Mapping:*
 ROS 2 uses AMCL (Adaptive Monte Carlo Localization) and/or GPS to correct wheel slipping and adjust the odometer frame through Global Localization. This shall keep an updated transform of the Map to the Odom. Local methods (Odometry or IMU) shall be used to get a transformation from Odometry to base_link through wheel encoders or IMU. This shall provide an accurate evaluation of motion. The team shall be using a UAV to map the board in order to avoid simultaneous localization and mapping (a feature where the map is created as the robot moves along the board).
 
-3. Perception, Costmaps, Path Planning and Motion Control:
-    - Nav2 shall use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This shall be done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This shall be sent via linear and angular velocities of the robot actuators (convert energy into motion).
+### *Perception, Costmaps, Path Planning and Motion Control:*
+Nav2 shall use LiDAR sensors to create a neutral 2D map of the space with black representing obstacles, white representing free space and grey representing unknown objects. This shall be done through Global Costmaps (developing a path through the space over time) and Local Costmaps (short-term path planning around obstacles and motion adjustment). This shall be sent via linear and angular velocities of the robot actuators (convert energy into motion).
   
+### *Comparative Analysis of Existing Solutions:*
+  - There are numerous solutions that can be used for autonomous navigation such as: Mobile Robot Programming Toolkit (MRPT) and Monocular Camera Navigation System besides ROS 2 Nav2. MRPT contains open source, cross-platform libraries, and applications that shall be used to provide mapping, localization, motion planning, SLAM, and obstacle avoidance. MPRT is a great option to use due to its flexibility to implement the systems the team needs. However, because it lacks a fully integrated navigation framework, more programming shall be required to make connections within the Navigation stack. This includes designing the communication, sensor interface, and behavior logic, etc.
+  - Another option to use is the Monocular Camera Navigation System. This system uses a singular camera and deep learning to identify obstacles and objects with increased accuracy in complex environments. This approach uses a navigation algorithm alongside a PID controller to navigate dynamic obstacles and terrain. Unfortunately, due to its high complexity, more computation power and complex calibrations are required to achieve the goal of autonomous navigation.
+  - Though ROS 2 Nav2 has a steep learning curve and issues debugging due to the complexity of the system, its open-source nature and strong documentation provide a reliable resource to develop a strong knowledge framework. Furthermore, ROS 2’s modular architecture enhances the reliability and performance of real-time communication and quality-of-service.
 
-
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/NavPic1.png)
 
 
 ## Power Subsystem
@@ -311,7 +358,36 @@ The Power Subsystem shall store, switch, condition, distribute, and monitor elec
   - Servo and actuator quantity and type, TBD mechanical application.
   - Connector part numbers; fuse ratings; wire gauges; thermal solution.
 
-Block Diagram for Power Subsystem: 
+### Power Comparative Analysis
+The robot’s electronics (Jetson Nano, Arduino, sensors, and actuators) require regulated voltages while the drivetrain pulls high current from a variable battery source. The problem is to provide stable voltage rails across all load conditions while maintaining safety, efficiency, and system functionality. 
+
+#### Potential Solutions
+Solution 1: Feed robot directly from battery with buck converters. 
+  - The battery directly powers high-current loads (H-bridges) and supplies step-down converters for lower-voltage rails (5 V, 12 V).
+  - No voltage boosting; system voltage falls as the battery discharges. 
+
+Solution 2: Boost converter with regulated power bus. 
+  - A boost converter regulates the battery’s variable voltage (10–14 V) to a fixed higher system bus. 
+  - All subsystems (motors, controllers, sensors) are powered from this stable bus through buck converters.
+
+Solution 3: Bidirectional buck-boost converter. 
+  - A four-switch topology allows both boosting (when battery voltage is low) and bucking (during regenerative braking). 
+  - Enables controlled energy recovery and precise bus voltage control.
+
+#### Comparison
+Solution 1: 
+  - Simple and efficient but is prone to voltage drops at low battery levels, which can cause controller brownouts and reduce performance.
+
+Solution 2:
+  - Provides constant system voltage, which simplifies power regulation, maintaining reliable performance of functions. Drawbacks are the increased current draw from the battery at low voltages and reduced efficiency. 
+
+Solution 3: 
+  - Potential regenerative capability and solid power regulation, but requires control complexity and thermal management, making it expensive and difficult to implement within the time constraints.
+
+#### Leading Solution
+Solution 2: Boost converter with regulated power bus
+
+Provides the best trade-off between performance, reliability, cost, and ease of implementation. A boost converter ensures stable operation of the Jetson Nano and all downstream electronics even under battery drop, while still being simpler and cheaper than a fully bidirectional converter. With proper filtering, heat management, and implementation of an E-Stop, it achieves consistent power delivery with manageable risk. 
 
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Power_and_Drivetrain__Hardware_Block_Diagram.png)
@@ -322,7 +398,26 @@ The Low-Level Controller (LLC) subsystem shall execute motion control instructio
 
 Using the information received from the Global Controller and Power subsystems, the LLC shall process different inputs, translate instructions, and calculate appropriate movement commands via an Arduino. Then the microcontroller shall direct the motion of the actuators. A sensor shall continuously track real-time performance and return feedback to the controller. The feedback shall help mitigate any deviations to ensure efficient and smooth movement.  
 
-The LLC interfaces very closely with the mechanical engineering team. Much of the design’s specifications shall depend on the drivetrain, torque, and mechanical layout. The continued coordination between the electrical and mechanical engineering teams shall determine distribution, placements, connector types, ultimate electrical components, and safety protocol necessary for a successful UAV-robot design. 
+The LLC interfaces very closely with the mechanical engineering team. Much of the design specifications shall depend on the drivetrain, torque, and mechanical layout. The continued coordination between the electrical and mechanical engineering teams shall determine distribution, placements, connector types, ultimate electrical components, and safety protocol necessary for a successful UAV-robot design. 
+
+### LLC General Budget
+
+| **Components**              | **Price**   | **Quantity** | **Monetary Total** |
+|-----------------------------|-------------|---------------|--------------------|
+| Possible Arduino Mega 2560  | ~$50–70     | x1            |                    |
+| Possible Teensy 4.1         | ~$60        | x1            |                    |
+| Pololu #3232 DC Gearmotor   | ~$40        | x2            | ~$80               |
+| Adafruit APDS9960 Sensor    | ~$9         | x2            | ~$18               |
+| Possible DROK DC Buck       | ~$16        | x1            |                    |
+| Pololu Dual VNH5019         | ~$80        | x2            | ~$160              |
+| Omron SS-5GL                | ~$3         | x3            | ~$9                |
+| Reused fuse                 | –           | x1            |                    |
+| **Total**                   |             |               | **~$420**          |
+
+#### *Comparative Analysis of Solutions:*
+
+
+
 
 ### LLC Connection Block Diagrams: 
 Though each subsystem is a complex and vital part of the UAV-robot integrated system, Diagram 1 only shows each subsystem’s impact on the LLC directly. Diagram 2 focuses on the internal relationships within the LLC subsystem itself. 
@@ -332,10 +427,11 @@ Though each subsystem is a complex and vital part of the UAV-robot integrated sy
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LLC_Block_Diagram_2.png)
 
 ### Main Sections of the Specific LLC Subsystem:
-This subsection shall delve into the different components present with the LLC subsystem, as depicted in Diagram 2.  
+This subsection shall delve into the different components present with the LLC subsystem, as depicted in Diagram 2. 
 
 #### (1) Microcontroller: Arduino
 The microcontroller shall act as a designated motion controller, or “second brain,” in the robot, directly controlling the motors and all related equipment of the ground robot. An Arduino shall be used to receive and interpret commands from the Global Controller, apply any local algorithms, and generate corresponding pulse-width modulation signals. The implemented code shall consider several variables such as resistance, inductance, inertia, friction, voltage (from the power subsystem), and torque to properly account for the speed, direction, and required power output needed to complete the different tasks on varying terrain. For example, navigating flat surfaces of the arena shall require different parameters than interacting with the crater. As more collaboration and coordination is achieved with the mechanical engineers, a final decision as to the specific Arduino model shall be made. 
+
 
 #### (2) Actuators: Motors
 The actuators shall be motors that convert electrical energy into the mechanical rotation that produces the physical mobility of the robot. In line with the ethical and environmental responsibility of professional engineers, Tennessee Tech’s SECON team shall reuse the two Pololu Metal Gearmotors [18] used in the previous year’s design. Since this year’s robot shall have four wheels, two more identical Pololu DC motors will be acquired. Each reused motor shall be tested to verify it is still within manufacturer specifications. 
@@ -350,7 +446,8 @@ The LLC shall be designed with an emphasis on modularity so that each component 
 ## Ethical, Professional, and Standards Considerations
   - The design of the UAV-robot integrated system adheres to the professional and ethical standards and responsibilities outlined in the IEEE Code of ethics. These principles emphasize the significance of transparent design reports, environmentally conscientious innovation, and most importantly the safety of the public. In alignment with these standards, each process of the design will be deliberately tested and conducted to uphold these standards.
   - Environmentally, resource responsibility extends throughout the project through the reuse of components, such as the Pololu motors and Adafruit APDS9960 Sensors in the Low-Level Controllers.  As well as the Jetson Nano family in the Global Controller subsystems.
-  - Safety also remains a central principle throughout the project, as the design implements several different safeguards. The Power subsystem's implementation of an emergency-stop feature allows for the immediate halt of all robot systems, minimizing any danger to equipment, property, and the public. The Low-Level controller preemptively minimizes complications by continuous actuator monitoring and feedback. Similarly, the Navigation subsystem integrates LiDAR-based object detection along with ROS2-based pathway creation into its design to preemptively to prevent collisions with arena obstacles and boundaries.
+  - Safety also remains a central principle throughout the project, as the design implements several different safeguards. The Power subsystem's implementation of an emergency-stop feature allows for the immediate halt of all robot systems, minimizing any danger to equipment, property, and the public. The Low-Level controller preemptively minimizes complications by continuous actuator monitoring and feedback. Similarly, the Navigation subsystem integrates LiDAR-based object detection along with ROS2-based pathway creation into its design to preemptively to prevent collisions with arena obstacles and boundaries. Along with waste reduction, safety will also be a big consideration for any reused components. Testing will take place to ensure all elements are still within their expected safe specifications.
+  - The Communications subsystem applies ethics through the secure transfer of data over validated wireless communication protocols. By prioritizing data and code integrity, the subsystem protects performance, safety, and fair competition opportunities. The same subsystem also adheres to engineering standards, such as choosing UAV communication and transmission designs that comply with accepted uses of the electromagnetic spectrum by the Federal Aviation Administration (FAA) and Federal Communication Commissions (FCC).  
 
 
 ## Resources
@@ -417,9 +514,9 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 
 
 ## References
-[1] mjs513, “Another T3.5 Rover with a OpenMV Camera (Machine Vision),” Teensy Forum, Aug. 11, 2017. https://forum.pjrc.com/index.php?threads/another-t3-5-rover-with-a-openmv-camera-machine-vision.45741/ (accessed Oct. 29, 2025).
+[1] mjs513, “Another T3.5 Rover with a OpenMV Camera (Machine Vision),” Teensy Forum, Aug. 11, 2017. https://forum.pjrc.com/index.php?threads/another-t3-5-rover-with-a-openmv-camera-machine-vision.45741/ (accessed Oct. 24, 2025).
 
-[2] R. Mitchell, “Best SBCs for AI Projects in 2024: Comprehensive Guide,” Electromaker.io, Mar. 27, 2024. https://www.electromaker.io/blog/article/the-ultimate-guide-to-single-board-computers-for-ai-applications?srsltid=AfmBOooR42sNiD1Ac8Vz5HhEcTHXqnfuTKQgxJdXuL6CxgFoQY8jOzXm (accessed Oct. 29, 2025).
+[2]  R. Mitchell, “Best SBCs for AI Projects in 2024: Comprehensive Guide,” Electromaker.io, Mar. 27, 2024. https://www.electromaker.io/blog/article/the-ultimate-guide-to-single-board-computers-for-ai-applications?srsltid=AfmBOooR42sNiD1Ac8Vz5HhEcTHXqnfuTKQgxJdXuL6CxgFoQY8jOzXm (accessed Oct. 24, 2025).
 
 [3] Raspberry Pi Ltd, “Buy a Raspberry Pi AI HAT+ – Raspberry Pi,” Raspberry Pi, 2024. https://www.raspberrypi.com/products/ai-hat/
 
@@ -431,7 +528,7 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 
 [7] NVIDIA, “NVIDIA Jetson AGX Orin,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/ 
 
-[8] “F24_Team1_SECON/Reports/DetailedDesignNavigationAndMasterControl.md at main · TnTech-ECE/F24_Team1_SECON,” GitHub, 2025. https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/DetailedDesignNavigationAndMasterControl.md (accessed Oct. 29, 2025).
+[8] “F24_Team1_SECON/Reports/DetailedDesignNavigationAndMasterControl.md at main · TnTech-ECE/F24_Team1_SECON,” GitHub, 2025. https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/DetailedDesignNavigationAndMasterControl.md (accessed Oct. 17, 2025).
 
 [9] TnTech-ECE, “F24_Team1_SECON/Reports/Detailed-Design-Camera.md at main · TnTech-ECE/F24_Team1_SECON,” GitHub, 2025. https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/Detailed-Design-Camera.md 
 
@@ -505,5 +602,11 @@ John Land – Resources section, Power Atomic Subsystem Specifications
 Jane Vasar – Global Controller High Level Solution and Subsystem. 
 
 Trevor Snyder - Object Detection Subsystem
+
+Angela Nde – Ethics, Low-Level Controller Subsystem 
+
+Aiden Mullins – Communications subsystem and operational flow chart 
+
+Atra-Niese – Navigation Subsystem 
 
 
