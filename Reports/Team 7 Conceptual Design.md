@@ -491,6 +491,17 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 
 
 ### Division of Labor:
+John Land – Power Subsystem
+
+Jane Vassar – Global Controller Subsystem 
+
+Trevor Snyder - Object Detection Subsystem
+
+Angela Nde – Low-Level Controller Subsystem 
+
+Aiden Mullins –  Communications Subsystem
+
+Atra-Niese – Autonomous Navigation Subsystem
 
 
 ### Timeline:
@@ -609,7 +620,7 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 
 John Land – Resources section, Power Atomic Subsystem Specifications 
 
-Jane Vasar – Global Controller High Level Solution and Subsystem. 
+Jane Vassar – Global Controller High Level Solution and Subsystem. 
 
 Trevor Snyder - Object Detection Subsystem
 
