@@ -21,7 +21,7 @@ Design time is a limiting factor as the competition will take place in March of 
 
 ### Operational Flow Chart:
 
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Operational%20Flow%20Chart.png)
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Operational%20Flow%20Chart_REDONE.png)
 
 
 
