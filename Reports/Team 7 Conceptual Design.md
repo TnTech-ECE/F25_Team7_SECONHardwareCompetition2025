@@ -230,12 +230,12 @@ This subsystem is responsible for transferring information between the UAV, the 
 
 There are a few possible methods of wireless data transfer: 
 
-  - Wifi is the fastest method available to us, and also will likely already be used by the drone that we buy. 
+  - Wifi is the fastest method available to the team, and also shall likely already be used by the drone that the team buys. 
   - IR will be used by the UAV to transmit the satellite data to Earth, but this method is also more limiting, as not as much data can be transferred, and it requires lining up LEDs and photoresistors. 
-  - Radio (FM/AM) is technically able to be used, but we should probably avoid it for the best. 
+  - Radio (FM/AM) is technically able to be used, but the team should probably avoid it for the best. 
   - Bluetooth is like wifi, but you can send less data, and use less power 
 
-Based on these options, the team shall use wifi to transmit camera data and flight control, and IR on the UAV to transmit data to Earth. Because of the team not knowing which drone shall be bought and whether the team can connect IR LEDs to the microcontroller and have the same library, we think that it’s best to have a second small microcontroller used exclusively to send IR data to the earth. Because of the low range, small use, and high efficiency, we think that Bluetooth will be best for this case. 
+Based on these options, the team shall use wifi to transmit camera data and flight control, and IR on the UAV to transmit data to Earth. Because of the team not knowing which drone shall be bought and whether the team can connect IR LEDs to the microcontroller and have the same library, the team thinks that it’s best to have a second small microcontroller used exclusively to send IR data to the earth. Because of the low range, small use, and high efficiency, theh team thinks that Bluetooth will be best for this case. 
 
 In summary, the robot will have Wifi and Bluetooth capabilities to send flight control data and IR control data, and the UAV will have Wifi to send data and receive orders, and a microcontroller on the UAV will have Bluetooth and IR LEDs to transmit satellite data. 
 
