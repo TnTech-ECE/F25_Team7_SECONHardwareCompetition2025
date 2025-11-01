@@ -239,6 +239,17 @@ Based on these options, the team shall use wifi to transmit camera data and flig
 
 In summary, the robot will have Wifi and Bluetooth capabilities to send flight control data and IR control data, and the UAV will have Wifi to send data and receive orders, and a microcontroller on the UAV will have Bluetooth and IR LEDs to transmit satellite data. 
 
+### Communications General Budget:
+
+| **Components**          | **Price** |
+|--------------------------|-----------|
+| Arduino Nano BLE         | ~$30      |
+| WiFi/Bluetooth Adapter   | ~$25      |
+| IR LEDs                  | ~$10      |
+| Wires                    | ~$10      |
+| **Total**                | **~$75**  |
+
+
 
 ## Autonomous Navigation Subsystem
 According to IEEE SECON guidelines, our team shall create a fully autonomous ground robot that can accurately navigate the board and complete given tasks. This shall be done without any collisions with obstacles on the board. Our team shall use Robot Operating System 2 Navigation Stack (ROS 2 Nav2) in order for our ground robot to autonomously navigate. ROS 2 is a system that allows the robot to move from point A to point B in a space. The usage of Localization and Mapping helps the robot understand its position while creating a real-time map of the environment within the space and moving without hitting obstacles. 
@@ -479,15 +490,16 @@ The team shall utilize the official competition ruleset, CAD models, wiring diag
 ### Budget and Early Prototyping:
 The team shall develop a budget by estimating costs for each subsystem. Early prototyping shall focus on the Global Controller, Communication, and Object Detection subsystems, as these represent the most complex integration points. Critical unknowns include sensor calibration accuracy, UAV-to-robot data transfer reliability, and autonomous navigation precision. These shall be addressed through iterative prototyping and testing in the Capstone Lab. 
 
-| **Subsystem**        | **Est. Cost** |
-|----------------------|---------------|
-| Global Controller    | $250–$500     |
-| Low-Level Controller | $220–$440     |
-| Communication        | $100–$200     |
-| Navigation           | $120–$240     |
-| Object Detection     | $80–$200      |
-| Power                | $250–$500     |
-| **Total**            | **$1020–$2080** |
+| **Subsystem**         | **Est. Cost**     | **Justification**                      |
+|------------------------|-------------------|----------------------------------------|
+| Global Controller      | $250–$500         | Main Computer                          |
+| Low-Level Controller   | ~$420             | Arduino, Motors                        |
+| Communication          | ~$75              | WiFi/BLE adapters / microcontroller     |
+| Navigation             | $0                | All Software                           |
+| Object Detection       | $80–$200          | Lidar and Light Cameras                |
+| Power                  | $250–$500         | Batteries, Cables                      |
+| **Total**              | **$1375–$1685**   | **$1075–$1695**                        |
+
 
 
 ### Division of Labor:
