@@ -105,6 +105,35 @@ IMUs, or Inertial Measurement Units, are devices that contain an array of sensor
 
 Using these two sensor types together shall allow the robot to know its exact position and orientation on the game board. The robot shall use one IMU for position and orientation. As the team continues into the detailed design phase, they shall consider how to implement the LiDAR sensor(s). LiDAR sensors come in various configurations and the team shall consider which configuration is the most cost effective while being able to provide all of the needed information for the robot’s successful operation. 
 
+### Global Controller Interfaces
+Each of the Jetson computers that were listed have access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, and GPIO. The TX2 also has access to CAN protocol. The Orin also has access to PWM, DMIC, and DSPK protocols. All of the development boards come with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power. The robot mounted camera will connect to the global computer using a USB connection. The UAV mounted camera will connect to the global computer over a WiFi connection. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be digital signals. 
+
+#### Global Controller Inputs and Outputs 
+
+Inputs: 
+
+  - Autonomous Start Signal
+      - Digital Signal
+  - Manual Start Signal
+      - Digital Signal
+  - LiDAR Sensors
+      - Distance and Mapping Data over I2C
+  - IMU
+      - Position and Orientation Data over I2C
+  - Robot Mounted Camera
+      - Image and Object Data over USB
+  - Drone Mounted Camera
+      - Image Data over WiFi
+   
+Outputs: 
+
+  - Command Signals to Low Level Controller
+      - Object Position Data (coordinates)
+      - Navigation Commands (Coordinates of the designated path to follow)
+      - These shall be transmitted over a serial protocol
+  - Command Signals to UAV Controller
+      - Take Off and Land Commands over BLE
+
 #### Global Controller Block Diagram:
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Global%20Controller%20Block%20Diagram.png)
@@ -498,7 +527,7 @@ The team shall develop a budget by estimating costs for each subsystem. Early pr
 | Navigation             | $0                | All Software                           |
 | Object Detection       | $80–$200          | Lidar and Light Cameras                |
 | Power                  | $250–$500         | Batteries, Cables                      |
-| **Total**              | **$1375–$1685**   | **$1075–$1695**                        |
+| **Total**              | **$1375–$1685**   |                       |
 
 
 
