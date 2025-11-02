@@ -305,6 +305,23 @@ The image below shows an example of a photoresistor that shall be used to detect
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Photoresistor.jpg)
 
 
+### Object Detection Interfaces:
+
+1. Drone Sensor Interfaces
+     - Camera Interface (CSI/USB): Connects the onboard camera to the flight controller or companion computer
+     - IMU Interface (I2C/SPI): Provides accelerometer and gyroscope data for VIO fusion within the SLAM algorithm
+
+2. Robot Senseor Interfaces
+     - LiDAR Interface (UART/USB): Supplies range data for obstacle detection and localization alignment with the SLAM map
+     - Camera Interface (CSI/USB): Captures images for close-range object classification using YOLOv5 model
+     - Photoresistor Interface (Analog Input): Detects the "Start LED" illumination to start autonomously
+
+3. Software Integration Interfaces
+     - ROS 2 Middleware: Provides topic-based message passing for SLAM and sensor fusion
+     - YOLOv5 Model Interface (Python/C++ API): Bridges the network inference engine with the camera image streams for both aerial and ground-level object detection
+     - EKF and Pose Graph Interface: Links the sensor fusion modules with the SLAM backend to continuously refine localization
+
+
 ## Communications Subsystem
 This subsystem shall handle the wireless transfer of data between the robot, UAV, and Earth. Specifically, the UAV needs to send camera data to the robot and satellite data to the Earth.  The satellite data shall be transmitted via IR LEDs with the IRremote Arduino library. The robot shall be able to send flight control data and satellite data to the UAV, as image processing is held on the robot. 
 
