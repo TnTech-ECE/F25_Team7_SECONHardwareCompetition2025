@@ -255,12 +255,12 @@ At the beginning of the competition, the robot and drone shall start automatical
 
 
 ## Communications Subsystem
-This subsystem is responsible for transferring information between the UAV, the ground robot, and the Earth. Communication between the UAV and the robot shall primarily be established through Wi-Fi. The UAV shall serve as the access point, while the robot shall connect using an adapter linked to the Jetson Nano. This setup allows the robot to send navigational commands to the UAV and enables the UAV to transmit a continuous stream of sensor and camera data back to the robot. For communication with Earth, the UAV shall transmit data regarding the colors of specific satellites using infrared (IR) LEDs. To achieve this, the UAV shall incorporate a small microcontroller equipped with low-power Bluetooth capability to control the IR LEDs. Consequently, the Jetson Nano shall also include Bluetooth functionality to interface with this subsystem. In summary, the robot and UAV shall communicate through Wi-Fi for control and data exchange, while Bluetooth is utilized for sending IR commands. The UAV then uses IR LEDs to transmit the necessary information to Earth.
+This subsystem shall handle the wireless transfer of data between the robot, UAV, and Earth. Specifically, the UAV needs to send camera data to the robot and satellite data to the Earth.  The satellite data shall be transmitted via IR LEDs with the IRremote Arduino library. The robot shall be able to send flight control data and satellite data to the UAV, as image processing is held on the robot. 
 
 There are a few possible methods of wireless data transfer: 
 
   - Wifi is the fastest method available to the team, and also shall likely already be used by the drone that the team buys. 
-  - IR will be used by the UAV to transmit the satellite data to Earth, but this method is also more limiting, as not as much data can be transferred, and it requires lining up LEDs and photoresistors. 
+  - IR shall be used by the UAV to transmit the satellite data to Earth, but this method is also more limiting, as not as much data can be transferred, and it requires lining up LEDs and photoresistors. 
   - Radio (FM/AM) is technically able to be used, but the team should probably avoid it for the best. 
   - Bluetooth is like wifi, but you can send less data, and use less power 
 
