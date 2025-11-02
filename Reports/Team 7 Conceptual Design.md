@@ -66,6 +66,7 @@ The Jetson computer will be the device that makes all of the control decisions f
      - The robot and UAV shall be able to detect and avoid obstacles.
 
 ### *Comparative Analysis of Potential Solutions:*
+
 #### Global Contoller
 In order to meet specifications 1, 5, and 6; the robot shall have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer shall send the needed instructions to the low level controller in order to execute those decisions. 
 
@@ -78,6 +79,14 @@ The robot shall also need a software architecture that will allow the robot to h
 
 The team shall use a NVIDIA Jestion single board computer to handle the sensor intake, AI processing, and decision making for the robot. The team shall utilize ROS as a tool to help implement AI work loads and to control the robot. As the team approaches the detailed design phase, they shall decide which Jeston single board computer will be used. This decision will depend on the computers ability to process the robots AI loads fast enough to meet specification 3. ROS has the capability to run both C++ and Python programs, so the team will consider salvaging programs from the previous team’s robot. 
 
+The images below are of the Jetson Nano, Jeston Orin, and the Jetson TX2 respectively:
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Jetson%20Nano.png)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Jetson%20Orin.png)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Jetson%20TX2.png)
+
 
 #### Cameras
 In order to meet specifications 1, 5, 6, and 8 the robot shall need to be able to visually perceive its environment so it can identify objects and plan paths to those objects. The team shall utilize two cameras; one that will be mounted on the robot’s frame, and one that shall be mounted on the UAV. Both cameras shall need to be able to detect color, as the previously listed specifications shall require the robot and UAV to identify areas like the lunar landing zone and the antenna LEDs based on their colors. Thus both cameras shall, at minimum, be RGB cameras [11]. 
@@ -87,6 +96,19 @@ The robot mounted camera shall be needed to detect more than just color. The rob
 
 
 The robot mounted camera shall be a RGBD camera that can be used to detect objects and provide information about their locations. The UAV camera shall at minimum be a RGB camera that shall be used to identify LED and area colors. The team shall pick a UAV mounted camera that will help the UAV comply with specification 2. As the team approaches the detailed design phase, the team shall further consider the role of the UAV mounted camera. Some cameras have built in tools for processing image data for tasks like object detection. The team shall consider whether or not the drone mounted camera will take a direct role in processing the image data that it will collect or if sending the unprocessed data to the Jeston computer will be more efficient. 
+
+
+
+Drone Camera Option 1:
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Drone%20Camera%20A%20-%20XIAO%20ESP32-S3%20Sense.png)
+
+Drone Camera Option 2:
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Drone%20Camera%20B%20-%20OpenMV%20Cam%20RT1062.png)
+
+Robot Mounted Camera:
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Robot%20Mounted%20Camera%20-%20D435.png)
+
+
 
 #### General Sensors
 
@@ -104,6 +126,12 @@ LiDAR, or Light Detection and Ranging, sensors use laser pulses to measure dista
 IMUs, or Inertial Measurement Units, are devices that contain an array of sensors like accelerometers, gyroscopes, and potentially magnetometers [16]. These devices are able to track changes in velocity and rotational orientation. These measurements shall allow the robot to know its exact orientation at a given time. The velocity data can also be integrated over short periods in order to find the robots position data [17]. 
 
 Using these two sensor types together shall allow the robot to know its exact position and orientation on the game board. The robot shall use one IMU for position and orientation. As the team continues into the detailed design phase, they shall consider how to implement the LiDAR sensor(s). LiDAR sensors come in various configurations and the team shall consider which configuration is the most cost effective while being able to provide all of the needed information for the robot’s successful operation. 
+
+
+The image below is of the IMU:
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/IMU.png)
+
+
 
 ### Global Controller Interfaces
 Each of the Jetson computers that were listed have access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, and GPIO. The TX2 also has access to CAN protocol. The Orin also has access to PWM, DMIC, and DSPK protocols. All of the development boards come with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power. The robot mounted camera will connect to the global computer using a USB connection. The UAV mounted camera will connect to the global computer over a WiFi connection. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be digital signals. 
