@@ -257,6 +257,8 @@ At the beginning of the competition, the robot and drone shall start automatical
 
   - The decision to implement a geometry-based SLAM initialization rather than a traditional exploration-based SLAM approach is driven by the strict time, accuracy, and autonomy constraints defined by the IEEE SoutheastCon 2026 Hardware Competition ruleset [27]. While the best way to create a SLAM map is to have a lawnmower plot, this solution would take too much of the three minute time frame. In order to still create a basic SLAM map and continuously add to it, the drone shall fly around the perimeter of the arena once then make a figure eight in the middle. The figure eight in the middle of the course is to ensure none of the field is missed due to the peripheral of the drone's camera not picking it up as it goes along the perimeter.
 
+The image below shows the idea of the SLAM map created that shall be added to continuously throughout the competition run.
+
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Slam%20Map.jpg)
 
 
@@ -265,6 +267,8 @@ At the beginning of the competition, the robot and drone shall start automatical
 
   - The combined use of pre-mapped SLAM data, LiDAR-assisted EKF localization, and a YOLOv5-nano vision model provides the best balance of speed, accuracy, and hardware efficiency for the SoutheasternCon 2026 autonomous arena challenge. Each element of the algorithm was selected to directly address the unique environmental and time constraints of the competition. While another solution to this is for the robot to "map while driving". Due to time constraints of the competition, the robot needs to have the map data as soon as possible. With the ready-to-use SLAM map created from the drone's intialization phase, the robot instantly has the map data before it even starts moving. In short, this design maximizes performance per watt, accuracy per frame, and time efficiency per match, making it the most competitive and technically sound solution for autonomous navigation in the SoutheasternCon 2026 environment.
 
+The image below shows the idea of locating the robot from the generated SLAM map using the known coordinates of the starting arean.
+
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LocatingNavigatingRobot.png)
 
 
@@ -272,11 +276,15 @@ At the beginning of the competition, the robot and drone shall start automatical
 
   - The dual-layer detection algorithm, combining drone-based aerial scanning and robot-based close-range confirmation, was chosen because it offers a balanced trade-off between speed, accuracy, and redundancy for locating Astro-Ducks and antennas within the three-minute fully autonomous competition run. While having either the robot or drone solely locating the antennas is a solution, the division of task between the two is the most effecient for time and computaional workload. The drone performs a wide-area, low-detail scanning in the beginning of the match. The robot performs local, high-detail verification of the Astro-Ducks and antennas using refined classification. This cooperative algorithm ensures rapid and accurate object localization in a time critical competition.
 
+The image below shoes an example of objects being identified using the Yolov5 object detection algorithm. This shall translate the the ground robot to identify the Astro-Ducks and antennas using close-range confirmation.
+
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/yolov5ObjectDetection.png)
 
 ##### For identifying task of the antennas:
 
   - By automatically knowing which antenna is where on the field and the assigned task with it, the team doesn't have to deal with any unnecessary complextiy when completing task. While the robot could visually identify each antenna's task using onboard cameras and sensors, this is unnecessary since the official ruleset gives the exact location of each antenna and the cardinal directing the base is facing. By having this data, the robot instantly knows where to face and how to align itself to complete the antenna's task. In short, the solution of not having to manually identify the specific antenna and task is the most time and workload efficient solution.
+
+The image below shoes the dimensions of the competition arean. As shown in the image by the small blue-dotted squares, the exact locations of the antennas are already known. The competition ruleset also states the specific task of each antenna as well as the cardinal direction the base of the antenna shall be facing.
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/CompetitionArena.png)
 
@@ -284,11 +292,15 @@ At the beginning of the competition, the robot and drone shall start automatical
 
   - The selected drone-based HSV color detection algorithm provides the most efficient, reliable, and competition-ready solution for identifying antenna LED colors under the IEEE SoutheastCon 2026 Hardware Competition constraints. While the robot could identify the LED using a color sensor or photodiode array, using the drone-based HSV algorithm eliminates the need of pointless complexity. With the chosen solution, the drone can simply hover over the LED and determine the color in a matter milliseconds with the worst case being one to two seconds.
 
+The image below shows the HSV color model that shall be implemented into the color detection algorithm to determine the color of the LED.
+
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/HSV_Algorithm.jpg)
 
 ##### For detecting the starting LED: 
 
   - The photoresistor-based trigger is the fastest, simplest, and most robust way to detect the Start LED. It ensures both the drone and robot begin their autonomous routines almost instantly, avoiding computational overhead or misdetections that camera-based solutions would introduce. As previously stated, using the robots camera is a potential solution. If the camera solution was used, the detection would happen through image differencing or frame-intensity thresholding. This option is rejected due to the consumption of computing, suffering of lighting variability, added frame-processing delay, and camera stabilization before starting. In summary, the photoresitor solution is the fastest and reliable method.
+
+The image below shows an example of a photoresistor that shall be used to detect the starting LED.
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Photoresistor.jpg)
 
