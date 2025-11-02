@@ -267,7 +267,7 @@ The image below shows the idea of the SLAM map created that shall be added to co
 
   - The combined use of pre-mapped SLAM data, LiDAR-assisted EKF localization, and a YOLOv5-nano vision model provides the best balance of speed, accuracy, and hardware efficiency for the SoutheasternCon 2026 autonomous arena challenge. Each element of the algorithm was selected to directly address the unique environmental and time constraints of the competition. While another solution to this is for the robot to "map while driving". Due to time constraints of the competition, the robot needs to have the map data as soon as possible. With the ready-to-use SLAM map created from the drone's intialization phase, the robot instantly has the map data before it even starts moving. In short, this design maximizes performance per watt, accuracy per frame, and time efficiency per match, making it the most competitive and technically sound solution for autonomous navigation in the SoutheasternCon 2026 environment.
 
-The image below shows the idea of locating the robot from the generated SLAM map using the known coordinates of the starting arean.
+The image below shows the idea of locating the robot from the generated SLAM map using the known coordinates of the starting arena.
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LocatingNavigatingRobot.png)
 
@@ -276,7 +276,7 @@ The image below shows the idea of locating the robot from the generated SLAM map
 
   - The dual-layer detection algorithm, combining drone-based aerial scanning and robot-based close-range confirmation, was chosen because it offers a balanced trade-off between speed, accuracy, and redundancy for locating Astro-Ducks and antennas within the three-minute fully autonomous competition run. While having either the robot or drone solely locating the antennas is a solution, the division of task between the two is the most effecient for time and computaional workload. The drone performs a wide-area, low-detail scanning in the beginning of the match. The robot performs local, high-detail verification of the Astro-Ducks and antennas using refined classification. This cooperative algorithm ensures rapid and accurate object localization in a time critical competition.
 
-The image below shoes an example of objects being identified using the Yolov5 object detection algorithm. This shall translate the the ground robot to identify the Astro-Ducks and antennas using close-range confirmation.
+The image below shoes an example of objects being identified using the Yolov5 object detection algorithm. This shall translate to the ground robot to identify the Astro-Ducks and antennas using close-range confirmation.
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/yolov5ObjectDetection.png)
 
