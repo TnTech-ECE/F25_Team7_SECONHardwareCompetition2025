@@ -164,7 +164,7 @@ Outputs:
 
 #### Global Controller Block Diagram:
 
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Global%20Controller%20Block%20Diagram.png)
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Global%20Controller%20Block%20Diagram_BetterResolutionTake3.png)
 
 
 
