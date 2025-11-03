@@ -385,6 +385,8 @@ Nav2 shall use LiDAR sensors to create a neutral 2D map of the space with black 
   - Another option to use is the Monocular Camera Navigation System. This system uses a singular camera and deep learning to identify obstacles and objects with increased accuracy in complex environments. This approach uses a navigation algorithm alongside a PID controller to navigate dynamic obstacles and terrain. Unfortunately, due to its high complexity, more computation power and complex calibrations are required to achieve the goal of autonomous navigation [43].
   - Though ROS 2 Nav2 has a steep learning curve and issues debugging due to the complexity of the system, its open-source nature and strong documentation provide a reliable resource to develop a strong knowledge framework. Furthermore, ROS 2’s modular architecture enhances the reliability and performance of real-time communication and quality-of-service [45].
 
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/NavPic1.png)
+
 ### Interfaces:
 
 Inputs:
@@ -392,9 +394,35 @@ Inputs:
   - Camera Data (From the UAV using the UAV’s API) 
 
 Outputs:
-  - Movement Data (To the Low Level Controller using a wired, serial connection) 
+  - Movement Data (To the Low Level Controller using a wired, serial connection)
 
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/NavPic1.png)
+Topic Interface:
+  - ros2 topic pub <topic_name> – Node publishes message to a specific topic that another node can subscribe to.
+
+Service Interface:
+  - /clear_costmap (std_srvs/srv/Empty) – Client node makes a request and waits, then server node provides it.
+
+Hardware Interface:
+  - hardware_interface::SensorInterface – Interacts between ROS 2 Nav2 and the robot's physical hardware.
+
+Parameter Interface:
+  -  ros2 param get <node_name> <parameter_name> and ros2 param set <node_name> <parameter_name> <value> – Configures value and behavior (read or set) of individual nodes.
+
+Plugin Interface: 
+  - Provides customizable implementation of algorithms and behaviors. e.g. – nav2_core/include/nav2_core/global_planner.hpp – allows implementation custom algorithms for generating global path from position to goal
+  - nav2_core/include/nav2_core/local_planner.hpp – grants creation of custom 	controllers to guide robot along global path and avoid obstacles
+
+Action Interface: 
+  - nav2_msgs/action/NavigateToPose – Navigate to position and orientation (ROS 2 Nav2 to Local controller) 
+  - nav2_behaviors::Backup – Executes a specific behavior
+  - nav2_planner/action/ComputePathToPose – Plans a path to a goal position and orientation
+  - nav2_route/action/ComputeRoute – Computes route
+
+
+### Image of Solution for Map Server
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/NavPic2.png)
+
+
 
 
 ## Power Subsystem
@@ -639,7 +667,21 @@ The LLC serves as a bridge between the high-level software processing of Jetson 
 
 ##### Outputs:
   - Motor Driver Control Signals (PMW/DIR Digital) 
-  - High Motor Power Enable Path (Bus Digital) 
+  - High Motor Power Enable Path (Bus Digital)
+
+### Diagram and Descriptions:
+
+The image below illustrates the detailed LLC interface connections and communication types with relevant functionalities of other subsystems, as well as the inner connections within the LLC.
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/LowLevelControlCompleteDiagram.png)
+
+| **Component**        | **Interface Type**       | **Direction**        | **Description** |
+|-----------------------|--------------------------|----------------------|-----------------|
+| **Jetson Computer**   | Serial (UART)            | Both                 | Exchanges packets of motion commands and telemetry data that include parameters such as speed, direction, and rotational rate. The Global Controller sends motion mode, desired speed, and heading, while the LLC’s encoders transmit encoder counts, bump sensor events, motor velocity, and the health diagnostics of the motor. |
+| **Motor Drivers**     | PWM/GPIO                | Output               | PWM and directional (DIR) lines are issued to the motor driver to control speed, torque, and direction of the DC motors. Each motor channel receives its own unique PWM and DIR. |
+| **Bump Sensors**      | Digital                 | Input                | Binary contact switches provide collision and obstacle feedback signals that trigger the microcontroller (Arduino) to issue either a stop or recalibration signal in response. |
+| **Power/Battery**     | Analog/I2C/Bus enable   | Input                | Current draw, rail voltages, and faults are transferred from the Power subsystem to the LLC via analog or digital I2C. A kill signal enable is either inactive to ensure power delivery or active to cut motor driver power and successfully carry out a E-stop signal. |
+| **Encoder Sensors**   | Quadrature Digital      | Input (feedback)     | The rotary encoders’ channels A and B have 4 states per cycle (A-High, A-Low, B-High, B-Low). The differences in phase deduce direction, position, and speed of rotation. Each motor has its own mounted encoder, creating 8 total digital input lines that form a closed-loop odometry feedback system. |
 
 
 
@@ -821,6 +863,10 @@ Atra-Niese – Autonomous Navigation Subsystem
 [46] A. Industries, “Adafruit APDS9960 Proximity, Light, RGB, and Gesture Sensor,” www.adafruit.com. https://www.adafruit.com/product/3595  
 
 [47] “172:1 Metal Gearmotor 25Dx56L mm MP 12V,” Pololu.com, 2025. https://www.pololu.com/product/3232. 
+
+[48] “Navigation concepts,” Navigation Concepts - Nav2 1.0.0 documentation, https://docs.nav2.org/concepts/index.html (accessed Nov. 3, 2025).  
+
+[49] L. S. Dsouza, “Navigation2/nav2_map_server at main · Ros-Navigation/Navigation2,” GitHub, https://github.com/ros-navigation/navigation2/tree/main/nav2_map_server (accessed Nov. 3, 2025).  
 
 
 
