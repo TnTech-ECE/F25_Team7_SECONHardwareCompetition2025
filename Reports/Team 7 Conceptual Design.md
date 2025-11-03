@@ -831,11 +831,11 @@ John Land – Resources section, Power Atomic Subsystem Specifications
 
 Jane Vassar – Global Controller High Level Solution and Subsystem. 
 
-Trevor Snyder - Object Detection Subsystem
+Trevor Snyder - Object Detection Subsystem, Hardware Block Diagram
 
 Angela Nde – Ethics, Low-Level Controller Subsystem 
 
-Aiden Mullins – Operational Flow Chart, Communications Subsystem
+Aiden Mullins – Operational Flow Chart, Communications Subsystem, Hardware Block Diagram
 
 Atra-Niese – Autonomous Navigation Subsystem
 
