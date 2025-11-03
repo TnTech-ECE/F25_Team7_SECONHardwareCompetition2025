@@ -16,7 +16,7 @@ Design time is a limiting factor as the competition will take place in March of 
 
 
 ### Hardware Block Diagram:
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Hardware%20Block%20Diagram.png)
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/UpdateHardwareBlock.png)
 
 
 ### Operational Flow Chart:
