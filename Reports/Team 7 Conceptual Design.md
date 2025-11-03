@@ -328,9 +328,13 @@ This subsystem shall handle the wireless transfer of data between the robot, UAV
 There are a few possible methods of wireless data transfer: 
 
   - Wifi is the fastest method available to the team, and also shall likely already be used by the drone that the team buys. 
-  - IR shall be used by the UAV to transmit the satellite data to Earth, but this method is also more limiting, as not as much data can be transferred, and it requires lining up LEDs and photoresistors. 
-  - Radio (FM/AM) is technically able to be used, but the team should probably avoid it for the best. 
-  - Bluetooth is like wifi, but you can send less data, and use less power 
+  - IR shall be used by the UAV to transmit the satellite data to Earth, but this method is also more limiting, as not as much data can be transferred, and it requires lining up LEDs and photoresistors.  
+  - Bluetooth is like wifi, but you can send less data, and use less power
+
+Below is an image of the Bluetooth/WiFi adapter and the IR transmitter respectively:
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Wifi-Bluetooth%20Communication.jpg)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/IR_SENSOR%20Communication.jpg)
 
 Based on these options, the team shall use wifi to transmit camera data and flight control, and IR on the UAV to transmit data to Earth. Because of the team not knowing which drone shall be bought and whether the team can connect IR LEDs to the microcontroller and have the same library, the team thinks that it’s best to have a second small microcontroller used exclusively to send IR data to the earth. Because of the low range, small use, and high efficiency, theh team thinks that Bluetooth will be best for this case. 
 
