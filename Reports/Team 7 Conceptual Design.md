@@ -340,6 +340,21 @@ Based on these options, the team shall use wifi to transmit camera data and flig
 
 In summary, the robot will have Wifi and Bluetooth capabilities to send flight control data and IR control data, and the UAV will have Wifi to send data and receive orders, and a microcontroller on the UAV will have Bluetooth and IR LEDs to transmit satellite data. 
 
+### Interfaces:
+
+Inputs:
+  - Camera data from the UAV (will be done with UAV’s API) 
+  - Flight Commands (From Jetson over Wi-Fi using the UAV’s API)
+  - Satellite Data (From Jetson over Bluetooth to Microcontroller using data)
+
+Outputs:
+  - Satellite Data (To Earth using IRremote on the microcontroller and information on the rules sheet)
+  - Flight Commands (To the UAV using the UAV’s API)
+  - Camera Data (To the Jetson using the UAV’s API)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/CommunicationDiagram.png)
+
+
 ### Communications General Budget:
 
 | **Components**          | **Price** |
@@ -369,6 +384,15 @@ Nav2 shall use LiDAR sensors to create a neutral 2D map of the space with black 
   - There are numerous solutions that can be used for autonomous navigation such as: Mobile Robot Programming Toolkit (MRPT) and Monocular Camera Navigation System besides ROS 2 Nav2. MRPT contains open source, cross-platform libraries, and applications that shall be used to provide mapping, localization, motion planning, SLAM, and obstacle avoidance. MPRT is a great option to use due to its flexibility to implement the systems the team needs. However, because it lacks a fully integrated navigation framework, more programming shall be required to make connections within the Navigation stack. This includes designing the communication, sensor interface, and behavior logic, etc [44].
   - Another option to use is the Monocular Camera Navigation System. This system uses a singular camera and deep learning to identify obstacles and objects with increased accuracy in complex environments. This approach uses a navigation algorithm alongside a PID controller to navigate dynamic obstacles and terrain. Unfortunately, due to its high complexity, more computation power and complex calibrations are required to achieve the goal of autonomous navigation [43].
   - Though ROS 2 Nav2 has a steep learning curve and issues debugging due to the complexity of the system, its open-source nature and strong documentation provide a reliable resource to develop a strong knowledge framework. Furthermore, ROS 2’s modular architecture enhances the reliability and performance of real-time communication and quality-of-service [45].
+
+### Interfaces:
+
+Inputs:
+  - LIDAR Camera Data (From the LIDAR Camera connected to the Jetson)
+  - Camera Data (From the UAV using the UAV’s API) 
+
+Outputs:
+  - Movement Data (To the Low Level Controller using a wired, serial connection) 
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/NavPic1.png)
 
@@ -467,15 +491,21 @@ The robot’s electronics (Jetson Nano, Arduino, sensors, and actuators) require
 #### Potential Solutions
 Solution 1: Feed robot directly from battery with buck converters. 
   - The battery directly powers high-current loads (H-bridges) and supplies step-down converters for lower-voltage rails (5 V, 12 V).
-  - No voltage boosting; system voltage falls as the battery discharges. 
+  - No voltage boosting; system voltage falls as the battery discharges.
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Solution1.png)
 
 Solution 2: Boost converter with regulated power bus. 
   - A boost converter regulates the battery’s variable voltage (10–14 V) to a fixed higher system bus. 
   - All subsystems (motors, controllers, sensors) are powered from this stable bus through buck converters.
 
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Solution2.png)
+
 Solution 3: Bidirectional buck-boost converter. 
   - A four-switch topology allows both boosting (when battery voltage is low) and bucking (during regenerative braking). 
   - Enables controlled energy recovery and precise bus voltage control.
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Solution3.png)
 
 #### Comparison
 Solution 1: 
@@ -491,6 +521,32 @@ Solution 3:
 Solution 2: Boost converter with regulated power bus
 
 Provides the best trade-off between performance, reliability, cost, and ease of implementation. A boost converter ensures stable operation of the Jetson Nano and all downstream electronics even under battery drop, while still being simpler and cheaper than a fully bidirectional converter. With proper filtering, heat management, and implementation of an E-Stop, it achieves consistent power delivery with manageable risk. 
+
+### Power Subsystem Budget Estimate
+
+| Component                     | Qty | Cost | Subtotal |
+|-------------------------------|-----|------|-----------|
+| Battery LiFePO4               | 1   | $65  | $65  |
+| Smart BMS                     | 1   | $25  | $25  |
+| Boost Converter               | 1   | $18  | $18  |
+| Inductor                      | 1   | $7   | $7   |
+| Rectifier + MOSFET Set        | 1   | $5   | $5   |
+| Buck Converter 5V/5A          | 1   | $15  | $15  |
+| Servo Voltage Regulator       | 1   | $12  | $12  |
+| Buck Converter 6V/10A         | 1   | $8   | $8   |
+| E-Stop                        | 1   | $10  | $10  |
+| Main Fuse + Housing           | 2   | $3   | $6   |
+| Reverse Polarity Diode        | 1   | $4   | $4   |
+| TVS Diode                     | 2   | $2   | $4   |
+| Bus Bar                       | 1   | $12  | $12  |
+| Connectors                    | 2   | $2   | $4   |
+| 14 AWG Wire                   | 1   | $6   | $6   |
+| I/V Sensor                    | 2   | $5   | $10  |
+| Microcontroller Interface Board | 1 | $12  | $12  |
+| Miscellaneous                 | —   | —    | $40  |
+| **Total Budget Estimate**     |     |      | **$263** |
+
+
 
 
 ![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Power_and_Drivetrain__Hardware_Block_Diagram.png)
@@ -570,6 +626,22 @@ The sensors shall be encoders mounted to each motor. The encoders shall collect 
 #### Verification and Adaptability
 The LLC shall be designed with an emphasis on modularity so that each component can be tested and independently changed if deemed necessary due to design efficiency or product failure. Early testing shall include verification of proper communication between the Global and Low-Level controllers, as well as the connections within the LLC itself. As collaborative efforts with the mechanical team progress, additional testing shall ensure proper integration of the LLC’s electrical systems to its mechanical counterparts, such as the wheels and drivetrain components. 
 
+### LLC Interfaces:
+The LLC serves as a bridge between the high-level software processing of Jetson and the electromechanical components that enable motion of the robot. The LLC behaves as a closed-loop system by using an Arduino to translate input signals from the Jetson into actuator signals, monitoring motor output via sensors, and responding to real-time adjustment needs of the motors. 
+
+##### Bidirectioanl:
+  - Input: Jetson Motion Commands | Output: Status Reports to Jetson (UART Digital)
+
+##### Inputs:
+  - Encoder Pulse Feedback (Quadrature Digital) 
+  - Contact States of Bump Sensor (Active High Digital) 
+  - Power Status Signals (Analog/ I2C)
+
+##### Outputs:
+  - Motor Driver Control Signals (PMW/DIR Digital) 
+  - High Motor Power Enable Path (Bus Digital) 
+
+
 
 ## Ethical, Professional, and Standards Considerations
   - The design of the UAV-robot integrated system adheres to the professional and ethical standards and responsibilities outlined in the IEEE Code of ethics. These principles emphasize the significance of transparent design reports, environmentally conscientious innovation, and most importantly the safety of the public. In alignment with these standards, each process of the design will be deliberately tested and conducted to uphold these standards.
@@ -609,15 +681,17 @@ The team shall utilize the official competition ruleset, CAD models, wiring diag
 ### Budget and Early Prototyping:
 The team shall develop a budget by estimating costs for each subsystem. Early prototyping shall focus on the Global Controller, Communication, and Object Detection subsystems, as these represent the most complex integration points. Critical unknowns include sensor calibration accuracy, UAV-to-robot data transfer reliability, and autonomous navigation precision. These shall be addressed through iterative prototyping and testing in the Capstone Lab. 
 
-| **Subsystem**         | **Est. Cost**     | **Justification**                      |
-|------------------------|-------------------|----------------------------------------|
-| Global Controller      | $250–$500         | Main Computer                          |
-| Low-Level Controller   | ~$420             | Arduino, Motors                        |
-| Communication          | ~$75              | WiFi/BLE adapters / microcontroller     |
-| Navigation             | $0                | All Software                           |
-| Object Detection       | $80–$200          | Lidar and Light Cameras                |
-| Power                  | $250–$500         | Batteries, Cables                      |
-| **Total**              | **$1375–$1685**   |                       |
+### Subsystem Cost Summary
+
+| Subsystem           | Est. Cost             | Justification                         |
+|---------------------|----------------------:|---------------------------------------|
+| Global Controller   | $921.38 – $1276.29    | Main Computer, Cameras, Sensors       |
+| Low-Level Controller| ~ $420                | Arduino, Motors                       |
+| Communication       | ~ $75                 | WiFi / BLE Adapters, Microcontroller  |
+| Navigation          | $0                    | All Software                          |
+| Object Detection    | $80 – $200             | LiDAR and Light Cameras               |
+| Power               | $250 – $500            | Batteries, Cables                     |
+| **Total**           | **$1746.38 – $2471.29** | **Overall System Cost Estimate**      |
 
 
 
@@ -743,6 +817,10 @@ Atra-Niese – Autonomous Navigation Subsystem
 [44] J. L. B. Claraco, Development of Scientific Applications with the Mobile Robot Programming Toolkit, pp. 15–100, Oct. 2010.  
 
 [45] Milvus, “What are the advantages of using ROS (robot operating system) in MAS?,” Milvus, https://milvus.io/ai-quick-reference/what-are-the-advantages-of-using-ros-robot-operating-system-in-mas (accessed Oct. 30, 2025).  
+
+[46] A. Industries, “Adafruit APDS9960 Proximity, Light, RGB, and Gesture Sensor,” www.adafruit.com. https://www.adafruit.com/product/3595  
+
+[47] “172:1 Metal Gearmotor 25Dx56L mm MP 12V,” Pololu.com, 2025. https://www.pololu.com/product/3232. 
 
 
 
