@@ -677,11 +677,13 @@ The image below illustrates the detailed LLC interface connections and communica
 
 | **Component**        | **Interface Type**       | **Direction**        | **Description** |
 |-----------------------|--------------------------|----------------------|-----------------|
-| **Jetson Computer**   | Serial (UART)            | Both                 | Exchanges packets of motion commands and telemetry data that include parameters such as speed, direction, and rotational rate. The Global Controller sends motion mode, desired speed, and heading, while the LLC’s encoders transmit encoder counts, bump sensor events, motor velocity, and the health diagnostics of the motor. |
-| **Motor Drivers**     | PWM/GPIO                | Output               | PWM and directional (DIR) lines are issued to the motor driver to control speed, torque, and direction of the DC motors. Each motor channel receives its own unique PWM and DIR. |
+| **Jetson Computer**   | Serial (UART)            | Both                 | Exchanges packets motion commands and telemetry data that include parameters such as speed, direction, and rotational rate. The Global Controller sends motion mode, desired speed, and heading, while the LLC’s encoders return encoder counts, bump sensor events, motor velocities, and the health diagnostics of the motor. |
+| **Motor Drivers**     | PWM/GPIO                | Output               | PWM and directional (DIR) signal lines are issued to each motor driver channel to control speed, torque, and direction of the DC motors. Each motor channel receives its own unique PWM and DIR line. |
 | **Bump Sensors**      | Digital                 | Input                | Binary contact switches provide collision and obstacle feedback signals that trigger the microcontroller (Arduino) to issue either a stop or recalibration signal in response. |
-| **Power/Battery**     | Analog/I2C/Bus enable   | Input                | Current draw, rail voltages, and faults are transferred from the Power subsystem to the LLC via analog or digital I2C. A kill signal enable is either inactive to ensure power delivery or active to cut motor driver power and successfully carry out a E-stop signal. |
-| **Encoder Sensors**   | Quadrature Digital      | Input (feedback)     | The rotary encoders’ channels A and B have 4 states per cycle (A-High, A-Low, B-High, B-Low). The differences in phase deduce direction, position, and speed of rotation. Each motor has its own mounted encoder, creating 8 total digital input lines that form a closed-loop odometry feedback system. |
+| **Power/Battery**     | Analog/I2C/Bus enable   | Input                | Current draw, rail voltages, and fault status are received from the Power subsystem to the LLC via analog sensing or digital I2C. A kill signal enable is either inactive for power delivery or active to successfully carry out a E-stop signal by cutting power to the motor drivers. |
+| **Encoder Sensors**   | Quadrature Digital      | Input (feedback)     | The rotary encoder A/B channels have 4 states per cycle (A-High\|A-Low\|B-High\|B-Low). The differences in phase determine direction, position, and speed of rotation. Each motor has its own mounted encoder that provides 2 digital input lines. The sensors create a closed loop odometry feedback system. |
+
+
 
 
 
