@@ -521,7 +521,25 @@ The LLC interfaces very closely with the mechanical engineering team. Much of th
 
   - Motor Drivers interface between a microcontroller and a motor to convert low power command signals into the high-power demand necessary to power motors. The Polulu Dual VNH5019 is a possible component choice for the design. 
 
-  - Bump Sensors are optional, as ideally the Navigation and Object Detection subsystems are intended to find the most optimal path, and, therefore, avoid collisions.  However, to ensure quick error correction and provide a last-resort detection option, a possible bump sensor may be added for collision detection and calibration. The Omron SS-5GL is a possible low-cost, durable, and lightweight option.  
+  - Bump Sensors are optional, as ideally the Navigation and Object Detection subsystems are intended to find the most optimal path, and, therefore, avoid collisions.  However, to ensure quick error correction and provide a last-resort detection option, a possible bump sensor may be added for collision detection and calibration. The Omron SS-5GL is a possible low-cost, durable, and lightweight option.
+
+#### Images of Definite Solutions: 
+
+Below is a visual representation of the components that shall be used in the design. Both are reused from a former design.
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Adafruit%20APDS9960%20Sensor.webp)
+ 
+
+Adafruit APDS9960 Sensor 
+
+(Adafruit APDS9960 Proximity, Light, RGB, and Gesture Sensor - STEMMA QT / Qwiic) [46] 
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Poster%20Template/Images/Polulu%203232%20DC%20Gearmotor.webp)
+
+Polulu #3232 DC Gearmotor 
+
+(172:1 Metal Gearmotor 25Dx56L mm MP 12V) [47]
+
 
 
 
