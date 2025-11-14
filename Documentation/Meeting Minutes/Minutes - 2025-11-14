@@ -1,0 +1,29 @@
+Late meeting this week due to Veterans Day
+
+Updates:  
+  -Torsten - time to lock in, all of it is in LTSpice and KiCad, but a little limited bc ME is not being super specific on all that is input
+      -needs: List of all power inputs and where they are.
+  -Trevor - Just needed some clarifications, now can get things going
+  -Aiden - No updates, but feeling good about accomplishing it, will work on it this weekend
+  -Angela - Had a late start due to Tests, but started breaking it down by slides, working on power specs for Torsten, currently in the "brainstorming" phase
+      -Question for Torsten: Do you have a preference for communication style? I^2C is probably the type that fits best.
+  -Jane - Probably needs to spec it up a bit more to have it run faster, might need the "dumb" camera, to just send the data to nano and have it do stuff. Still working on sensors.
+      -needs: a list of protocols for the LLC (currently has I^2C for power) - Which is what she was looking for
+      -For Atra Neiese - Bc she is doing more stuff in intro to robotics, she will have ROS code for Atra Neiese
+  -Atra Neiese - Not feeling bad,  but no current updates
+  -ONE MORE THING: Calendar:
+    -Rough Draft - 18th
+    -25th - Try to submit the final draft (1st submission)
+    -Sit down and compile the presentation? - Dec 1st
+    -Detailed design - Dec 3rd
+    -Presentation - Dec 8th (Monday)
+
+Clarification:
+  -LLC probably doesn't need 3d models, but does need circuit diagrams
+  -Are we still using the Intel RealSense (Camera that can perceive depth)? Yes, and the Lidar sensor too
+  -What Drone camera are we going with? Trevor recommends the OpenMV Camera H7 Plus!
+  -Do we stick with the nano, or possibly upgrade? We need speed, but we don't know how much.
+  -Do we know which drone to buy? Probably the Crazy-fly 2.1+ (or maybe another store-bought option)
+  -Do we need to start making code? (Probably?)
+  -We are each doing our own individual Subsection Document? Yes!
+  -Do we do one big submission, and do we all deal with each other's limited submissions? No? and No.
