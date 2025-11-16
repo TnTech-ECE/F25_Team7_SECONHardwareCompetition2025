@@ -1,1 +1,113 @@
+# Detailed Design
 
+This document delineates the objectives of a comprehensive system design. Upon reviewing this design, the reader should have a clear understanding of:
+
+- How the specific subsystem integrates within the broader solution
+- The constraints and specifications relevant to the subsystem
+- The rationale behind each crucial design decision
+- The procedure for constructing the solution
+
+
+## General Requirements for the Document
+
+The document should include:
+
+- Explanation of the subsystem’s integration within the overall solution
+- Detailed specifications and constraints specific to the subsystem
+- Synopsis of the suggested solution
+- Interfaces to other subsystems
+- 3D models of customized mechanical elements*
+- A buildable diagram*
+- A Printed Circuit Board (PCB) design layout*
+- An operational flowchart*
+- A comprehensive Bill of Materials (BOM)
+- Analysis of crucial design decisions
+
+*Note: These technical documentation elements are mandatory only when relevant to the particular subsystem.
+
+
+## Function of the Subsystem
+
+The function of this subsystem is for objects and objectives to be detected throughout the course to efficiently communicate with the robot to navigate with ease. By using different object detection algorithms the drone and robot shall both be able to detect objects such as the antennas, tasks of antennas, antenna LED colors, Astro-Ducks, starting LED, and the layout of the course. These algorithms shall share different types of data that shall be wirelessly communicated with the robot and the Earth base using both WiFi and Bluetooth. Each of these algortithms shall be discussed in much greater detail later in the document.
+
+
+## Specifications and Constraints
+
+This section should provide a list of constraints applicable to the subsystem, along with the rationale behind these limitations. For instance, constraints can stem from physics-based limitations or requirements, subsystem prerequisites, standards, ethical considerations, or socio-economic factors.
+
+The team should set specifications for each subsystem. These specifications may require modifications, which must be authorized by the team. It could be necessary to impose additional constraints as further information becomes available.
+
+Every subsystem must incorporate at least one constraint stemming from standards, ethics, or socio-economic factors.
+
+
+### Specifcations:
+
+1. The drone and robot shall create a SLAM map of the competition within 20 seconds
+2. The drone shall locate and navigate the robot
+3. The drone and robot shall both locate the Astro-Ducks and antennas
+4. The drone and robot shall both identify the specific task of the antennas
+5. The drone shall determine the color of the antennas’ LEDs
+6. The drone and robot shall automatically starting using the LED bar on the competition board
+
+### Constraints: 
+1. The drone shall not weigh more than 250 grams or 0.55 pounds
+2. The drone shall not move outisde of the netted playing field
+3. The robot and drone shall have a maximum of 3 minutes to complete objectives and score points
+4. The drone shall properly identify the antennas' LEDs and tranmit the correct data to Earth
+5. The robot shall automatically starts using the white starting LED
+
+
+## Overview of Proposed Solution
+
+Describe the solution and how it will fulfill the specifications and constraints of this subsystem.
+
+
+##### Drone Onject Detection:
+
+To meet the listed specifcation and constrains above, the drone shall use the OpenMV H7 PLus camera. This camera is capable of detecting the crater edges, antenna-tower location, duck-like shapes, colored objects, and AprilTags. The OpenMV H7 Plus allows the drone and robot to create a rough SLAM map of the competition field within the first 20 seconds (Specification #1), locate the robot using AprilTag detection (Specification #2), locate the Astro-Ducks and antennas (Specification #3), and the color of the antennas' LED (Specification #5). The camera is lightweight with a weight of 17 grams to help stay within 250 grams (Constraint #1).
+
+
+##### Robot Object Detection: 
+
+To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identifty of the Astr-Ducks and antennas (Specifcation #3). The robot shall already know where the antennas are located on the field from the pre-created map from the www
+
+
+
+## Interface with Other Subsystems
+
+Provide detailed information about the inputs, outputs, and data transferred to other subsystems. Ensure specificity and thoroughness, clarifying the method of communication and the nature of the data transmitted.
+
+
+## 3D Model of Custom Mechanical Components
+
+Should there be mechanical elements, display diverse views of the necessary 3D models within the document. Ensure the image's readability and appropriate scaling. Offer explanations as required.
+
+
+## Buildable Schematic 
+
+Integrate a buildable electrical schematic directly into the document. If the diagram is unreadable or improperly scaled, the supervisor will deny approval. Divide the diagram into sections if the text and components seem too small.
+
+The schematic should be relevant to the design and provide ample details necessary for constructing the model. It must be comprehensive so that someone, with no prior knowledge of the design, can easily understand it. Each related component's value and measurement should be clearly mentioned.
+
+
+## Printed Circuit Board Layout
+
+Include a manufacturable printed circuit board layout.
+
+
+## Flowchart
+
+For sections including a software component, produce a chart that demonstrates the decision-making process of the microcontroller. It should provide an overview of the device's function without exhaustive detail.
+
+
+## BOM
+
+Provide a comprehensive list of all necessary components along with their prices and the total cost of the subsystem. This information should be presented in a tabular format, complete with the manufacturer, part number, distributor, distributor part number, quantity, price, and purchasing website URL. If the component is included in your schematic diagram, ensure inclusion of the component name on the BOM (i.e R1, C45, U4).
+
+## Analysis
+
+Deliver a full and relevant analysis of the design demonstrating that it should meet the constraints and accomplish the intended function. This analysis should be comprehensive and well articulated for persuasiveness.
+
+## References
+
+All sources that have contributed to the detailed design and are not considered common knowledge should be duly cited, incorporating multiple references.
