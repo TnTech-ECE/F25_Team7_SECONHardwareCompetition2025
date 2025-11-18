@@ -66,16 +66,23 @@ In order to meet the specifications and constraints, object detection is broken 
 
 To meet the listed specifcation and constrains above, the drone shall use the ESP32-S3 Sense. This camera is capable of detecting the crater edges, antenna-tower location, duck-like shapes, colored objects, and AprilTags. The ESP32-S3 allows the drone and robot to create a rough SLAM map of the competition field within the first 20 seconds (Specification #1), locate the robot using AprilTag detection (Specification #2), locate the Astro-Ducks and antennas (Specification #3), and the color of the antennas' LED (Specification #5). The camera is very lightweight with a weight of 6.6 grams to help stay within 250 grams limit of the drone (Constraint #1).
 
-![image]() --- image of ESP32-S3
+The image below is of the ESP32-S3 Sense:
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/ESP32_S3.png)
 
 
 ##### Robot Object Detection: 
 
 To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identifty of the Astr-Ducks and antennas (Specifcation #3). The robot shall already know where the antennas are located on the field from the pre-created map of the competition arena. By already knowing which antenna is where on the competition arean, the specific task of each antenna is already known. The robot shall navigate to drone where it uses it onboard Intel RealSense camera and Garmin LiDAR sensors to correctly position and algin itself with whichever antenna task is at hand (Specification #4).The robot shall aslo be equipped with a 5mm GL5528 Photoresistor to detect the starting LED for autonomous starting (Specification #6).
 
-![image]() --- image of Intel RealSense
+The image below is of the Intel RealSense:
 
-![image]() --- image of Garmin LiDAR
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Intel%20RealSense%20D435.jpg)
+
+
+The image below is of the Garmin LiDAR:
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Garmin%20LiDAR%20Lite%20v4.webp)
 
 
 
