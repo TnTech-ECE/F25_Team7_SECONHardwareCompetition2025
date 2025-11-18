@@ -152,7 +152,42 @@ The Object Detection subsystem communicates extensively with nearly every major 
   - Alows mission-level decision making
   - Support path planning and object prioritization
   - Enables SLAM updates based on visual beaconing
-        
+
+### *Interface with Navigation Subsystem:*
+
+##### Outputs from Object Detection
+  - Approximate (x,y) coordinates of detected objects
+      - Converted from image-space to world-space using camera calibration
+  - Obstacle detections
+      - Flags geometric shapes or unexpected objects in the competition arena
+  - Distance-to-object estimates
+
+##### Communication Method
+  - ROS2 TF messages
+  - Pose updates to "/nav/object_positions"
+
+##### Purpose
+  - Allows Navigation to generate a path directly to the antenna of duck
+  - Real-time obstacle avoidance
+  - Link visual detections with wheel odometry and  IMU data
+
+
+### *Interface with Local Controller*
+
+##### Outputs
+  - Final target pixel alignment values
+      - Used for fine-positioning near an object
+      - Example: "Object is 24 pixels left of center. Rotate left 3 deg"
+  - Target distance
+      - Enables precise approach maneuvers when stopping in front of an antenna
+
+##### Communication Method
+  - ROS2 topic or serial pass-through direct message
+
+##### Purpose
+  - Allow the robot to precisely align itself with the antenna for task completion
+  - Ensure smooth docking and payload-level precision
+    
 
 
 ## 3D Model of Custom Mechanical Components
