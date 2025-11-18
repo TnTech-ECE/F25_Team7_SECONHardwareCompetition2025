@@ -59,23 +59,100 @@ Every subsystem must incorporate at least one constraint stemming from standards
 
 ## Overview of Proposed Solution
 
-Describe the solution and how it will fulfill the specifications and constraints of this subsystem.
+In order to meet the specifications and constraints, object detection is broken up into two main groups. The first being the drone's object detection system with the other being the robot's object detection.
 
 
 ##### Drone Onject Detection:
 
-To meet the listed specifcation and constrains above, the drone shall use the OpenMV H7 PLus camera. This camera is capable of detecting the crater edges, antenna-tower location, duck-like shapes, colored objects, and AprilTags. The OpenMV H7 Plus allows the drone and robot to create a rough SLAM map of the competition field within the first 20 seconds (Specification #1), locate the robot using AprilTag detection (Specification #2), locate the Astro-Ducks and antennas (Specification #3), and the color of the antennas' LED (Specification #5). The camera is lightweight with a weight of 17 grams to help stay within 250 grams (Constraint #1).
+To meet the listed specifcation and constrains above, the drone shall use the ESP32-S3 Sense. This camera is capable of detecting the crater edges, antenna-tower location, duck-like shapes, colored objects, and AprilTags. The ESP32-S3 allows the drone and robot to create a rough SLAM map of the competition field within the first 20 seconds (Specification #1), locate the robot using AprilTag detection (Specification #2), locate the Astro-Ducks and antennas (Specification #3), and the color of the antennas' LED (Specification #5). The camera is very lightweight with a weight of 6.6 grams to help stay within 250 grams limit of the drone (Constraint #1).
+
+![image]() --- image of ESP32-S3
 
 
 ##### Robot Object Detection: 
 
-To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identifty of the Astr-Ducks and antennas (Specifcation #3). The robot shall already know where the antennas are located on the field from the pre-created map from the www
+To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identifty of the Astr-Ducks and antennas (Specifcation #3). The robot shall already know where the antennas are located on the field from the pre-created map of the competition arena. By already knowing which antenna is where on the competition arean, the specific task of each antenna is already known. The robot shall navigate to drone where it uses it onboard Intel RealSense camera and Garmin LiDAR sensors to correctly position and algin itself with whichever antenna task is at hand (Specification #4).The robot shall aslo be equipped with a 5mm GL5528 Photoresistor to detect the starting LED for autonomous starting (Specification #6).
+
+![image]() --- image of Intel RealSense
+
+![image]() --- image of Garmin LiDAR
 
 
 
 ## Interface with Other Subsystems
 
-Provide detailed information about the inputs, outputs, and data transferred to other subsystems. Ensure specificity and thoroughness, clarifying the method of communication and the nature of the data transmitted.
+The Object Detection subsystem communicates extensively with nearly every major subsystem within the robot–drone architecture. Its primary role is to convert raw camera data into meaningful, actionable information such as object identity, object location, antenna LED color, and task classification. The following subsections provide detailed descriptions of all inputs, outputs, data formats, communication methods, and the exact purpose of each data transfer.
+
+### *Interface with Drone Vision:*
+
+##### Inputs to Object Detection
+  - Low-resolution grayscale frames (160x120) for SLAM initalization
+  - High-resolution RGB frames (320x240 or 640x480) for object detection
+
+##### Communication Method
+  - Wi-Fi UDP or TCP stream using the drone's ESP32-S3
+  - Images are packeted and fowarded to robot's communication subsytem
+
+##### Purpose
+  - Provide real-time ariel imagery of the areana
+  - Detect the Astro-Ducks, antennas, crater, and basic arena geometry
+  - Initialize SLAM map for global controller subsystem
+
+### *Interface with Communication Subsystem:*
+
+##### Inputs to Object Detection
+  - Image packets from the Crazyflie 2.1+ drone
+  - Robot Intel RealSense camera frames
+  - Status messages from global controller
+
+##### Outputs from Object Detection
+  - Compressed detection results
+      - Object class (duck, antenna, dish, ...)
+      - Bounding box coordinates (x_min, y_min, width, height)
+      - Confidence score
+      - Object height classification
+      - LED color classification (red, blue, green, white)
+  - Feature points for SLAM map
+      - ORB/FAST keypoints
+      - Known landmark coordinates (crater rim, walls, antennas)
+
+##### Communication Method
+  - ROS2 topics or TCP messaging to the communicatins stack
+  - JSON or Protobuf for lightweight transmission
+
+##### Purpose
+  - Allows global controller to merger detected objects with navigation and SLAM data
+  - Maintain consistent communucation between drone, robot sensors, and processing nodes.
+
+### *Interface with Global Controller:*
+
+##### Outputs to Global Controller
+  - Object Identification Data
+      - Object type: duck or antenna
+      - Task type inference: button, pressure plate, crank, keypad
+  - Object Position Data
+      - Pixel-space coordinates
+      - Depth estimation
+  - Antenna LED Color
+      - Dominant HSV region classification output
+      - Timestamping for synchronization
+  - SLAM Initialization Features
+      - Crater center detection
+      - Boundary detections
+      - Fiducial points
+
+##### Communication Method
+  - ROS2 topic: /object_detection/results
+  - Global Controller publishes callbacks
+      - "Naviagate to this coordinate"
+      - "This object belongs to task #3"
+      - "Update global map"
+
+##### Purpose
+  - Alows mission-level decision making
+  - Support path planning and object prioritization
+  - Enables SLAM updates based on visual beaconing
+        
 
 
 ## 3D Model of Custom Mechanical Components
@@ -90,9 +167,7 @@ Integrate a buildable electrical schematic directly into the document. If the di
 The schematic should be relevant to the design and provide ample details necessary for constructing the model. It must be comprehensive so that someone, with no prior knowledge of the design, can easily understand it. Each related component's value and measurement should be clearly mentioned.
 
 
-## Printed Circuit Board Layout
 
-Include a manufacturable printed circuit board layout.
 
 
 ## Flowchart
