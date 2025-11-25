@@ -1,0 +1,9 @@
+Updates:
+Aiden - I'm behind and need to update the subsystem without an Arduino Nano BLE
+Jane - Not Finished (Might be wrong, but will be fixed) - but bulk is complete
+Atra Niese - Doing good, not as much work because of her subsystem, but still working on how the interface should be formatted. And needs to do an analysis.
+Torsten - Almost done, great paper, and a very good schematic. Just needs to do BOM.
+Trevor and Angela are not here :(
+
+Discussions:
+Arduino in LLC will be powered by USB and will use USB to communicate with the Jetson
