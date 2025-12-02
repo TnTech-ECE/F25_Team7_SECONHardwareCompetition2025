@@ -198,17 +198,11 @@ The Object Detection subsystem communicates extensively with nearly every major 
 ### *Interface with Safety and Power:*
 
 #### Outputs
- - Sends glag if camrea fails or image quality drops
+ - Sends flag if camera fails or image quality drops
 
 #### Purpose
  - Fail-safe operation
  - Allows the robot to fall back to default waypoint navigation if camera becomes unavailable
-    
-
-
-## 3D Model of Custom Mechanical Components
-
-Should there be mechanical elements, display diverse views of the necessary 3D models within the document. Ensure the image's readability and appropriate scaling. Offer explanations as required.
 
 
 ## Buildable Schematic 
@@ -217,10 +211,12 @@ Integrate a buildable electrical schematic directly into the document. If the di
 
 The schematic should be relevant to the design and provide ample details necessary for constructing the model. It must be comprehensive so that someone, with no prior knowledge of the design, can easily understand it. Each related component's value and measurement should be clearly mentioned.
 
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Pinout_ESP32.png)
 
-## Printed Circuit Board Layout
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Phtotoresistor%20Circuit.webp)
 
-Include a manufacturable printed circuit board layout.
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Phtotoresistor%20Circuit%202.webp)
+
 
 
 ## Flowchart
@@ -232,10 +228,19 @@ For sections including a software component, produce a chart that demonstrates t
 
 Provide a comprehensive list of all necessary components along with their prices and the total cost of the subsystem. This information should be presented in a tabular format, complete with the manufacturer, part number, distributor, distributor part number, quantity, price, and purchasing website URL. If the component is included in your schematic diagram, ensure inclusion of the component name on the BOM (i.e R1, C45, U4).
 
+
+| Item                          | Quantity | Cost Per  | Total     | URL |
+|------------------------------|----------|-----------|-----------|-----|
+| Intel RealSense D435 RGBD    | 1        | $322.50   | $322.50   | [Link](https://www.digikey.com/en/products/detail/realsense/82635AWGDVKPMP/9926003gclid=e94e5a4519a81e0a76cf336a387962ef&gclsrc=3p.ds&msclkid=e94e5a4519a81e0a76cf336a387962ef) |
+| Garmin LIDAR-Lite v4 LED     | 3        | $59.99    | $179.97   | [Link](https://www.garmin.com/en-US/p/610275/) |
+| Photoresistor GL12528 (set)  | 10       | $22.98    | $22.98    | [Link](https://www.amazon.com/Juried-Engineering-Photoresistor-GL12528-Sensitive/dp/B08F3WPNPF) |
+| Seeed Studio XIAO ESP32-S3 Sense | 1    | $12.59    | $12.59    | [Link](https://www.seeedstudio.com/XIAO-ESP32S3-Sense-p-5639.html) |
+|  | || **$538.04**||
+
+
 ## Analysis
 
 Deliver a full and relevant analysis of the design demonstrating that it should meet the constraints and accomplish the intended function. This analysis should be comprehensive and well articulated for persuasiveness.
 
 ## References
 
-All sources that have contributed to the detailed design and are not considered common knowledge should be duly cited, incorporating multiple references.
