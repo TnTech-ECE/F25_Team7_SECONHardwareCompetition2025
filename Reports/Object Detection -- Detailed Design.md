@@ -179,7 +179,7 @@ The Object Detection subsystem communicates extensively with nearly every major 
   - Link visual detections with wheel odometry and  IMU data
 
 
-### *Interface with Local Controller*
+### *Interface with Local Controller:*
 
 ##### Outputs
   - Final target pixel alignment values
@@ -195,7 +195,7 @@ The Object Detection subsystem communicates extensively with nearly every major 
   - Allow the robot to precisely align itself with the antenna for task completion
   - Ensure smooth docking and payload-level precision
 
-### *Interface with Safety and Power*
+### *Interface with Safety and Power:*
 
 ##### Outputs
  - Sends glag if camrea fails or image quality drops
