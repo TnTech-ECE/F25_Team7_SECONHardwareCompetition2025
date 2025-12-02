@@ -194,6 +194,15 @@ The Object Detection subsystem communicates extensively with nearly every major 
 ##### Purpose
   - Allow the robot to precisely align itself with the antenna for task completion
   - Ensure smooth docking and payload-level precision
+
+### *Interface with Safety and Power*
+
+##### Outputs
+ - Sends glag if camrea fails or image quality drops
+
+##### Purpose
+ - Fail-safe operation
+ - Allows the robot to fall back to default waypoint navigation if camera becomes unavailable
     
 
 
