@@ -92,27 +92,27 @@ The Object Detection subsystem communicates extensively with nearly every major 
 
 ### *Interface with Drone Vision:*
 
-##### Inputs to Object Detection
+#### Inputs to Object Detection
   - Low-resolution grayscale frames (160x120) for SLAM initalization
   - High-resolution RGB frames (320x240 or 640x480) for object detection
 
-##### Communication Method
+#### Communication Method
   - Wi-Fi UDP or TCP stream using the drone's ESP32-S3
   - Images are packeted and fowarded to robot's communication subsytem
 
-##### Purpose
+#### Purpose
   - Provide real-time ariel imagery of the areana
   - Detect the Astro-Ducks, antennas, crater, and basic arena geometry
   - Initialize SLAM map for global controller subsystem
 
 ### *Interface with Communication Subsystem:*
 
-##### Inputs to Object Detection
+#### Inputs to Object Detection
   - Image packets from the Crazyflie 2.1+ drone
   - Robot Intel RealSense camera frames
   - Status messages from global controller
 
-##### Outputs from Object Detection
+#### Outputs from Object Detection
   - Compressed detection results
       - Object class (duck, antenna, dish, ...)
       - Bounding box coordinates (x_min, y_min, width, height)
@@ -123,17 +123,17 @@ The Object Detection subsystem communicates extensively with nearly every major 
       - ORB/FAST keypoints
       - Known landmark coordinates (crater rim, walls, antennas)
 
-##### Communication Method
+#### Communication Method
   - ROS2 topics or TCP messaging to the communicatins stack
   - JSON or Protobuf for lightweight transmission
 
-##### Purpose
+#### Purpose
   - Allows global controller to merger detected objects with navigation and SLAM data
   - Maintain consistent communucation between drone, robot sensors, and processing nodes.
 
 ### *Interface with Global Controller:*
 
-##### Outputs to Global Controller
+#### Outputs to Global Controller
   - Object Identification Data
       - Object type: duck or antenna
       - Task type inference: button, pressure plate, crank, keypad
@@ -148,21 +148,21 @@ The Object Detection subsystem communicates extensively with nearly every major 
       - Boundary detections
       - Fiducial points
 
-##### Communication Method
+#### Communication Method
   - ROS2 topic: /object_detection/results
   - Global Controller publishes callbacks
       - "Naviagate to this coordinate"
       - "This object belongs to task #3"
       - "Update global map"
 
-##### Purpose
+#### Purpose
   - Alows mission-level decision making
   - Support path planning and object prioritization
   - Enables SLAM updates based on visual beaconing
 
 ### *Interface with Navigation Subsystem:*
 
-##### Outputs from Object Detection
+#### Outputs from Object Detection
   - Approximate (x,y) coordinates of detected objects
       - Converted from image-space to world-space using camera calibration
   - Obstacle detections
@@ -173,7 +173,7 @@ The Object Detection subsystem communicates extensively with nearly every major 
   - ROS2 TF messages
   - Pose updates to "/nav/object_positions"
 
-##### Purpose
+#### Purpose
   - Allows Navigation to generate a path directly to the antenna of duck
   - Real-time obstacle avoidance
   - Link visual detections with wheel odometry and  IMU data
@@ -181,26 +181,26 @@ The Object Detection subsystem communicates extensively with nearly every major 
 
 ### *Interface with Local Controller:*
 
-##### Outputs
+#### Outputs
   - Final target pixel alignment values
       - Used for fine-positioning near an object
       - Example: "Object is 24 pixels left of center. Rotate left 3 deg"
   - Target distance
       - Enables precise approach maneuvers when stopping in front of an antenna
 
-##### Communication Method
+#### Communication Method
   - ROS2 topic or serial pass-through direct message
 
-##### Purpose
+#### Purpose
   - Allow the robot to precisely align itself with the antenna for task completion
   - Ensure smooth docking and payload-level precision
 
 ### *Interface with Safety and Power:*
 
-##### Outputs
+#### Outputs
  - Sends glag if camrea fails or image quality drops
 
-##### Purpose
+#### Purpose
  - Fail-safe operation
  - Allows the robot to fall back to default waypoint navigation if camera becomes unavailable
     
