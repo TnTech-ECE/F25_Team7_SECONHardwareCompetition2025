@@ -3,7 +3,13 @@
 
 The Power Subsystem is responsible for storing, converting, distributing, and protecting electrical energy for the entire robot. It supplies:
 
-- How the specific subsystem integrates within the broader solution
+- 	The 24 V drivetrain motors (Pololu 150:1 37D 24 V metal gearmotors with encoders).
+-	The motor drivers (Pololu Dual VNH5019 motor driver shield).
+-	The Jetson Orin Nano global controller, and Arduino nano as the supporting microcontroller.
+-	All sensors, servos, and auxiliary electronics listed in the PowerSheet.
+
+
+
 - The constraints and specifications relevant to the subsystem
 - The rationale behind each crucial design decision
 - The procedure for constructing the solution
