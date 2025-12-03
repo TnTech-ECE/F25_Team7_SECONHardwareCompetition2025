@@ -73,7 +73,7 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 
 - **Efficiency & runtime targets:**
 
-# Safety, Standards, and Ethical Constraints
+## Safety, Standards, and Ethical Constraints
 
 - **Over-current protection:**
   - Input fuse sized to ~1.25–1.5× nominal battery current to protect wiring and downstream circuitry.
