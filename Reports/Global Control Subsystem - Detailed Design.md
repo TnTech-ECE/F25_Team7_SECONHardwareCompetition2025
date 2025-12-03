@@ -2,7 +2,7 @@
 
 ## Function of the Subsystem
 
-The function of the global control system is to allow the robot to collected and process data about the its envirnment and 
+The function of the global control system is to allow the robot to collected and process data about its environment. It will host the AI processes, ROS middleware, and decision algorithms needed for the robot and UAV to complete their tasks.   
 
 ## Specifications and Constraints
 
