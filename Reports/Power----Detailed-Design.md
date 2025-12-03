@@ -222,19 +222,15 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 ### 1) Can the Zeee 3S LiPo power the whole system?
 
 - **Energy:**  
-  \( 11.1\ \text{V} \times 5.2\ \text{Ah} \approx 57.7\ \text{Wh} \)
+  11.1V * 5.2Ah ~ 57.7Wh
 
 - **Runtime estimate:**  
   Estimated average power: **365 W**  
   Overall efficiency: **~80%**  
-  \[
-  \text{Runtime} = \frac{57.7\ \text{Wh} \times 0.8}{365\ \text{W}}
-  = 0.1265\ \text{hours} \approx 7.6\ \text{minutes}
-  \]
-
+  Is ~ (57.7 Wh × 0.8) / 365 W = 0.1265 hours. Runtime is ≈ 7.6 minutes.
 - **Conclusion:**  
   The 80C rating provides ample current headroom.  
-  The limitation is **energy capacity**, not current capability.
+  The limitation is keeping runtime under 3 minutes, not current capability.
 
 ---
 
@@ -256,16 +252,12 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 ### 3) Boost converter stresses
 
 - **Output power:**  
-  \[
-  P_{\text{out}} = 24\ \text{V} \times 16\ \text{A} = 384\ \text{W}
-  \]
-
+  - At 24 V and 16 A, output power is 384 W.
+  
 - **Battery current needed:**  
-  Assuming 90% converter efficiency:  
-  \[
-  I_{\text{bat}} \approx \frac{384}{0.9 \times 11.1} \approx 38.4\ \text{A}
-  \]
-
+  Assuming 90% converter efficiency:
+   - Battery current ≈ 384 / (0.9 × 11.1) ≈ 38.4 A.
+  
 - **Implications for component selection:**  
   - Battery connectors (XT60 rated ~60 A)  
   - Fuse (slightly above max continuous current)  
