@@ -212,8 +212,16 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
     - Optional temperature sensors on boost converter & motor driver heatsinks
 
 ## Buildable Schematic
+
+![Buildable Schematic](Images/BulidSchem.png)
+
 ## Printed Circuit Board Layout
+
+![Printed Circuit Board Layout](Images/PCB_Layout.png)
+
 ## Flowchart (Power-Up and E-Stop Behavior)
+
+![Flowchart](Images/BlockDiagram.png)
 
 ## Analysis of Crucial Design Decisions
 
