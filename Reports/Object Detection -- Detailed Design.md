@@ -15,7 +15,7 @@ The team should set specifications for each subsystem. These specifications may 
 Every subsystem must incorporate at least one constraint stemming from standards, ethics, or socio-economic factors.
 
 
-### Specifcations:
+### Specifications:
 
 1. The drone and robot shall create a SLAM map of the competition within 20 seconds
 2. The drone shall locate and navigate the robot
@@ -28,7 +28,7 @@ Every subsystem must incorporate at least one constraint stemming from standards
 1. The drone shall not weigh more than 250 grams or 0.55 pounds
 2. The drone shall not move outisde of the netted playing field
 3. The robot and drone shall have a maximum of 3 minutes to complete objectives and score points
-4. The drone shall properly identify the antennas' LEDs and tranmit the correct data to Earth
+4. The drone shall properly identify the antennas' LEDs and transmit the correct data to Earth
 5. The robot shall automatically starts using the white starting LED
 
 
@@ -37,9 +37,9 @@ Every subsystem must incorporate at least one constraint stemming from standards
 In order to meet the specifications and constraints, object detection is broken up into two main groups. The first being the drone's object detection system with the other being the robot's object detection.
 
 
-##### Drone Onject Detection:
+##### Drone Object Detection:
 
-To meet the listed specifcation and constrains above, the drone shall use the ESP32-S3 Sense. This camera is capable of detecting the crater edges, antenna-tower location, duck-like shapes, colored objects, and AprilTags. The ESP32-S3 allows the drone and robot to create a rough SLAM map of the competition field within the first 20 seconds (Specification #1), locate the robot using AprilTag detection (Specification #2), locate the Astro-Ducks and antennas (Specification #3), and the color of the antennas' LED (Specification #5). The camera is very lightweight with a weight of 6.6 grams to help stay within 250 grams limit of the drone (Constraint #1).
+To meet the listed specification and constraints above, the drone shall use the ESP32-S3 Sense. This camera is capable of detecting the crater edges, antenna-tower location, duck-like shapes, colored objects, and AprilTags. The ESP32-S3 allows the drone and robot to create a rough SLAM map of the competition field within the first 20 seconds (Specification #1), locate the robot using AprilTag detection (Specification #2), locate the Astro-Ducks and antennas (Specification #3), and the color of the antennas' LED (Specification #5). The camera is very lightweight with a weight of 6.6 grams to help stay within 250 grams limit of the drone (Constraint #1).
 
 The image below is of the ESP32-S3 Sense:
 
@@ -48,7 +48,7 @@ The image below is of the ESP32-S3 Sense:
 
 ##### Robot Object Detection: 
 
-To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identifty of the Astr-Ducks and antennas (Specifcation #3). The robot shall already know where the antennas are located on the field from the pre-created map of the competition arena. By already knowing which antenna is where on the competition arean, the specific task of each antenna is already known. The robot shall navigate to drone where it uses it onboard Intel RealSense camera and Garmin LiDAR sensors to correctly position and algin itself with whichever antenna task is at hand (Specification #4).The robot shall aslo be equipped with a 12mm GL12528 Photoresistor to detect the starting LED for autonomous starting (Specification #6).
+To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identify of the Astr-Ducks and antennas (Specification #3). The robot shall already know where the antennas are located on the field from the pre-created map of the competition arena. By already knowing which antenna is where on the competition arena, the specific task of each antenna is already known. The robot shall navigate to the drone where it uses it onboard Intel RealSense camera and Garmin LiDAR sensors to correctly position and align itself with whichever antenna task is at hand (Specification #4).The robot shall aslo be equipped with a 12mm GL12528 Photoresistor to detect the starting LED for autonomous starting (Specification #6).
 
 The image below is of the Intel RealSense:
 
@@ -68,7 +68,7 @@ The Object Detection subsystem communicates extensively with nearly every major 
 ### *Interface with Drone Vision:*
 
   - **Inputs to Object Detection**
-    - Low-resolution grayscale frames (160x120) for SLAM initalization
+    - Low-resolution grayscale frames (160x120) for SLAM initialization
     - High-resolution RGB frames (320x240 or 640x480) for object detection
 
   - **Communication Method**
@@ -76,7 +76,7 @@ The Object Detection subsystem communicates extensively with nearly every major 
     - Images are packeted and fowarded to robot's communication subsytem
 
   - **Purpose**
-    - Provide real-time ariel imagery of the areana
+    - Provide real-time aeriel imagery of the arena
     - Detect the Astro-Ducks, antennas, crater, and basic arena geometry
     - Initialize SLAM map for global controller subsystem
 
@@ -99,12 +99,12 @@ The Object Detection subsystem communicates extensively with nearly every major 
         - Known landmark coordinates (crater rim, walls, antennas)
 
   - **Communication Method**
-    - ROS2 topics or TCP messaging to the communicatins stack
+    - ROS2 topics or TCP messaging to the communications stack
     - JSON or Protobuf for lightweight transmission
 
   - **Purpose**
     - Allows global controller to merger detected objects with navigation and SLAM data
-    - Maintain consistent communucation between drone, robot sensors, and processing nodes.
+    - Maintain consistent communication between drone, robot sensors, and processing nodes.
 
 ### *Interface with Global Controller:*
 
@@ -364,7 +364,7 @@ By combining known coordinates from the map with RealSense and LiDAR measurement
 The ESP32-S3 Sense supports capturing RGB imagery at moderate resolution, which is sufficient for LED color classification. The object detection subsystem can employ simple color segmentation (e.g., HSV thresholding) around known antenna LED regions to classify LEDs as red, blue, green, or white. Because the drone views LEDs from above and from a distance, this task is kept algorithmically lightweight and can be integrated into the drone’s frame processing before transmission or performed on the robot after receiving the images. Either approach enables the system to meet the LED color identification requirement without overloading the drone.
 
 
-#### Specifcation #6 -- The drone and robot shall automatically starting using the LED bar on the competition board
+#### Specification #6 -- The drone and robot shall automatically start using the LED bar on the competition board
 On the robot, the 12mm GL12528 photoresistor is dedicated to detecting the starting LED on the competition board. This sensor provides a simple, reliable analog indication that the start signal has been activated. The local controller can monitor the photoresistor voltage and automatically transition the robot from idle to autonomous mode once the white starting LED is detected, fulfilling the autonomous starting requirement without imposing additional computational load on the camera-based detection pipeline.
 
 
@@ -386,10 +386,10 @@ All selected algorithms and sensors are chosen with latency and throughput in mi
 This ensures that object detection produces actionable results quickly enough for the global controller and navigation subsystem to complete objectives and scoring within the three-minute window.
 
 
-#### Constraint #4 -- The drone shall properly identify the antennas' LEDs and tranmit the correct data to Earth
+#### Constraint #4 -- The drone shall properly identify the antennas' LEDs and transmit the correct data to Earth
 For antenna LEDs, the design uses a combination of color segmentation and known antenna positions to robustly assign LED colors to specific antenna IDs. The communication interface between the object detection subsystem, communication stack, and Earth base uses structured messages. This prevents misinterpretation of data and reduces the risk of ambiguous or corrupted messages influencing mission decisions.
 
-#### Constraint #5 -- The drone shall properly identify the antennas' LEDs and tranmit the correct data to Earth
+#### Constraint #5 – The robot shall automatically starts using the white starting LED
 The dedicated photoresistor for start LED detection provides a simple, robust, and low-cost solution. It is electrically and functionally isolated from the more complex camera-based object detection pipeline, which improves reliability. In combination with software safeguards in the local controller, this ensures the robot begins motion only when a valid start signal is present.
 
 
