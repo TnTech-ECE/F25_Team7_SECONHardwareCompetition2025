@@ -224,8 +224,8 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 - Pcb layout is still in progress due to learning curve and last minute revisions.
 - Still Need:
   - Ground terminal to robot frame.
-  - appropriately placed heat dissipating vias.
-  - optimal traces and planes for the high currnt draw.
+  - Appropriately placed heat dissipating vias.
+  - Optimal traces and planes for the high currnt draw.
 ## Flowchart (Power-Up and E-Stop Behavior)
 
 ![Flowchart](Images/BlockDiagram.png)
@@ -330,7 +330,7 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 
 
 ## Bill Of Materials
-
+![BOM](Images/BOM.png)
 ## References
 
 Batteries & Connectors
