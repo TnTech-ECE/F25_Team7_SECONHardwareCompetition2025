@@ -1,7 +1,7 @@
 # Power Subsystem
 
 
-This document delineates the objectives of a comprehensive system design. Upon reviewing this design, the reader should have a clear understanding of:
+The Power Subsystem is responsible for storing, converting, distributing, and protecting electrical energy for the entire robot. It supplies:
 
 - How the specific subsystem integrates within the broader solution
 - The constraints and specifications relevant to the subsystem
