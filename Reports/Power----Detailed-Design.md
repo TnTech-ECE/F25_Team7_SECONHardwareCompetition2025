@@ -73,7 +73,7 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 
 - **Efficiency & runtime targets:**
 ![Efficiency](Images/Efficiency.png)
-- -	Runtime goal: ≥ 3 minutes at average power 60W.
+- 	Runtime goal: ≥ 3 minutes at average power 60W.
 
 ## Safety, Standards, and Ethical Constraints
 
