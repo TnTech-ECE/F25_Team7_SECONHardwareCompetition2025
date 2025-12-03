@@ -1,29 +1,4 @@
-# Detailed Design
-
-This document delineates the objectives of a comprehensive system design. Upon reviewing this design, the reader should have a clear understanding of:
-
-- How the specific subsystem integrates within the broader solution
-- The constraints and specifications relevant to the subsystem
-- The rationale behind each crucial design decision
-- The procedure for constructing the solution
-
-
-## General Requirements for the Document
-
-The document should include:
-
-- Explanation of the subsystem’s integration within the overall solution
-- Detailed specifications and constraints specific to the subsystem
-- Synopsis of the suggested solution
-- Interfaces to other subsystems
-- 3D models of customized mechanical elements*
-- A buildable diagram*
-- A Printed Circuit Board (PCB) design layout*
-- An operational flowchart*
-- A comprehensive Bill of Materials (BOM)
-- Analysis of crucial design decisions
-
-*Note: These technical documentation elements are mandatory only when relevant to the particular subsystem.
+# Object Detection Detailed Design
 
 
 ## Function of the Subsystem
@@ -92,142 +67,258 @@ The Object Detection subsystem communicates extensively with nearly every major 
 
 ### *Interface with Drone Vision:*
 
-#### Inputs to Object Detection
-  - Low-resolution grayscale frames (160x120) for SLAM initalization
-  - High-resolution RGB frames (320x240 or 640x480) for object detection
+  - **Inputs to Object Detection**
+    - Low-resolution grayscale frames (160x120) for SLAM initalization
+    - High-resolution RGB frames (320x240 or 640x480) for object detection
 
-#### Communication Method
-  - Wi-Fi UDP or TCP stream using the drone's ESP32-S3
-  - Images are packeted and fowarded to robot's communication subsytem
+  - **Communication Method**
+    - Wi-Fi UDP or TCP stream using the drone's ESP32-S3
+    - Images are packeted and fowarded to robot's communication subsytem
 
-#### Purpose
-  - Provide real-time ariel imagery of the areana
-  - Detect the Astro-Ducks, antennas, crater, and basic arena geometry
-  - Initialize SLAM map for global controller subsystem
+  - **Purpose**
+    - Provide real-time ariel imagery of the areana
+    - Detect the Astro-Ducks, antennas, crater, and basic arena geometry
+    - Initialize SLAM map for global controller subsystem
 
 ### *Interface with Communication Subsystem:*
 
-#### Inputs to Object Detection
-  - Image packets from the Crazyflie 2.1+ drone
-  - Robot Intel RealSense camera frames
-  - Status messages from global controller
+  - **Inputs to Object Detection**
+    - Image packets from the Crazyflie 2.1+ drone
+    - Robot Intel RealSense camera frames
+    - Status messages from global controller
 
-#### Outputs from Object Detection
-  - Compressed detection results
-      - Object class (duck, antenna, dish, ...)
-      - Bounding box coordinates (x_min, y_min, width, height)
-      - Confidence score
-      - Object height classification
-      - LED color classification (red, blue, green, white)
-  - Feature points for SLAM map
-      - ORB/FAST keypoints
-      - Known landmark coordinates (crater rim, walls, antennas)
+  - **Outputs from Object Detection**
+    - Compressed detection results
+        - Object class (duck, antenna, dish, ...)
+        - Bounding box coordinates (x_min, y_min, width, height)
+        - Confidence score
+        - Object height classification
+        - LED color classification (red, blue, green, white)
+    - Feature points for SLAM map
+        - ORB/FAST keypoints
+        - Known landmark coordinates (crater rim, walls, antennas)
 
-#### Communication Method
-  - ROS2 topics or TCP messaging to the communicatins stack
-  - JSON or Protobuf for lightweight transmission
+  - **Communication Method**
+    - ROS2 topics or TCP messaging to the communicatins stack
+    - JSON or Protobuf for lightweight transmission
 
-#### Purpose
-  - Allows global controller to merger detected objects with navigation and SLAM data
-  - Maintain consistent communucation between drone, robot sensors, and processing nodes.
+  - **Purpose**
+    - Allows global controller to merger detected objects with navigation and SLAM data
+    - Maintain consistent communucation between drone, robot sensors, and processing nodes.
 
 ### *Interface with Global Controller:*
 
-#### Outputs to Global Controller
-  - Object Identification Data
-      - Object type: duck or antenna
-      - Task type inference: button, pressure plate, crank, keypad
-  - Object Position Data
-      - Pixel-space coordinates
-      - Depth estimation
-  - Antenna LED Color
-      - Dominant HSV region classification output
-      - Timestamping for synchronization
-  - SLAM Initialization Features
-      - Crater center detection
-      - Boundary detections
-      - Fiducial points
+  - **Outputs to Global Controller**
+    - Object Identification Data
+        - Object type: duck or antenna
+        - Task type inference: button, pressure plate, crank, keypad
+    - Object Position Data
+        - Pixel-space coordinates
+        - Depth estimation
+    - Antenna LED Color
+        - Dominant HSV region classification output
+        - Timestamping for synchronization
+    - SLAM Initialization Features
+        - Crater center detection
+        - Boundary detections
+        - Fiducial points
 
-#### Communication Method
-  - ROS2 topic: /object_detection/results
-  - Global Controller publishes callbacks
-      - "Naviagate to this coordinate"
-      - "This object belongs to task #3"
-      - "Update global map"
+  - **Communication Method**
+    - ROS2 topic: /object_detection/results
+    - Global Controller publishes callbacks
+        - "Naviagate to this coordinate"
+        - "This object belongs to task #3"
+        - "Update global map"
 
-#### Purpose
-  - Alows mission-level decision making
-  - Support path planning and object prioritization
-  - Enables SLAM updates based on visual beaconing
+  - **Purpose**
+    - Alows mission-level decision making
+    - Support path planning and object prioritization
+    - Enables SLAM updates based on visual beaconing
 
 ### *Interface with Navigation Subsystem:*
 
-#### Outputs from Object Detection
-  - Approximate (x,y) coordinates of detected objects
-      - Converted from image-space to world-space using camera calibration
-  - Obstacle detections
-      - Flags geometric shapes or unexpected objects in the competition arena
-  - Distance-to-object estimates
+  - **Outputs from Object Detection**
+    - Approximate (x,y) coordinates of detected objects
+        - Converted from image-space to world-space using camera calibration
+    - Obstacle detections
+        - Flags geometric shapes or unexpected objects in the competition arena
+    - Distance-to-object estimates
 
-##### Communication Method
-  - ROS2 TF messages
-  - Pose updates to "/nav/object_positions"
+  - **Communication Method**
+    - ROS2 TF messages
+    - Pose updates to "/nav/object_positions"
 
-#### Purpose
-  - Allows Navigation to generate a path directly to the antenna of duck
-  - Real-time obstacle avoidance
-  - Link visual detections with wheel odometry and  IMU data
+  - **Purpose**
+    - Allows Navigation to generate a path directly to the antenna of duck
+    - Real-time obstacle avoidance
+    - Link visual detections with wheel odometry and  IMU data
 
 
 ### *Interface with Local Controller:*
 
-#### Outputs
-  - Final target pixel alignment values
-      - Used for fine-positioning near an object
-      - Example: "Object is 24 pixels left of center. Rotate left 3 deg"
-  - Target distance
-      - Enables precise approach maneuvers when stopping in front of an antenna
+  - **Outputs**
+    - Final target pixel alignment values
+        - Used for fine-positioning near an object
+        - Example: "Object is 24 pixels left of center. Rotate left 3 deg"
+    - Target distance
+        - Enables precise approach maneuvers when stopping in front of an antenna
 
-#### Communication Method
-  - ROS2 topic or serial pass-through direct message
+  - **Communication Method**
+    - ROS2 topic or serial pass-through direct message
 
-#### Purpose
-  - Allow the robot to precisely align itself with the antenna for task completion
-  - Ensure smooth docking and payload-level precision
+  - **Purpose**
+    - Allow the robot to precisely align itself with the antenna for task completion
+    - Ensure smooth docking and payload-level precision
 
 ### *Interface with Safety and Power:*
 
-#### Outputs
- - Sends flag if camera fails or image quality drops
+  - **Outputs**
+    - Sends flag if camera fails or image quality drops
 
-#### Purpose
- - Fail-safe operation
- - Allows the robot to fall back to default waypoint navigation if camera becomes unavailable
+  - **Purpose**
+    - Fail-safe operation
+    - Allows the robot to fall back to default waypoint navigation if camera becomes unavailable
 
 
 ## Buildable Schematic 
 
-Integrate a buildable electrical schematic directly into the document. If the diagram is unreadable or improperly scaled, the supervisor will deny approval. Divide the diagram into sections if the text and components seem too small.
+Below are the images of the psuedocode for the main object detection algorithms that shall be used by the robot and drone respectively.
 
-The schematic should be relevant to the design and provide ample details necessary for constructing the model. It must be comprehensive so that someone, with no prior knowledge of the design, can easily understand it. Each related component's value and measurement should be clearly mentioned.
+### Algorithm 1: Drone ESP32-S3 Image Capture and Transmission
 
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Pinout_ESP32.png)
+    BEGIN
 
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Phtotoresistor%20Circuit.webp)
+    initialize_camera_esp32()
+    initialize_wireless_link()
 
-![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Phtotoresistor%20Circuit%202.webp)
+    running = TRUE
 
+    WHILE running == TRUE DO
+
+        frame = capture_camera_frame()
+
+        IF frame == NULL THEN
+            CONTINUE
+        ENDIF
+
+        frame_compressed = compress_frame_to_jpeg(frame)
+
+        metadata.timestamp  = get_current_time()
+        metadata.frame_id   = get_next_frame_id()
+        metadata.drone_pose = read_drone_pose()
+
+        packet = build_image_packet(frame_compressed, metadata)
+        send_packet_to_ground_robot(packet)
+
+        running = check_flight_running_flag()
+
+    ENDWHILE
+
+    shutdown_camera_esp32()
+    shutdown_wireless_link()
+
+    END
+
+
+### Algorithm 2: Robot Main Object Detection Loop
+
+    BEGIN
+
+    initialize_camera()
+    initialize_drone_link()
+    model = load_yolov5_nano_model()
+
+    running = TRUE
+
+    WHILE running == TRUE DO
+
+        local_frame = capture_local_frame()
+        drone_frame = receive_drone_frame_if_available()
+
+        IF drone_frame exists THEN
+            frame_to_process = drone_frame
+        ELSE
+            frame_to_process = local_frame
+        ENDIF
+
+        IF frame_to_process == NULL THEN
+            CONTINUE
+        ENDIF
+
+        input_tensor = preprocess_image(frame_to_process)
+        raw_detections = run_yolov5_inference(model, input_tensor)
+
+        processed = process_and_estimate_pose(raw_detections, frame_to_process)
+
+        FOR each detection IN processed DO
+            msg = build_detection_message(detection)
+            send_to_global_controller(msg)
+            send_to_navigation(msg)
+        ENDFOR
+
+        running = check_system_running_flag()
+
+    ENDWHILE
+
+    shutdown_camera()
+    shutdown_drone_link()
+    unload_model(model)
+
+    END
+
+
+### ALgorithm 3: Object Detection Post-Processing and Pose Estimation
+
+
+    BEGIN
+
+    detections = []
+
+    FOR each det IN raw_detections DO
+        IF det.score < CONFIDENCE_THRESHOLD THEN CONTINUE
+        IF det.class NOT IN {DUCK, ANTENNA, TASK_OBJECT} THEN CONTINUE
+        APPEND det TO detections
+    ENDFOR
+
+    detections = non_max_suppression(detections, NMS_IOU_THRESHOLD)
+
+    processed = []
+
+    FOR each det IN detections DO
+
+        u = (det.bbox.x_min + det.bbox.x_max) / 2
+        v = (det.bbox.y_min + det.bbox.y_max) / 2
+
+        pose_world = image_point_to_world(u, v, frame)
+        pose_filtered = temporal_filter(det.class, pose_world)
+
+        record.type = det.class
+        record.bbox = det.bbox
+        record.confidence = det.score
+        record.pose_world = pose_filtered
+
+        APPEND record TO processed
+
+    ENDFOR
+
+    RETURN processed
+
+    END
 
 
 ## Flowchart
 
-For sections including a software component, produce a chart that demonstrates the decision-making process of the microcontroller. It should provide an overview of the device's function without exhaustive detail.
+### Drone Object Detection Flowchart:
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/DroneObjectDetectionFlowchart.png)
+
+
+### Robot Object Detection Flowchart: 
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/RobotObjectDetectionFlowchart.png)
+
+![image](https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Poster%20Template/Images/Robot2ObjectDetectionFlowchart.png)
 
 
 ## BOM
-
-Provide a comprehensive list of all necessary components along with their prices and the total cost of the subsystem. This information should be presented in a tabular format, complete with the manufacturer, part number, distributor, distributor part number, quantity, price, and purchasing website URL. If the component is included in your schematic diagram, ensure inclusion of the component name on the BOM (i.e R1, C45, U4).
-
 
 | Item                          | Quantity | Cost Per  | Total     | URL |
 |------------------------------|----------|-----------|-----------|-----|
