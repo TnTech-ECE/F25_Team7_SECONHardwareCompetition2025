@@ -330,7 +330,7 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 
 
 ## Bill Of Materials
-![BOM](Images/BOM.png)
+![BOM](Images/BOM1.png)
 ## References
 
 Batteries & Connectors
