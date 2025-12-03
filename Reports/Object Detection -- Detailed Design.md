@@ -30,6 +30,7 @@ Every subsystem must incorporate at least one constraint stemming from standards
 3. The robot and drone shall have a maximum of 3 minutes to complete objectives and score points
 4. The drone shall properly identify the antennas' LEDs and transmit the correct data to Earth
 5. The robot shall automatically starts using the white starting LED
+6. The object detection sensors and wireless links shall comply with relevant safety and RF emission guidelines (e.g., small unmanned aircraft weight limits and Wi-Fi/Bluetooth regulatory limits), reflecting ethical considerations for safe operation around people and other teams
 
 
 ## Overview of Proposed Solution
@@ -389,8 +390,12 @@ This ensures that object detection produces actionable results quickly enough fo
 #### Constraint #4 -- The drone shall properly identify the antennas' LEDs and transmit the correct data to Earth
 For antenna LEDs, the design uses a combination of color segmentation and known antenna positions to robustly assign LED colors to specific antenna IDs. The communication interface between the object detection subsystem, communication stack, and Earth base uses structured messages. This prevents misinterpretation of data and reduces the risk of ambiguous or corrupted messages influencing mission decisions.
 
-#### Constraint #5 – The robot shall automatically starts using the white starting LED
+#### Constraint #5 –- The robot shall automatically starts using the white starting LED
 The dedicated photoresistor for start LED detection provides a simple, robust, and low-cost solution. It is electrically and functionally isolated from the more complex camera-based object detection pipeline, which improves reliability. In combination with software safeguards in the local controller, this ensures the robot begins motion only when a valid start signal is present.
+
+
+#### Constraint #6 -- Compliance with Standards, Ethical Operation, and RF Safety
+To ensure adherence to safety, ethical, and regulatory standards, the object detection subsystem is designed using components and communication methods that comply with widely adopted emissions, RF, and operational guidelines. The ESP32-S3 Sense and Intel RealSense D435 both operate within standard unlicensed ISM frequency bands (2.4 GHz Wi-Fi/Bluetooth and USB-powered RGB-D sensing), which remain compliant with FCC Part 15 rules governing low-power radio transmitters. This ensures the system does not create harmful interference with other teams, equipment, or emergency communication devices.
 
 
 ### Algorithmic Performance and Data Flow
