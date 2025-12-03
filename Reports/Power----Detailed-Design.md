@@ -97,7 +97,7 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 
 ---
 
-# Physical and Integration Constraints
+## Physical and Integration Constraints
 
 - Maximum envelope for the power subsystem: **4 × 8 × 7 in** within the chassis.
 - Must accommodate at least one **Zeee 3S 5200 mAh pack**.
@@ -106,11 +106,16 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 
 ---
 
-# Overview of Proposed Solution
+## Overview of Proposed Solution
 
 The chosen architecture:
 
+Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI)
 
+- 24 V → Pololu Dual VNH5019 motor driver shield → 24 V gearmotors  
+- 24 V → 19 V buck converter → Jetson Nano → Arduino  
+- 24 V → 5 V and 7.4 V buck regulator → servo rails  
+- 24 V → 12 V buck regulator → linear actuator  
 
 ---
 
