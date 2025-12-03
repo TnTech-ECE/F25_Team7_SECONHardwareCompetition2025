@@ -26,7 +26,7 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 ## Specifications and Constraints
 
 ### Electrical Specifications
-- Source: Zeee 3S LiPo battery
+-  Source: Zeee 3S LiPo battery
 --	Nominal voltage: 11.1 V (3S1P)
 --	Voltage range: 9.0–12.6 V
 --	Capacity: 5200 mAh (5.2 Ah)
