@@ -10,14 +10,15 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 
 
 
-- The constraints and specifications relevant to the subsystem
-- The rationale behind each crucial design decision
-- The procedure for constructing the solution
+## The subsystem:
 
 
-## General Requirements for the Document
+1.	Accepts energy from a removable 3S LiPo pack (Zeee 11.1 V 5200 mAh, 80 C, XT60 connector). 
+2.	Uses a boost converter to generate a regulated 24 V bus (VBUS_HI) for the motors and downstream converters.
+3.	Uses buck converters from the 24 V bus to generate lower-voltage rails (3.3V, 5V, 7.4V, 12V, 19V). Contacts made through screw terminals, allowing for test points on each rail.
+4.	Implements a hard emergency stop (E-Stop) and fusing that can safely isolate the battery from all loads. 
+5.	Monitors voltage and current and reports power-health information to the controller.
 
-The document should include:
 
 - Explanation of the subsystem’s integration within the overall solution
 - Detailed specifications and constraints specific to the subsystem
