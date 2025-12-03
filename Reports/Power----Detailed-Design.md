@@ -111,6 +111,99 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 The chosen architecture:
 
 
+
+---
+
+## Key Design Decisions
+
+### **1. 3S LiPo + Boost vs. Native 24 V Battery**
+- **Chosen:** 3S LiPo + boost.
+- **Rationale:**
+  - 3S LiPo packs are inexpensive, widely available, and compatible with common RC chargers.
+  - Boosting to 24 V provides a stable motor bus and simplifies downstream buck converter design.
+  - Avoids weight and cost of carrying a large 24 V battery pack during prototyping.
+
+---
+
+### **2. 24 V Motors + VNH5019 Driver**
+- **Motors:** Pololu 24 V 37D 150:1 gearmotors with encoder (3 A stall each).  
+- **Driver:** Pololu Dual VNH5019 motor driver shield (5.5–24 V, up to 12 A continuous).  
+- **Rationale:**
+  - VNH5019 has substantial current headroom and built-in over-current + thermal protection.
+  - Integrated current sense enables stall detection and load monitoring.
+
+---
+
+### **3. Boost Converter to 24 V**
+- Regulates the variable battery input (9–12.6 V) to a constant **24 V bus**.
+- Sizing based on:
+  - Motor power (near-stall or heavy load)
+  - 19 V Jetson rail
+  - Servo and auxiliary loads
+- **Design target:** ≥ 400 W continuous, ≥ 600 W peak.
+
+---
+
+### **4. Buck Stages for Low-Voltage Rails**
+- 24 V → 19 V buck for Jetson (also powers Arduino via USB).
+- 24 V → 12 V, 7.4 V, and 5 V bucks isolated to prevent servo noise from causing controller brownouts.
+
+---
+
+### **5. Safety & EMC**
+- **30 A main fuse**, E-Stop, and optional contactor provide full hardware isolation.
+- TVS diodes, ceramic capacitors, and EMI filters suppress switching noise.
+- PCB layout separates high-current switching loops from sensitive digital/analog circuits.
+
+---
+
+## Interface with Other Subsystems
+
+### Power Interfaces
+
+- **Battery Interface:**
+  - Connector: XT60  
+  - Signals:
+    - `BAT+` (9–12.6 V)
+    - `BAT−` (GND)
+
+- **Drivetrain Interface:**
+  - 24 V bus (VBUS_HI) → Pololu Dual VNH5019 motor driver  
+  - Driver outputs → Motor terminals (M1A/M1B, M2A/M2B)
+
+- **Jetson Interface:**
+  - 19 V rail and GND
+
+- **Arduino Interface:**
+  - USB power/data from Jetson
+
+- **Actuation / Servo Interface:**
+  - 12 V, 7.4 V, and 5 V rails + GND
+
+---
+
+### Control and Telemetry Interfaces
+
+- **E-Stop Loop:**
+  - Wired through hardware E-Stop button.
+  - Opening the loop:
+    - Interrupts high-current battery path.
+    - Disables boost converter (via EN pin).
+    - Optionally triggers dump/bleeder path.
+
+- **Power-Good (PG) Signals:**
+  - `PG24` — 24 V bus regulation good  
+  - `PG5` — 5 V rail good  
+  - `PGservo` — servo rail good  
+  - Used for start-up sequencing and safe shutdown.
+
+- **Telemetry Bus (I²C):**
+  - Exposes:
+    - Battery voltage (via divider/ADC or monitor IC)
+    - 24 V bus current (shunt or Hall sensor)
+    - Optional temperature sensors on boost converter & motor driver heatsinks
+
+
 ## Specifications and Constraints
 
 This section should provide a list of constraints applicable to the subsystem, along with the rationale behind these limitations. For instance, constraints can stem from physics-based limitations or requirements, subsystem prerequisites, standards, ethical considerations, or socio-economic factors.
