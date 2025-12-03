@@ -115,7 +115,8 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 - 24 V → Pololu Dual VNH5019 motor driver shield → 24 V gearmotors  
 - 24 V → 19 V buck converter → Jetson Nano → Arduino  
 - 24 V → 5 V and 7.4 V buck regulator → servo rails  
-- 24 V → 12 V buck regulator → linear actuator  
+- 24 V → 12 V buck regulator → linear actuator
+- 24 V → 3.3V buck regulator -> sensors
 
 ---
 
@@ -208,56 +209,117 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
     - 24 V bus current (shunt or Hall sensor)
     - Optional temperature sensors on boost converter & motor driver heatsinks
 
-
-## Specifications and Constraints
-
-This section should provide a list of constraints applicable to the subsystem, along with the rationale behind these limitations. For instance, constraints can stem from physics-based limitations or requirements, subsystem prerequisites, standards, ethical considerations, or socio-economic factors.
-
-The team should set specifications for each subsystem. These specifications may require modifications, which must be authorized by the team. It could be necessary to impose additional constraints as further information becomes available.
-
-Every subsystem must incorporate at least one constraint stemming from standards, ethics, or socio-economic factors.
-
-
-## Overview of Proposed Solution
-
-Describe the solution and how it will fulfill the specifications and constraints of this subsystem.
-
-
-## Interface with Other Subsystems
-
-Provide detailed information about the inputs, outputs, and data transferred to other subsystems. Ensure specificity and thoroughness, clarifying the method of communication and the nature of the data transmitted.
-
-
-## 3D Model of Custom Mechanical Components
-
-Should there be mechanical elements, display diverse views of the necessary 3D models within the document. Ensure the image's readability and appropriate scaling. Offer explanations as required.
-
-
-## Buildable Schematic 
-
-Integrate a buildable electrical schematic directly into the document. If the diagram is unreadable or improperly scaled, the supervisor will deny approval. Divide the diagram into sections if the text and components seem too small.
-
-The schematic should be relevant to the design and provide ample details necessary for constructing the model. It must be comprehensive so that someone, with no prior knowledge of the design, can easily understand it. Each related component's value and measurement should be clearly mentioned.
-
-
+## Buildable Schematic
 ## Printed Circuit Board Layout
+## Flowchart (Power-Up and E-Stop Behavior)
 
-Include a manufacturable printed circuit board layout.
+## Analysis of Crucial Design Decisions
+
+---
+
+### 1) Can the Zeee 3S LiPo power the whole system?
+
+- **Energy:**  
+  \( 11.1\ \text{V} \times 5.2\ \text{Ah} \approx 57.7\ \text{Wh} \)
+
+- **Runtime estimate:**  
+  Estimated average power: **365 W**  
+  Overall efficiency: **~80%**  
+  \[
+  \text{Runtime} = \frac{57.7\ \text{Wh} \times 0.8}{365\ \text{W}}
+  = 0.1265\ \text{hours} \approx 7.6\ \text{minutes}
+  \]
+
+- **Conclusion:**  
+  The 80C rating provides ample current headroom.  
+  The limitation is **energy capacity**, not current capability.
+
+---
+
+### 2) Current headroom for drivetrain
+
+- **Motors:**  
+  Each motor stall: **3 A @ 24 V**  
+  Four motors → **16 A total stall**.  
+
+- **Driver (Dual VNH5019):**  
+  - 12 A continuous per channel (30 A peak)  
+  - 24 A continuous when channels are paralleled  
+
+- **Conclusion:**  
+  The motor driver has sufficient margin for expected stall loads, assuming proper thermal design.
+
+---
+
+### 3) Boost converter stresses
+
+- **Output power:**  
+  \[
+  P_{\text{out}} = 24\ \text{V} \times 16\ \text{A} = 384\ \text{W}
+  \]
+
+- **Battery current needed:**  
+  Assuming 90% converter efficiency:  
+  \[
+  I_{\text{bat}} \approx \frac{384}{0.9 \times 11.1} \approx 38.4\ \text{A}
+  \]
+
+- **Implications for component selection:**  
+  - Battery connectors (XT60 rated ~60 A)  
+  - Fuse (slightly above max continuous current)  
+  - E-Stop and contactor ratings  
+
+---
+
+### 4) Safety and standards alignment
+
+- Fuse and E-Stop placement follow recommended practice and align with **ISO 13849-1**:  
+  - E-Stop removes power to **all motion-producing elements** via one clear path.
+
+- Use of TVS diodes, filtering, and grounding techniques reduces EMI risks affecting sensors and controllers.
+
+---
+
+### 5) Grounding strategy and signal integrity
+
+- A routed ground path could have been used, but it introduces:
+  - Higher impedance  
+  - Discontinuities  
+  - Noise susceptibility (especially with motor drivers near sensitive electronics)
+
+- The design instead uses:
+  - A **full-layer ground plane** for low impedance return paths and minimized loop area  
+  - Improved EMI performance and signal clarity
+
+- The aluminum chassis will be tied to an **absolute chassis ground**, improving:
+  - ESD protection  
+  - EMC behavior  
+  - Overall system grounding stability  
+
+---
+
+### 6) Ethical considerations
+
+- Proper LiPo handling reduces fire and injury risks:
+  - Correct balancing chargers  
+  - Mechanical protection  
+  - Avoiding over-discharge  
+
+- Clear labeling of battery, fuse, and E-Stop improves long-term safety for future operators or maintainers.
+
+---
+
+### 7) Feasibility and cost
+
+- Using a 3S LiPo + boost + buck architecture:
+  - Minimizes part count  
+  - Uses COTS modules like the VNH5019  
+  - Simplifies prototyping and repairs  
+
+- Total cost remains within the **$400 power subsystem budget** while meeting all performance and safety requirements.
 
 
-## Flowchart
 
-For sections including a software component, produce a chart that demonstrates the decision-making process of the microcontroller. It should provide an overview of the device's function without exhaustive detail.
+##Bill Of Materials
 
-
-## BOM
-
-Provide a comprehensive list of all necessary components along with their prices and the total cost of the subsystem. This information should be presented in a tabular format, complete with the manufacturer, part number, distributor, distributor part number, quantity, price, and purchasing website URL. If the component is included in your schematic diagram, ensure inclusion of the component name on the BOM (i.e R1, C45, U4).
-
-## Analysis
-
-Deliver a full and relevant analysis of the design demonstrating that it should meet the constraints and accomplish the intended function. This analysis should be comprehensive and well articulated for persuasiveness.
-
-## References
-
-All sources that have contributed to the detailed design and are not considered common knowledge should be duly cited, incorporating multiple references.
+##References
