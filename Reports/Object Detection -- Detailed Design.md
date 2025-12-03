@@ -267,7 +267,7 @@ Below are the images of the psuedocode for the main object detection algorithms 
     END
 
 
-### ALgorithm 3: Object Detection Post-Processing and Pose Estimation
+### Algorithm 3: Object Detection Post-Processing and Pose Estimation
 
 
     BEGIN
