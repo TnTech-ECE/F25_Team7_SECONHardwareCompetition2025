@@ -48,14 +48,14 @@ The navigation subsystem works alongside the Global Controller which retrieves a
 Pseudocode:
 
 function navigate_to_goal(goal_pose):
-  # Step 1: Initialize system
+   Step 1: Initialize system
    start lifecycle nodes (planner_server, controller_server, costmap_server, bt_navigator)
  	   load plugins (planners, controllers, costmap layers)
 
-  # Step 2: Behavior Tree orchestrates navigation
+   Step 2: Behavior Tree orchestrates navigation
    BT = load_behavior_tree("navigate_to_pose.xml")
 
-  # Step 3: Global Planning
+   Step 3: Global Planning
 current_pose = get_robot_pose(tf, odom)
 global_plan = planner_server.compute_path(current_pose, goal_pose,    global_costmap)
 
@@ -63,7 +63,7 @@ if global_plan is invalid:
            run_recovery_behavior()
            return FAILURE
 
-   # Step 4: Local Control Loop
+  Step 4: Local Control Loop
 while not goal_reached:
 local_costmap = update_costmap(sensor_data)
         cmd_vel = controller_server.compute_velocity(global_plan, local_costmap, current_pose)
