@@ -72,6 +72,7 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
   - Peak current: ≥ 0.266 A
 
 - **Efficiency & runtime targets:**
+![Efficiency](Images/Efficiency.png)
 
 ## Safety, Standards, and Ethical Constraints
 
