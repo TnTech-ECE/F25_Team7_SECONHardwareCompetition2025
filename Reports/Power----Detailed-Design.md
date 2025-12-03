@@ -325,3 +325,102 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 ## Bill Of Materials
 
 ## References
+
+Batteries & Connectors
+
+[1] Zeee Power, “Zeee 3S 11.1 V 5200 mAh 80C LiPo Battery,” Amazon Product Page, 2024.
+https://www.amazon.com/dp/B07PPDLFVD
+
+[2] Amass Electronics, “XT60/XT90 Connector Specifications,” 2023.
+https://www.amass.com.cn/products/xt_series/
+
+Motors & Motor Drivers
+
+[3] Pololu, “150:1 Metal Gearmotor 37Dx73L mm, 24 V with 64 CPR Encoder,” 2023.
+https://www.pololu.com/product/4729
+
+[4] Pololu, “Dual VNH5019 Motor Driver Shield for Arduino,” 2023.
+https://www.pololu.com/product/2507
+
+[5] STMicroelectronics, “VNH5019A-E Full-Bridge Motor Driver Datasheet,” 2022.
+https://www.st.com/resource/en/datasheet/vnh5019a-e.pdf
+
+Microcontrollers & Computing Platforms
+
+[6] STMicroelectronics, “STM32F405xx ARM® Cortex®-M4 MCU Datasheet,” 2023.
+https://www.st.com/resource/en/datasheet/stm32f405rg.pdf
+
+[7] Nordic Semiconductor, “nRF51822 Multiprotocol Bluetooth® SoC,” 2021.
+https://infocenter.nordicsemi.com/pdf/nRF51822_PS_v3.1.pdf
+
+[8] Arduino, “Arduino Mega 2560 Rev3 Technical Specs,” 2023.
+https://docs.arduino.cc/hardware/mega-2560
+
+[9] NVIDIA, “Jetson Orin Nano Series Module Datasheet,” 2023.
+https://developer.nvidia.com/embedded/jetson-orin-nano
+
+Sensors
+
+[10] Bosch Sensortec, “BMI088 Inertial Measurement Unit Datasheet,” 2022.
+https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmi088-ds000.pdf
+
+[11] Bosch Sensortec, “BMP388 Barometric Pressure Sensor Datasheet,” 2022.
+https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bmp388-ds001.pdf
+
+[12] Broadcom, “APDS-9960 Gesture/Ambient Light/Proximity Sensor Datasheet,” 2021.
+https://docs.broadcom.com/doc/AV02-2315EN
+
+Boost & Buck Converters
+
+[13] Texas Instruments, “DC/DC Boost Converter Design Guide,” 2022.
+https://www.ti.com/lit/an/slva061/slva061.pdf
+
+[14] Texas Instruments, “DC/DC Buck Converter Design Guide,” 2022.
+https://www.ti.com/lit/an/slva477b/slva477b.pdf
+
+[15] Murata Power Solutions, “Low-ESR Ceramic Capacitors for Switching Supplies,” 2021.
+https://www.murata.com/en-us/products/capacitor/low-esr-guide
+
+Fuse & Protection Components
+
+[16] Littelfuse, “ATO/ATC Blade Fuse Series Datasheet,” 2022.
+https://www.littelfuse.com/products/fuses/automotive-fuses/blade-fuses/ato.aspx
+
+[17] Littelfuse, “Automotive Fuse Holder Series,” 2023.
+https://www.littelfuse.com/products/fuse-blocks-holders-clips/automotive.aspx
+
+[18] ON Semiconductor, “Reverse Polarity Protection Using P-Channel MOSFETs,” Application Note AND8094/D, 2020.
+https://www.onsemi.com/pub/Collateral/AND8094-D.PDF
+
+PCB Design Principles
+
+[19] Texas Instruments, “AN-2020: PCB Layout Guidelines for Power Electronics,” 2022.
+https://www.ti.com/lit/an/snva489c/snva489c.pdf
+
+[20] Analog Devices, “MT-101: Decoupling Techniques,” 2021.
+https://www.analog.com/media/en/training-seminars/tutorials/MT-101.pdf
+
+[21] IPC, IPC-2221: Generic Standard on Printed Board Design, 2019.
+https://www.ipc.org/ipc-2221
+
+[22] H. Johnson and M. Graham, High-Speed Digital Design: A Handbook of Black Magic, Prentice Hall, 1993.
+ISBN Search: https://isbnsearch.org/isbn/9780133957242
+
+Grounding & Electrical Safety
+
+[23] IEEE Standards Association, IEEE Std 1100–2022 (Emerald Book), 2022.
+https://standards.ieee.org/standard/1100-2022.html
+
+[24] UL, UL 60950-1: Information Technology Equipment Safety Requirements, 2019.
+https://standardscatalog.ul.com/ProductDetail.aspx?productId=UL60950-1
+
+General Power Systems & Filtering
+
+[25] M. H. Rashid, Power Electronics: Devices, Circuits, and Applications, 5th ed., Pearson, 2020.
+ISBN: https://isbnsearch.org/isbn/9780133125900
+
+[26] R. Erickson and D. Maksimović, Fundamentals of Power Electronics, 3rd ed., Springer, 2020.
+https://link.springer.com/book/10.1007/978-3-319-51107-1
+
+[27] Analog Devices, “Application Note 44: Output Ripple Voltage Calculations for LC Filters,” 2021.
+https://www.analog.com/media/en/technical-documentation/application-notes/an44fa.pdf
