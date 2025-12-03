@@ -1,4 +1,4 @@
-<img width="468" height="83" alt="image" src="https://github.com/user-attachments/assets/8906b681-d4d1-4269-a433-db96a1c8648b" /># Power Subsystem
+# Power Subsystem
 
 
 This document delineates the objectives of a comprehensive system design. Upon reviewing this design, the reader should have a clear understanding of:
