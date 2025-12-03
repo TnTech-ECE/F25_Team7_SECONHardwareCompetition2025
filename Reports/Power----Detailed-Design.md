@@ -216,9 +216,16 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 ![Buildable Schematic](Images/BulidSchem.png)
 
 ## Printed Circuit Board Layout
-
+- PCB Schematic:
 ![Printed Circuit Board Layout](Images/PCB_Layout.png)
 
+- PCB Layout:
+![Printed Circuit Board Layout](Images/PCB.png)
+- Pcb layout is still in progress due to learning curve and last minute revisions.
+- Still Need:
+  - Ground terminal to robot frame.
+  - appropriately placed heat dissipating vias.
+  - optimal traces and planes for the high currnt draw.
 ## Flowchart (Power-Up and E-Stop Behavior)
 
 ![Flowchart](Images/BlockDiagram.png)
