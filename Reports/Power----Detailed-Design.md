@@ -73,6 +73,43 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 
 - **Efficiency & runtime targets:**
 
+# Safety, Standards, and Ethical Constraints
+
+- **Over-current protection:**
+  - Input fuse sized to ~1.25–1.5× nominal battery current to protect wiring and downstream circuitry.
+
+- **Emergency Stop:**
+  - E-Stop must remove power from all motors, actuators, and servos by interrupting the high-current path from the battery positive after the main fuse.
+
+- **LiPo-specific safety:**
+  - Pack must not be over-charged or over-discharged and must be charged with a proper balance charger.
+  - Battery must be mechanically protected to reduce risk of puncture or short.
+  - Pack must be removed from robot during charging. Robot is prohibited from functioning during charging.
+
+- **Standards:**
+  - The design follows the intent of:
+    - **ISO 13849-1** — safety of machinery (safety-related parts of control systems)
+    - **IEC 60950-1** — IT equipment safety  
+    (in terms of fusing, emergency stop, and creepage/clearance)
+
+- **Socio-economic:**
+  - Power subsystem BOM must remain within a budget of **$400 USD** to keep the project feasible for a student team.
+
+---
+
+# Physical and Integration Constraints
+
+- Maximum envelope for the power subsystem: **4 × 8 × 7 in** within the chassis.
+- Must accommodate at least one **Zeee 3S 5200 mAh pack**.
+- Use **XT60** for battery connection and appropriately rated **Phoenix Contact** connectors for the 24 V bus and major rails.
+- Wire gauge, PCB traces, and connector ratings must meet or exceed calculated continuous and peak currents with ~20% margin.
+
+---
+
+# Overview of Proposed Solution
+
+The chosen architecture:
+
 
 ## Specifications and Constraints
 
