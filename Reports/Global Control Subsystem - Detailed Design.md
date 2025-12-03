@@ -1,109 +1,116 @@
-# Conceptual Design
+# Detailed Design
 
-This document outlines the objectives of a conceptual design. After reading your conceptual design, the reader should understand:
-
-- The fully formulated problem.
-- The fully decomposed conceptual solution.
-- Specifications for each of the atomic pieces of the solution.
-- Any additional constraints and their origins.
-- How the team will accomplish their goals given the available resources.
-
-With these guidelines, each team is expected to create a suitable document to achieve the intended objectives and effectively inform their stakeholders.
+## Function of the Subsystem
 
 
-## General Requirements for the Document
-- Submissions must be composed in Markdown format. Submitting PDFs or Word documents is not permitted.
-- All information that is not considered common knowledge among the audience must be properly cited.
-- The document should be written in the third person.
-- An introduction section should be included.
-- The latest fully formulated problem must be clearly articulated using explicit "shall" statements.
-- A comparative analysis of potential solutions must be performed
-- The document must present a comprehensive, well-specified high-level solution.
-- The solution must contain a hardware block diagram.
-- The solution must contain an operational flowchart.
-- For every atomic subsystem, a detailed functional description, inputs, outputs, and specifications must be provided.
-- The document should include an acknowledgment of ethical, professional, and standards considerations, explaining the specific constraints imposed.
-- The solution must include a refined estimate of the resources needed, including: costs, allocation of responsibilities for each subsystem, and a Gantt chart.
+## Specifications and Constraints
+
+Listed below are the specifications and constraints for this subsystem as derived from the SECON 2026 rules manual [1].
+ 
+1.  Both the robot and UAV shall be completely autonomous.
+2.  The robot and UAV shall have a clearly labeled start switch. 
+3.  Teams shall have a maximum of 3 minutes to earn points. 
+  a.  The robot shall have the ability to quickly process sensor data.
+  b.  The robot shall have the ability to quickly process AI workloads.
+  c.  The robot shall have the ability to quickly make decisions and communicate them.
+4.  Teams shall rescue a total of 6 Astro-Ducks and shall return them to the “Lunar Landing Area.” 
+  a.  The robot shall be able to identify, locate, and navigate to the Astro-Ducks.
+  b.  The robot shall be able to identify and navigate to the Lunar Landing Area.
+5. Teams shall establish power to the 4 antennas throughout the course. Power shall be restored differently for each antenna. Once power is restored to the antenna, a randomly colored LED shall light up (red, blue, green, and purple).
+  a.  The robot shall be able to identify, locate, and navigate to the antenna towers.
+  b.  The robot must identify and complete the task located on each tower.
+6.  Two starting white LED bars shall be placed on top of the arena wall, one on each side of the 12” x 12” starting area. 
+  a.  The robot shall be able to sense the starting white LEDs in order to begin operation.
+7.  Points shall be lost every time the robot or UAV has an unintentional collision 
+  a.  The robot and UAV shall be able to detect and avoid obstacles.
+
+NOTE: Camera Related specs, constraints, and details have been relocated to the object detection subsystem. It was found to be more productive to have those components listed under that section as the cameras play a critical part of that subsystem.
+
+## Overview of Proposed Solution
+
+The Global control system is divided into two major components: The Global controller itself and the sensors that it relies on in order to collect the data the robot needs to make decisions. 
+
+The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. This computer will be the device that makes all of the control decisions for the robot. It will also host the processes for object detection and navigation and based on the data the Jetson receives and computes, it will make decisions and send the necessary commands to the low-level controller that will coordinate the robot’s motion and actuators. The robot shall use an NVIDIA Jetson Orin for this task. This single board computer was designed to efficiently run AI loads which will be essential for the robot’s object detection and navigation processes.
+
+ADD 
+
+The robot shall also use a combination of sensors that will allow the robot to perceive its location on the game board and be able to identify objects on it. Using the technique of sensor fusion, LiDAR sensors and an IMU will be used to pinpoint the robot’s location on the game board. The robot shall also utilize photoresistors which will be used to start the robot autonomously. The robot will also have a manual start button.The robot and the UAV will have cameras that will send image data to the global computer over USB and WiFi respectively. More detail about the cameras can be found in the object detection detailed design document.
+
+## Interface with Other Subsystems
+
+The Jetson Orin has access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, GPIO, PWM, DMIC, and DSPK protocols. The development board comes with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power [2]. The robot mounted camera will connect to the global computer using a USB connection. The UAV flight controller will be connected to the global computer over BLE. The UAV mounted camera will connect to the global computer over a WiFi connection. The Low Level Controller will connect to the global computer over UART/USB. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be GPIO signals.
+
+Inputs:
+-Autonomous Start Signals
+  -GPIO Analog Signal
+-Manual Start Signal
+  -GPIO Digital Signal
+-LiDAR Sensors
+  -Distance Data over I2C
+-IMU
+  -Acceleration and Orientation Data over I2C
+-Robot Mounted Camera
+  -Image and Distance Data over USB
+-Drone Mounted Camera
+  -Image Data over WiFi
+Outputs:
+-Command Signals to Low Level Controller
+-Motion and Actuation commands over USB
+-Navigation Commands (Coordinates of the designated path to follow)
+  -These shall be transmitted over a serial protocol
+-UAV Command and Data Signals
+  -Launch and Land Commands over BLE
+  -LED Information over Wifi
+
+## Buildable Schematic 
 
 
-## Introduction
-
-The introduction is intended to reintroduce the fully formulated problem. 
+## Flowchart
 
 
-## Restating the Fully Formulated Problem
-
-The fully formulated problem is the overall objective and scope complete with the set of shall statements. This was part of the project proposal. However, it may be that the scope has changed. So, state the fully formulated problem in the introduction of the conceptual design and planning document. For each of the constraints, explain the origin of the constraint (customer specification, standards, ethical concern, broader implication concern, etc).
+## BOM
 
 
-## Comparative Analysis of Potential Solutions
+## Analysis
+### Global Controller
+In order to meet specifications 1, 5, and 6; the robot shall have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer shall send the needed instructions to the low level controller in order to execute those decisions. The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [3]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power. 
 
-In this section, various potential solutions are hypothesized, design considerations are discussed, and factors influencing the selection of a solution are outlined. The chosen solution is then identified with justifications for its selection.
+The Jetson Orin is listed as having an AI performance of 67 tera-operation per second (TOPS) [2]. The Nano and the TX2 have an AI performance of 0.472 and 1.33 tera floating point operation per second (TFLOPS) respectively [4] [5]. TOPS and TFLOPS are both metrics that are used to describe AI performance [6] [7], though they are different, with TOPS referring to 8 bit integer operations while TFLOPS refers to floating point operation [8]. However, a general case conversion can be made to compare two [9]. An exact conversion is hardware architecture dependent, however, using the general case the Orin is shown to be the most powerful of the three listed computers. The previous competition’s robot was able to utilize the Jetson Nano, however, the 2026 competition’s robot will need to handle more AI loads than the previous competition’s robot. Thus the more powerful Jetson Orin shall allow the robot the ability to process all of its AI loads quickly, allowing the robot to complete all of its required task within the 3 minute time limit. Table 1.A shows a list of the AI process that the global computer shall be able to handle. 
 
+The robot shall also need a software architecture that will allow the robot to handle all its AI loads and sensor integration. The team has the option to continue developing the architecture designed by the previous team. There is a foundation that the team can use to build upon and add on to, including computer vision algorithms [8] [9]. The team can also build a new software architecture using the Robot Operating System (ROS). This architecture is open source and has a set of prebuilt tools for common robot applications. NVIDIA has also built a ROS distribution called Issac which is designed for using AI tools such as object detection and navigation algorithms [10]. This ROS library also makes using a Jetson board more appealing.
 
-## High-Level Solution
+The team shall use a NVIDIA Jestion single board computer to handle the sensor intake, AI processing, and decision making for the robot. The team shall utilize ROS as a tool to help implement AI work loads and to control the robot. As the team approaches the detailed design phase, they shall decide which Jeston single board computer will be used. This decision will depend on the computers ability to process the robots AI loads fast enough to meet specification 3. ROS has the capability to run both C++ and Python programs, so the team will consider salvaging programs from the previous team’s robot.
 
-This section presents a comprehensive, high-level solution aimed at efficiently fulfilling all specified requirements and constraints. The solution is designed to maximize stakeholder goal attainment, adhere to established constraints, minimize risks, and optimize resource utilization. Please elaborate on how your design accomplishes these objectives.
+General Sensors
+In order to complete specifications 1, 2, 4, 5, 6,and 7 the robot shall need an array of different sensors that will allow the robot to perceive its environment. The robot shall know its position, its orientation, and have an effective method of tracking its location on the game board. The robot shall also have a means of starting autonomously as defined in specification 6, but also have an auxiliary start switch in case the robot fails to start autonomously.
 
+Starting the Robot
+In order for the robot to start autonomously as defined in specification 6, the robot shall use a set of photoresistors. Two photoresistors shall be placed toward the front of the robot and will be used to measure the ambient light of the environment. An additional photoresistor will be placed near the rear of the robot. The start LEDs will be placed along the walls of the starting area, thus the rear photoresistor will be facing one of the two start LEDs. These photoresistors will be connected from 5 V power to analog GPIO pins on the Arduino Mega. A program will then compare the ambient light of the environment to the light detected by the rear photoresistor. If the rear photoresistor detects more light than the two ambient light photoresistors, that means that the start LEDs have been turned on and the robot may begin operation [10]. The GL12528 photoresistors can handle up to 250 V and 200 mW of power which is sufficient for this implementation [11].
 
-### Hardware Block Diagram
+Specification 6 requires that the robot begin operation without human intervention, however, the inclusion of a manual start switch shall allow the robot to begin operation in the event it fails to start autonomously. Having a manual start switch also satisfies specification 2. The manual start switch will be a push button located near the top of the robot’s chassis. It will be connected from 5 V power to a digital GPIO pin on the Arduino Mega. This signal shall be used as an interrupt that will start the robot’s operation regardless of whether the robot detects the start LEDs. The push button can handle up to 14 VDC and 10 A which is sufficient for this implementation [12]. 
 
-Block diagrams are an excellent way to provide an overarching understanding of a system and the relationships among its individual components. Generally, block diagrams draw from visual modeling languages like the Universal Modeling Language (UML). Each block represents a subsystem, and each connection indicates a relationship between the connected blocks. Typically, the relationship in a system diagram denotes an input-output interaction.
+Navigation Sensors
+The robot shall use multiple sensors in order to determine its exact location on the game board. These sensors shall also be used to pinpoint the robot on a virtual SLAM map and be used to improve that map. The concept of a SLAM map shall be discussed in a later section. A common technique that the team shall utilize will be sensor fusion. This technique shall allow the robot to combine the data from different types of sensors in order to create a more accurate representation of the robot's location. A common sensor fusion combination includes the use of LiDAR and IMU sensors which the team plans to utilize.
 
-In the block diagram, each subsystem should be depicted by a single block. For each block, there should be a brief explanation of its functional expectations and associated constraints. Similarly, each connection should have a concise description of the relationship it represents, including the nature of the connection (such as power, analog signal, serial communication, or wireless communication) and any relevant constraints.
+LiDAR, or Light Detection and Ranging, sensors use laser pulses to measure distance. They can be used for detecting obstacles, and be used to create virtual maps of the robots surroundings. Their ability to gather high volumes of accurate data in a short time frame makes these sensors a good option. They are also well known for their ability to create three dimensional maps, which shall be integral for our navigational strategy as defined in its own subsystem [14] [15].
 
-The end result should present a comprehensive view of a well-defined system, delegating all atomic responsibilities necessary to accomplish the project scope to their respective subsystems.
+IMUs, or Inertial Measurement Units, are devices that contain an array of sensors like accelerometers, gyroscopes, and potentially magnetometers [16]. These devices are able to track changes in velocity and rotational orientation. These measurements shall allow the robot to know its exact orientation at a given time. The velocity data can also be integrated over short periods in order to find the robots position data [17].
 
-
-### Operational Flow Chart
-
-Similar to a block diagram, the flow chart aims to specify the system, but from the user's point of view rather than illustrating the arrangement of each subsystem. It outlines the steps a user needs to perform to use the device and the screens/interfaces they will encounter. A diagram should be drawn to represent this process. Each step should be represented in the diagram to visually depict the sequence of actions and corresponding screens/interfaces the user will encounter while using the device.
-
-
-## Atomic Subsystem Specifications
-
-Based on the high-level design, provide a comprehensive description of the functions each subsection will perform.
-
-Inclued a description of the interfaces between this subsystem and other subsystems:
-- Give the type of signal (e.g. power, analog signal, serial communication, wireless communication, etc).
-- Clearly define the direction of the signal (input or output).
-- Document the communication protocols used.
-- Specifying what data will be sent and what will be received.
-
-Detail the operation of the subsystem:
-- Illustrate the expected user interface, if applicable.
-- Include functional flowcharts that capture the major sequential steps needed to achieve the desired functionalities.
-
-For all subsystems, formulate detailed "shall" statements. Ensure these statements are comprehensive enough so that an engineer who is unfamiliar with your project can design the subsystem based on your specifications. Assume the role of the customer in this context to provide clear and precise requirements.
-
-
-## Ethical, Professional, and Standards Considerations
-
-In the project proposal, each team must evaluate the broader impacts of the project on culture, society, the environment, public health, public safety, and the economy. Additionally, teams must consider relevant standards organizations that will inform the design process. A comprehensive discussion should be included on how these considerations have influenced the design. This includes detailing constraints, specifications, and practices implemented as a result, and how these address the identified considerations.
-
-
-## Resources
-
-You have already estimated the resources needed to complete the solution. Now, let's refine those estimates.
-
-### Budget
-
-Develop a budget proposal with justifications for expenses associated with each subsystem. Note that the total of this budget proposal can also serve as a specification for each subsystem. After creating the budgets for individual subsystems, merge them to create a comprehensive budget for the entire solution.
-
-### Division of Labor
-
-First, conduct a thorough analysis of the skills currently available within the team, and then compare these skills to the specific requirements of each subsystem. Based on this analysis, appoint a team member to take the specifications for each subsystem and generate a corresponding solution (i.e. detailed design). If there are more team members than subsystems, consider further subdividing the solutions into smaller tasks or components, thereby allowing each team member the opportunity to design a subsystem.
-
-### Timeline
-
-Revise the detailed timeline (Gantt chart) you created in the project proposal. Ensure that the timeline is optimized for detailed design. Address critical unknowns early and determine if a prototype needs to be constructed before the final build to validate a subsystem. Additionally, if subsystem $A$ imposes constraints on subsystem $B$, generally, subsystem $A$ should be designed first.
-
+Using these two sensor types together shall allow the robot to know its exact position and orientation on the game board. The robot shall use one IMU for position and orientation. As the team continues into the detailed design phase, they shall consider how to implement the LiDAR sensor(s). LiDAR sensors come in various configurations and the team shall consider which configuration is the most cost effective while being able to provide all of the needed information for the robot’s successful operation.
 
 ## References
+All sources that have contributed to the detailed design and are not considered common knowledge should be duly cited, incorporating multiple references.
 
-All sources utilized in the conceptual design that are not considered common knowledge must be properly cited. Multiple references should be included.
+[1] “2026 IEEE+SoutheastCon+Hardware+Competition+Ruleset_8_15_2025.” IEEE, Aug. 15, 2025 
 
+[5] NVIDIA, “NVIDIA jetson nano,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-nano/product-development/
 
-## Statement of Contributions
+[4] NVIDIA, “NVIDIA Jetson TX2: High Performance AI at the Edge,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/
 
-Each team member is required to make a meaningful contribution to the project proposal. In this section, each team member is required to document their individual contributions to the report. One team member may not record another member's contributions on their behalf. By submitting, the team certifies that each member's statement of contributions is accurate.
+[2] NVIDIA, “NVIDIA Jetson AGX Orin,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+
+[1] D. Moye, A. Cruz, S. Hunter, and S. Borchers, “F24_Team1_SECON/reports/experimental analysis.md at Main · tntech-ECE/F24_TEAM1_SECON,” GitHub, https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/Experimental%20Analysis.md (accessed Nov. 24, 2025).
+[2] “What is the relationship between the units of Tops and flops? - genspark,” What Is The Relationship Between The Units Of Tops And Flops?, https://www.genspark.ai/spark/what-is-the-relationship-between-the-units-of-tops-and-flops/466c318f-635c-30a6-90f2-594f3fe1b1d1 (accessed Nov. 25, 2025).
+[3] “What is Ai Tops? how it differs from teraflops.,” C&T Solution Inc. | 智愛科技股份有限公司, https://www.candtsolution.com/news_events-detail/tops-and-teraflops-in-AI/ (accessed Nov. 24, 2025).
+[4] GeeksforGeeks, “Floating-point operations per second (flops),” GeeksforGeeks, https://www.geeksforgeeks.org/computer-organization-architecture/what-is-floating-point-operations-per-second-flops/ (accessed Nov. 24, 2025).
+[5] P. Burns, “A guide to ai tops and NPU Performance Metrics,” Wireless Technology & Innovation, https://www.qualcomm.com/news/onq/2024/04/a-guide-to-ai-tops-and-npu-performance-metrics (accessed Nov. 24, 2025).
