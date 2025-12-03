@@ -26,46 +26,52 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 ## Specifications and Constraints
 
 ### Electrical Specifications
--  Source: Zeee 3S LiPo battery
---	Nominal voltage: 11.1 V (3S1P)
---	Voltage range: 9.0–12.6 V
---	Capacity: 5200 mAh (5.2 Ah)
-o	Discharge rating: 80 C (max current >> system needs)
-o	Connector: XT60 hard-case pack amazon.com+1
-•	24 V bus (VBUS_HI):
-o	Nominal output: 24 V DC
-o	Regulation: 24 V ± 5 % under loads from 0A to 8A
-o	Continuous power rating: ≥ 192 W
-o	Peak power rating (e.g., during motor stall / acceleration): ≥ 576 W
-•	Drivetrain load:
-o	Motors: Pololu 150:1 37Dx73L mm 24 V with 64 CPR encoder and helical pinion
-o	No-load at 24 V: ~0.1 A
-o	Stall current at 24 V: 3 A per motor Pololu+1
-o	Number of motors: 4
-o	Total stall current @ 24 V: 3 A × 4 motors = 12 A
-•	19V rail (Jetson Orin):
-o	Voltage: 19 V ± 5 %
-o	Continuous current: ≥ 5 A jetson
-o	Short-term peak: ≥ 7 A
-•	12V rail (L298N):
-o	Voltage: 12V ± 5 %
-o	Continuous current: ≥ 3 A
-o	Peak current: ≥ 6A
-•	7.4V- rail (L298N for 2 Normal Servos)
-o	Voltage: 7.4V ± 5 %
-o	Continuous current: ≥ 5.1 A
-o	Peak current: ≥ 10.2 A
-•	5V rail (5V- HSR-1425CR)
-o	Voltage: 5V ± 5 %
-o	Continuous current: ≥ 0.7 A
-o	Peak current: ≥ 1.4 A
-•	3.3V rail (STM32F405, nRF51822, BMI088, BMP388, APDS9960)
-o	Voltage: 3.3V ± 5 %
-o	Continuous current: ≥ 0.133 A
-o	Peak current: ≥ 0.266A
-•	Efficiency & runtime targets:
-<img width="468" height="648" alt="image" src="https://github.com/user-attachments/assets/8af28c16-c827-44a0-9263-6955c2d3c228" />
+- **Source: Zeee 3S LiPo battery**
+  - Nominal voltage: 11.1 V (3S1P)
+  - Voltage range: 9.0–12.6 V
+  - Capacity: 5200 mAh (5.2 Ah)
+  - Discharge rating: 80 C (max current >> system needs)
+  - Connector: XT60 hard-case pack (amazon.com)
 
+- **24 V bus (VBUS_HI):**
+  - Nominal output: 24 V DC
+  - Regulation: 24 V ± 5% under loads from 0 A to 8 A
+  - Continuous power rating: ≥ 192 W
+  - Peak power rating (e.g., motor stall / acceleration): ≥ 576 W
+
+- **Drivetrain load:**
+  - Motors: Pololu 150:1 37Dx73L mm 24 V with 64 CPR encoder and helical pinion
+  - No-load at 24 V: ~0.1 A
+  - Stall current at 24 V: 3 A per motor
+  - Number of motors: 4
+  - Total stall current @ 24 V: 3 A × 4 = **12 A**
+
+- **19 V rail (Jetson Orin):**
+  - Voltage: 19 V ± 5%
+  - Continuous current: ≥ 5 A
+  - Short-term peak: ≥ 7 A
+
+- **12 V rail (L298N):**
+  - Voltage: 12 V ± 5%
+  - Continuous current: ≥ 3 A
+  - Peak current: ≥ 6 A
+
+- **7.4 V rail (L298N for 2 normal servos):**
+  - Voltage: 7.4 V ± 5%
+  - Continuous current: ≥ 5.1 A
+  - Peak current: ≥ 10.2 A
+
+- **5 V rail (5V – HSR-1425CR):**
+  - Voltage: 5 V ± 5%
+  - Continuous current: ≥ 0.7 A
+  - Peak current: ≥ 1.4 A
+
+- **3.3 V rail (STM32F405, nRF51822, BMI088, BMP388, APDS9960):**
+  - Voltage: 3.3 V ± 5%
+  - Continuous current: ≥ 0.133 A
+  - Peak current: ≥ 0.266 A
+
+- **Efficiency & runtime targets:**
 
 
 ## Specifications and Constraints
