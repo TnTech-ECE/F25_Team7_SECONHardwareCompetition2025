@@ -2,6 +2,7 @@
 
 ## Function of the Subsystem
 
+The function of the global control system is to allow the robot to collected and process data about the its envirnment and 
 
 ## Specifications and Constraints
 
@@ -32,48 +33,92 @@ The Global control system is divided into two major components: The Global contr
 
 The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. This computer will be the device that makes all of the control decisions for the robot. It will also host the processes for object detection and navigation and based on the data the Jetson receives and computes, it will make decisions and send the necessary commands to the low-level controller that will coordinate the robot’s motion and actuators. The robot shall use an NVIDIA Jetson Orin for this task. This single board computer was designed to efficiently run AI loads which will be essential for the robot’s object detection and navigation processes.
 
-ADD 
-
 The robot shall also use a combination of sensors that will allow the robot to perceive its location on the game board and be able to identify objects on it. Using the technique of sensor fusion, LiDAR sensors and an IMU will be used to pinpoint the robot’s location on the game board. The robot shall also utilize photoresistors which will be used to start the robot autonomously. The robot will also have a manual start button.The robot and the UAV will have cameras that will send image data to the global computer over USB and WiFi respectively. More detail about the cameras can be found in the object detection detailed design document.
 
 ## Interface with Other Subsystems
 
-The Jetson Orin has access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, GPIO, PWM, DMIC, and DSPK protocols. The development board comes with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power [2]. The robot mounted camera will connect to the global computer using a USB connection. The UAV flight controller will be connected to the global computer over BLE. The UAV mounted camera will connect to the global computer over a WiFi connection. The Low Level Controller will connect to the global computer over UART/USB. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be GPIO signals.
+The Jetson Orin has access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, GPIO, PWM, DMIC, and DSPK protocols. The development board comes with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power [2]. The robot mounted camera will connect to the global computer using a USB connection. The UAV comes with a USB adaptor that will allow the global control computer to communicate with the UAV flight controller. Details for the USB adaptor can be found in the communication detailed design document. The UAV mounted camera will connect to the global computer over a WiFi connection. The Low Level Controller will connect to the global computer over USB. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be GPIO signals.
 
 Inputs:
--Autonomous Start Signals
-  -GPIO Analog Signal
--Manual Start Signal
-  -GPIO Digital Signal
--LiDAR Sensors
-  -Distance Data over I2C
--IMU
-  -Acceleration and Orientation Data over I2C
--Robot Mounted Camera
-  -Image and Distance Data over USB
--Drone Mounted Camera
-  -Image Data over WiFi
+* Autonomous Start Signals
+ * GPIO Analog Signal
+* Manual Start Signal
+ * GPIO Digital Signal
+* LiDAR Sensors
+ * Distance Data over I2C
+* IMU
+ * Acceleration and Orientation Data over I2C
+* Robot Mounted Camera
+ * Image and Distance Data over USB
+* Drone Mounted Camera
+ * Image Data over WiFi
 Outputs:
--Command Signals to Low Level Controller
--Motion and Actuation commands over USB
--Navigation Commands (Coordinates of the designated path to follow)
-  -These shall be transmitted over a serial protocol
--UAV Command and Data Signals
-  -Launch and Land Commands over BLE
-  -LED Information over Wifi
+* Command Signals to Low Level Controller
+ * Motion and Actuation commands over USB
+* Navigation Commands (Coordinates of the designated path to follow)
+ * These shall be transmitted over USB
+* UAV Command and Data Signals
+ * Launch and Land Commands over a radio signal via USB adaptor
+ * LED Information over Wifi.
 
-## Buildable Schematic 
+Figure 1 - Jeston Orin Top View
+<img width="1058" height="466" alt="son" src="https://github.com/user-attachments/assets/aae0ed3f-2c23-46a3-91c5-4c845903eb94" />
 
+
+Figure 2 - Jetson Orin Bottom View
+<img width="1084" height="559" alt="jet" src="https://github.com/user-attachments/assets/519fdd8c-3f3a-483f-9307-66d0a9f6ad4d" />
+
+
+Figure 3 - Jetson Orin Block Diagram
+<img width="1053" height="833" alt="diagram" src="https://github.com/user-attachments/assets/ed7d0934-27cd-4a91-8047-55d0931bcecf" />
+
+Figure 4 - Jetson Orin Header Pinout Diagram
+<img width="709" height="1161" alt="pinhead" src="https://github.com/user-attachments/assets/52d15e0d-a1ab-4c2d-a1e2-e43f5689db09" />
+
+## Buildable Schematic
+
+Figure 5 - Connections to Jetson IO
+<img width="2255" height="1597" alt="scheme" src="https://github.com/user-attachments/assets/5f8a4f5e-36fc-445c-891e-f3fbe23f0a7e" />
 
 ## Flowchart
 
+Figure 6 - System Block Diagram
+<img width="2064" height="1377" alt="Full Block Diagram" src="https://github.com/user-attachments/assets/4c4f986b-03d7-48fe-b823-53fa32cf9fdf" />
+
+Figure 7- Software Flowchart 1
+
+<img width="665" height="722" alt="soft 4" src="https://github.com/user-attachments/assets/07d74887-c5e6-4381-9261-d96a6c396d7c" />
+
+Figure 8 - Software Flowchart 2
+
+<img width="608" height="1118" alt="soft 3" src="https://github.com/user-attachments/assets/445299ef-aabc-4988-a97b-d758c968ee33" />
+
+Figure 9 - Software Flowchart 3
+
+<img width="417" height="1043" alt="soft 2" src="https://github.com/user-attachments/assets/ff4a76a4-f36e-4c28-b0d3-370891e4bf1a" />
+
+Figure 10 - Sofrware Flowchart 4
+
+<img width="677" height="917" alt="soft 1" src="https://github.com/user-attachments/assets/310cf1e4-0754-43c7-b672-4b84cfc72ddd" />
 
 ## BOM
-
+| Part        | Manufacturer| Part Number | Distributor | Distributo Part Number | Quantity | Price | Total Price | Website URL |
+| ----------- | ----------- | ----------- | ----------- | ---------------------- | -------- | ----- | ----------- | ----------- |
+| Jetson Orin | NVIDIA | N/A | Amazon | 945-137766-0000-000 | 1 | $249.00 | $249.00 | https://www.amazon.com/dp/B0BZJTQ5YP?utm_source=nvidia&th=1 | 
+| Garmin LIDAR-Lite V4 | Garmin | N/A | SparkFun | SEN-18009 | 3 | $119.95 | $359.85 | https://www.sparkfun.com/garmin-lidar-lite-v4-led-distance-measurement-sensor-qwiic.html |
+| 9Dof IMU Breakout | SparkFun | SEN-15335 | SparkFun | SEN-15335 | 1 | $21.95 | $21.95 | https://www.sparkfun.com/sparkfun-9dof-imu-breakout-icm-20948-qwiic.html |
+| GL12528 Photoresistor (10 pack) | Juried Engineering | N/A | Amazon | B08F3WPNPF | 1 | $22.98 | $22.98 | https://www.amazon.com/Juried-Engineering-Photoresistor-GL12528-Sensitive/dp/B08F3WPNPF |
+| Auxiliary Start Switch | Judco Manufacturing Inc. | 40-4325-00 | Digikey | 512PB-ND | 1 | $2.55 | $2.55 | https://www.digikey.com/en/products/detail/judco-manufacturing-inc/40-4325-00/254287 |
+| Flexible Qwiic Cable - 200mm | Spark | PRT-17258 | SparkFun | PRT-17258 | 4 | $1.95 | $7.80 | https://www.sparkfun.com/flexible-qwiic-cable-200mm.html |
+| Flexible Qwiic Cable - Female Jumper | SparkFun | CAB-17261 | SparkFun | CAB-17261 | 2 | $1.95 | $3.90 | https://www.sparkfun.com/flexible-qwiic-cable-female-jumper-4-pin.html |
+| QWiic MultiPort | SparkFun | BOB-18012 | SparkFun | BOB-18012 | 1 | $2.50 | $2.50 | ttps://www.sparkfun.com/sparkfun-qwiic-multiport.html |
+| Jumper Wire Kit | SparkFun | PRT-00124 | SparkFun | PRT-00124 | 1 | $8.95 | $8.95 | https://www.sparkfun.com/jumper-wire-kit-140pcs.html |
+| Right Angle Header - Male | SparkFun | PRT-30218 | SparkFun | PRT-30218 | 4 | $0.75 | $3.00 | https://www.sparkfun.com/right-angle-header-male-pth-0-1in-6-pin.html |
 
 ## Analysis
 ### Global Controller
 In order to meet specifications 1, 5, and 6; the robot shall have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer shall send the needed instructions to the low level controller in order to execute those decisions. The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [3]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power. 
+
 
 The Jetson Orin is listed as having an AI performance of 67 tera-operation per second (TOPS) [2]. The Nano and the TX2 have an AI performance of 0.472 and 1.33 tera floating point operation per second (TFLOPS) respectively [4] [5]. TOPS and TFLOPS are both metrics that are used to describe AI performance [6] [7], though they are different, with TOPS referring to 8 bit integer operations while TFLOPS refers to floating point operation [8]. However, a general case conversion can be made to compare two [9]. An exact conversion is hardware architecture dependent, however, using the general case the Orin is shown to be the most powerful of the three listed computers. The previous competition’s robot was able to utilize the Jetson Nano, however, the 2026 competition’s robot will need to handle more AI loads than the previous competition’s robot. Thus the more powerful Jetson Orin shall allow the robot the ability to process all of its AI loads quickly, allowing the robot to complete all of its required task within the 3 minute time limit. Table 1.A shows a list of the AI process that the global computer shall be able to handle. 
 
