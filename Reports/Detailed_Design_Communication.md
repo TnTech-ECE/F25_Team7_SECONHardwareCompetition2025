@@ -18,14 +18,19 @@ The robot will connect with the UAV in 2 ways: sending flight controls and satel
 
 This subsystem interfaces directly with the Global Controller through the wifi module and Crazyradio PA on the Jetson computer through USB. We will be using the UAV's given API to control its position (Flight Control).  This subsystem also communicates with Earth through IR LEDs that are connected to the UAV.
 
-Schematics:
+# Schematics:
+
+<img width="781" height="768" alt="Communication_Schematic" src="https://github.com/user-attachments/assets/63063a83-ebb8-4a90-ad58-471c0642da10" />
 
 
-Flowchart:
+# Flowchart:
 
+<img width="866" height="467" alt="Communication_Flowchart" src="https://github.com/user-attachments/assets/10ee9e35-9636-4338-9a71-4acc65f4118b" />
 
-| BOM: | Name of the Part: | Manufacturer: | Distributor:| Part Number: | Distributor Part Number: | Quantity: | Price: | Website:| Component Name: |
-|---|---|---|---|---|---|---|---|---|---|
+# BOM:
+
+| Name of the Part: | Manufacturer: | Distributor:| Part Number: | Distributor Part Number: | Quantity: | Price: | Website:| Component Name: |
+|---|---|---|---|---|---|---|---|---|
 | IR LEDs | Vishay Semiconductor Opto Division | Digikey | TSHF5210 | 751-1210-ND | 5 | $3.45 | https://www.digikey.com/en/products/detail/vishay-semiconductor-opto-division/TSHF5210/1681345 | D1-5 | 
 | 33 Ohm Resistor | YAGEO | Digikey | MFR50SFTE52-22R| 13-MFR50SFTE52-22RCT-ND | 5 | $0.50 | https://www.digikey.com/en/products/detail/yageo/MFR50SFTE52-33R/9151419| R2-6 |
 | 10k Ohm Resistor | YAGEO | Digikey | MFR-25FRF52-10K|13-MFR-25FRF52-10KCT-ND | 1 |0.1 | https://www.digikey.com/en/products/detail/yageo/MFR-25FRF52-10K/14626 | R1 |
