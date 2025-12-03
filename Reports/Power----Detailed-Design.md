@@ -159,7 +159,7 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 ---
 
 ### **5. Safety & EMC**
-- **30 A main fuse**, E-Stop, and optional contactor provide full hardware isolation.
+- **40 A main fuse**, E-Stop, and optional contactor provide full hardware isolation.
 - TVS diodes, ceramic capacitors, and EMI filters suppress switching noise.
 - PCB layout separates high-current switching loops from sensitive digital/analog circuits.
 
@@ -217,10 +217,10 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 
 ## Printed Circuit Board Layout
 - PCB Schematic:
-![Printed Circuit Board Layout](Images/PCB_Layout.png)
+![Printed Circuit Board Layout](Images/PCB_Layout1.png)
 
 - PCB Layout:
-![Printed Circuit Board Layout](Images/PCB.png)
+![Printed Circuit Board Layout](Images/PCB1.png)
 - Pcb layout is still in progress due to learning curve and last minute revisions.
 - Still Need:
   - Ground terminal to robot frame.
