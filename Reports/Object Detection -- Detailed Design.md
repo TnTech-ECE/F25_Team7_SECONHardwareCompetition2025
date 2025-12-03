@@ -48,7 +48,7 @@ The image below is of the ESP32-S3 Sense:
 
 ##### Robot Object Detection: 
 
-To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identifty of the Astr-Ducks and antennas (Specifcation #3). The robot shall already know where the antennas are located on the field from the pre-created map of the competition arena. By already knowing which antenna is where on the competition arean, the specific task of each antenna is already known. The robot shall navigate to drone where it uses it onboard Intel RealSense camera and Garmin LiDAR sensors to correctly position and algin itself with whichever antenna task is at hand (Specification #4).The robot shall aslo be equipped with a 5mm GL5528 Photoresistor to detect the starting LED for autonomous starting (Specification #6).
+To meet the listed specifications and constraints above, the robot shall use the Intel RealSense D435 RGBD camera and the Garmin LIDAR-Lite v4 LED sensors. The Intel RealSense camera shall be used to further confirm the robots location in the map and confirm the identifty of the Astr-Ducks and antennas (Specifcation #3). The robot shall already know where the antennas are located on the field from the pre-created map of the competition arena. By already knowing which antenna is where on the competition arean, the specific task of each antenna is already known. The robot shall navigate to drone where it uses it onboard Intel RealSense camera and Garmin LiDAR sensors to correctly position and algin itself with whichever antenna task is at hand (Specification #4).The robot shall aslo be equipped with a 12mm GL12528 Photoresistor to detect the starting LED for autonomous starting (Specification #6).
 
 The image below is of the Intel RealSense:
 
@@ -331,7 +331,119 @@ Below are the images of the psuedocode for the main object detection algorithms 
 
 ## Analysis
 
-Deliver a full and relevant analysis of the design demonstrating that it should meet the constraints and accomplish the intended function. This analysis should be comprehensive and well articulated for persuasiveness.
+The proposed object detection subsystem combines a lightweight aerial sensing platform (drone ESP32-S3 Sense) with a more capable ground-based perception stack (Intel RealSense D435, Garmin LiDAR-Lite v4, and photoresistor sensing) to meet the specifications and constraints defined for the SECON competition. This section evaluates how the design satisfies functional requirements, adheres to physical and regulatory constraints, and integrates with other subsystems to reliably support autonomous operation within the three-minute match window.
+
+### **Satisfaction of Functional Specifications:**
+
+#### Specification #1 -- The drone and robot shall create a SLAM map of the competition within 20 seconds
+The drone-mounted ESP32-S3 Sense provides rapid overhead imagery of the field, including crater edges, antenna towers, and arena boundaries. By streaming compressed frames to the robot, the global controller can initialize a coarse SLAM map using known arena geometry and detected fiducial features (e.g., crater center, wall lines, antenna bases). The robot’s Intel RealSense camera and LiDAR sensors then refine this initial map as it moves, adding depth data and feature points. This two-stage approach, fast aerial initialization followed by ground-level refinement, supports generating a usable SLAM map in the first ~20 seconds while remaining within the computational capabilities of the hardware.
+
+
+#### Specification #2 -- Drone shall locate and navigate the robot
+The ESP32-S3 Sense is capable of detecting AprilTags or other fiducial markers mounted on the robot chassis. By associating detected tags with the drone’s pose and the arena map, the system can estimate the robot’s position from above and transmit this information to the global controller. This enables the drone to function as an external localization aid, helping the robot correct accumulated odometry/IMU drift and improving global navigation accuracy.
+
+
+#### Specification #3 -- The drone and robot shall both locate the Astro-Ducks and antennas
+The design deliberately splits the detection problem into global and local views:
+  - The drone provides coarse detection of duck-like shapes, antenna tower locations, and crater boundaries using top-down imagery. Even if these detections are approximate, they are sufficient for seeding search regions.
+
+  - The robot then uses the Intel RealSense D435 RGB-D camera combined with a YOLOv5-Nano model to perform high-fidelity detection of Astro-Ducks and antennas at close range. The depth channel allows the system to estimate object distance and height, which helps distinguish ducks from antennas and background clutter.
+
+Together, this hierarchical detection strategy increases robustness and reduces the search space for the robot, making it more likely to find all scoring objects within the three-minute time limit.
+
+
+#### Specification #4 -- The drone and robot shall both identify the specific task of the antennas
+The robot’s object detection subsystem does not need to infer antenna tasks solely from visual cues because the competition rules fix antenna locations and tasks. The pre-built arena map encodes which antenna location corresponds to which task (button, crank, pressure plate, keypad). Object detection is used to:
+
+  - Confirm that the robot is correctly aligned with the physical antenna tower.
+  - Detect geometry and height of the task hardware for fine positioning.
+
+By combining known coordinates from the map with RealSense and LiDAR measurements, the robot can reliably determine which task is present at the current antenna and position itself appropriately to complete it.
+
+#### Specification #5 -- The drone shall determine the color of the antennas’ LEDs
+The ESP32-S3 Sense supports capturing RGB imagery at moderate resolution, which is sufficient for LED color classification. The object detection subsystem can employ simple color segmentation (e.g., HSV thresholding) around known antenna LED regions to classify LEDs as red, blue, green, or white. Because the drone views LEDs from above and from a distance, this task is kept algorithmically lightweight and can be integrated into the drone’s frame processing before transmission or performed on the robot after receiving the images. Either approach enables the system to meet the LED color identification requirement without overloading the drone.
+
+
+#### Specifcation #6 -- The drone and robot shall automatically starting using the LED bar on the competition board
+On the robot, the 12mm GL12528 photoresistor is dedicated to detecting the starting LED on the competition board. This sensor provides a simple, reliable analog indication that the start signal has been activated. The local controller can monitor the photoresistor voltage and automatically transition the robot from idle to autonomous mode once the white starting LED is detected, fulfilling the autonomous starting requirement without imposing additional computational load on the camera-based detection pipeline.
+
+
+### **Satisfaction of Constaints:**
+
+#### Constraint #1 -- The drone shall not weigh more than 250 grams or 0.55 pounds
+The Seeed Studio XIAO ESP32-S3 Sense has a mass of approximately 6.6 g, making it a negligible portion of the overall drone mass budget. By selecting a compact, integrated MCU-plus-camera module instead of a heavier SBC (e.g., Raspberry Pi or Jetson) and sensor stack, the design preserves ample margin under the 250 g weight limit for motors, battery, frame, and flight controller. This directly supports both competition rules and real-world aviation considerations, as 250 g is a common regulatory threshold for small unmanned aircraft.
+
+
+#### Constraint #2 -- The drone shall not move outisde of the netted playing field
+The object detection subsystem contributes to this constraint by providing the navigation subsystem with reliable estimates of arena boundaries (walls, crater edges, and antenna landmarks). The SLAM map and visual boundary detections allow the navigation and safety subsystems to define soft and hard limits, preventing path planners from generating trajectories outside the enclosed region and allowing for emergency corrections if the robot or drone approaches the netting.
+
+#### Constraint #3 -- The robot and drone shall have a maximum of 3 minutes to complete objectives and score points
+All selected algorithms and sensors are chosen with latency and throughput in mind:
+  - The drone transmits down-sampled or JPEG-compressed frames instead of raw high-resolution streams to keep bandwidth and latency manageable.
+  - YOLOv5-Nano is a lightweight model specifically suited to embedded inference, allowing real-time detection on the ground robot at practical frame rates.
+  - Depth-based pose estimation and temporal filtering are implemented in a modular pipeline (as shown in Algorithms 1–3) so that frame rate can be tuned without re-designing the system.
+
+This ensures that object detection produces actionable results quickly enough for the global controller and navigation subsystem to complete objectives and scoring within the three-minute window.
+
+
+#### Constraint #4 -- The drone shall properly identify the antennas' LEDs and tranmit the correct data to Earth
+For antenna LEDs, the design uses a combination of color segmentation and known antenna positions to robustly assign LED colors to specific antenna IDs. The communication interface between the object detection subsystem, communication stack, and Earth base uses structured messages. This prevents misinterpretation of data and reduces the risk of ambiguous or corrupted messages influencing mission decisions.
+
+#### Constraint #5 -- The drone shall properly identify the antennas' LEDs and tranmit the correct data to Earth
+The dedicated photoresistor for start LED detection provides a simple, robust, and low-cost solution. It is electrically and functionally isolated from the more complex camera-based object detection pipeline, which improves reliability. In combination with software safeguards in the local controller, this ensures the robot begins motion only when a valid start signal is present.
+
+
+### Algorithmic Performance and Data Flow
+The pseudocode in the Buildable Schematic section (Algorithms 1–3) and the accompanying flowcharts demonstrate that the subsystem is architected as a series of clear, modular stages:
+  - Algorithm 1 runs the ground robot’s main detection loop, handling camera acquisition, optional drone image ingestion, preprocessing, inference, and message publication.
+  - Algorithm 2 encapsulates post-processing (thresholding and non-maximum suppression) and pose estimation, cleanly separating geometric computation from model inference.
+  - Algorithm 3 defines the drone’s ESP32-S3 image acquisition and transmission loop, emphasizing lightweight operations and continuous streaming.
+
+This modular structure simplifies implementation, debugging, and future upgrades (such as swapping YOLOv5-Nano for another model without rewriting the communication logic). It also ensures that each function has well-defined inputs and outputs, matching the detailed interface descriptions provided earlier for the Communication, Global Controller, Navigation, Local Controller, and Safety and Power subsystems.
+
+Bandwidth requirements are controlled by compressing drone frames and limiting resolution and frame rate to what the wireless link and robot processor can handle. The Intel RealSense D435 provides both RGB and depth data in a single package, reducing integration complexity and allowing the same sensor to support SLAM refinement, obstacle detection, and object pose estimation. Garmin LiDAR-Lite modules further improve range accuracy and obstacle detection, particularly when visual conditions are poor or objects have low texture.
+
 
 ## References
+[1] Seeed Studio, “XIAO ESP32-S3 Sense,” *Seeed Studio Wiki*, 2024. [Online]. Available: https://wiki.seeedstudio.com/xiao_esp32s3_getting_started/
+
+[2] Espressif Systems, “ESP32-S3 Series Datasheet,” *Espressif Documentation*, 2023. [Online]. Available: https://www.espressif.com/en/support/documents/technical-documents
+
+[3] Intel, “Intel RealSense Depth Camera D435—Product Specifications,” *Intel RealSense Documentation*, 2024. [Online]. Available: https://www.intelrealsense.com/depth-camera-d435/
+
+[4] Garmin Ltd., “LIDAR-Lite v4 LED—Technical Specifications,” *Garmin Developer Resources*, 2023. [Online]. Available: https://developer.garmin.com/lidar-lite/
+
+[5] Advanced Photonix, “GL5528 Photoresistor Datasheet,” *Advanced Photonix Technical Library*, 2022. [Online]. Available: https://www.advancedphotonix.com/
+
+[6] G. Jocher *et al.*, “YOLOv5: A family of object detection architectures and models,” *GitHub Repository*, 2022. [Online]. Available: https://github.com/ultralytics/yolov5
+
+[7] E. Rublee, V. Rabaud, K. Konolige, and G. Bradski, “ORB: An efficient alternative to SIFT or SURF,” in *2011 International Conference on Computer Vision*, pp. 2564–2571.
+
+[8] E. Rosten and T. Drummond, “Machine learning for high-speed corner detection,” in *European Conference on Computer Vision*, 2006, pp. 430–443.
+
+[9] R. Hartley and A. Zisserman, *Multiple View Geometry in Computer Vision*, 2nd ed. Cambridge, U.K.: Cambridge Univ. Press, 2004.
+
+[10] G. Bradski, “The OpenCV Library,” *Dr. Dobb’s Journal of Software Tools*, 2000.
+
+[11] E. Olson, “AprilTag: A robust fiducial system,” in *IEEE International Conference on Robotics and Automation*, 2011, pp. 3400–3407.
+
+[12] J. Engel, V. Koltun, and D. Cremers, “Direct Sparse Odometry,” *IEEE Transactions on Pattern Analysis and Machine Intelligence*, vol. 40, no. 3, pp. 611–625, 2018.
+
+[13] ROS2 Documentation Team, “ROS 2 Documentation—Foxy/Humble,” *Open Robotics*, 2024. [Online]. Available: https://docs.ros.org/en
+
+[14] G. K. Wallace, “The JPEG still picture compression standard,” *IEEE Transactions on Consumer Electronics*, vol. 38, no. 1, pp. xviii–xxxiv, 1992.
+
+[15] H. Durrant-Whyte and T. Bailey, “Simultaneous localization and mapping: Part I,” *IEEE Robotics & Automation Magazine*, vol. 13, no. 2, pp. 99–110, June 2006.
+
+[16] T. Bailey and H. Durrant-Whyte, “Simultaneous localization and mapping: Part II,” *IEEE Robotics & Automation Magazine*, vol. 13, no. 3, pp. 108–117, Sept. 2006.
+
+[17] B. K. P. Horn, “Closed-form solution of absolute orientation using unit quaternions,” *JOSA A*, vol. 4, no. 4, pp. 629–642, 1987.
+
+[18] J. J. Leonard and H. F. Durrant-Whyte, *Mobile Robot Localization by Sensor Fusion*. Cambridge, MA: MIT Press, 1991.
+
+[19] IEEE SoutheastCon Hardware Competition Committee, *SoutheastCon Hardware Competition Ruleset*, 2025. [Online]. Available: https://ieeesoutheastcon.org/
+
+[20] J. B. Peatman, *Embedded Design with Microcontrollers*. McGraw-Hill, 2003.
+
+[21] D. Patterson and J. Hennessy, *Computer Organization and Design: The Hardware/Software Interface*, 5th ed., Morgan Kaufmann, 2014.
 
