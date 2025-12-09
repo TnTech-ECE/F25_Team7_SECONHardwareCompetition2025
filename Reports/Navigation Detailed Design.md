@@ -152,13 +152,12 @@ The Navigation subsystem retrieves the detected obstacles from the Object Detect
 
 ## Software Schematic
 
-!!!!!!!! ADDDD PIC HERE!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+### ROS 2 Nav2 Communication Inputs/Outputs
+
+<img width="1707" height="880" alt="ROS 2 Nav2 Communication Inputs_Outputs" src="https://github.com/user-attachments/assets/6c699042-2140-4104-9a15-9a32cadb1da7" />
 
 
-## Pseudocode for Navigation to Goal
+### Pseudocode for Navigation to Goal
 
     function navigate_to_goal(goal_pose):
     # Step 1: Initialize system
@@ -227,10 +226,7 @@ Relevant libraries for include:
 
 ## Flowchart
 
-!!!!!!!!!!!!ADDDD PIC HERE!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+<img width="2329" height="1777" alt="ROS 2 Nav2 (Nav) Flowchart" src="https://github.com/user-attachments/assets/7c592bbc-2eb6-487c-ac5d-5a5a8b2b95c5" />
 
 
 ## Analysis
