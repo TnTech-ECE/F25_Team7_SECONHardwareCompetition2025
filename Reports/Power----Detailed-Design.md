@@ -253,7 +253,7 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 
 - **Motors:**  
   Each motor stall: **3 A @ 24 V**  
-  Four motors → **16 A total stall**.  
+  Four motors → **12 A total stall**.  
 
 - **Driver (Dual VNH5019):**  
   - 12 A continuous per channel (30 A peak)  
