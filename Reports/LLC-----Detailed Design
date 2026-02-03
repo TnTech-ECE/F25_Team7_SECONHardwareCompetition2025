@@ -1,6 +1,28 @@
-DETAILED DESIGN
+### **DETAILED DESIGN**
+ignore
+**EE DD**
+ignore
+###EE DD
+ignore
+## EE DD
+ignore
 
-Function of the Subsystem
+<p align = "center">
+ignore center center center center center
+ignore center center center center center
+ignore center center center center center
+ignore center center center center center 
+</p>
+
+<h3 align = "center"> EE DD </h3>
+
+*EE DD ignore*
+_ignore 2 EE DD_
+
+***ee dd ignore3***
+
+
+#Function of the Subsystem
 The Low-Level Controller (LLC) subsystem is responsible for generating and executing real-time motion control for the ground unit robot during the IEEE 2026 SoutheastCon (SECON) Hardware Competition. Unlike the high-level perception and decision-making performed by the Global Controller subsystem, the LLC prioritizes direct control of electrical components relevant to the real-time movement and safety protocols of the ground robot. 
 The inclusion of a local controller reduces both the electrical and computational strain on the Global controller. By utilizing a microcontroller-based solution, the LLC can provide stable operation of motor circuitry, rapid fault response through continuous sensor sampling, and consistent safety protocol enforcement. Assigning these features to the LLC allows the Global Controller to focus on accurate higher-level autonomy and processing. 
 The LLC controls the robot’s drive system by receiving high-level motion commands from the Jetson in the Global subsystem and translating them into low-level actuator signals, such as speed and direction, to be executed in real-time. In addition, the LLC continuously monitors actuator output, component condition, and fault detection sensors to signal emergency stop conditions if necessary.
