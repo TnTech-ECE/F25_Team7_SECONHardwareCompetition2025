@@ -32,12 +32,16 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
   - Capacity: 5200 mAh (5.2 Ah)
   - Discharge rating: 80 C (max current >> system needs)
   - Connector: XT60 hard-case pack (amazon.com)
+ 
 
 - **24 V bus (VBUS_HI):**
   - Nominal output: 24 V DC
   - Regulation: 24 V ± 5% under loads from 0 A to 8 A
   - Continuous power rating: ≥ 192 W
   - Peak power rating (e.g., motor stall / acceleration): ≥ 576 W
+
+
+ 
 
 - **Drivetrain load:**
   - Motors: Pololu 150:1 37Dx73L mm 24 V with 64 CPR encoder and helical pinion
@@ -142,13 +146,16 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 
 ---
 
-### **3. Boost Converter to 24 V**
+### **3. Boost Converter to 24 V(specific module + thermal strategy)**
 - Regulates the variable battery input (9–12.6 V) to a constant **24 V bus**.
 - Sizing based on:
   - Motor power (near-stall or heavy load)
   - 19 V Jetson rail
   - Servo and auxiliary loads
 - **Design target:** ≥ 400 W continuous, ≥ 600 W peak.
+- **Specific converter used:**
+- The project uses a SUPERNIGHT DC 12 V → 24 V boost converter, rated 24 V fixed output, advertised up to 20 A / 480 W, in a sealed aluminum waterproof enclosure (vendor listings specify IP67–IP68 style waterproofing depending on seller).
+
 
 ---
 
