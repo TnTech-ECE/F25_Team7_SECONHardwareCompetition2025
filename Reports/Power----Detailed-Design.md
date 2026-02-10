@@ -154,8 +154,18 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
   - Servo and auxiliary loads
 - **Design target:** ≥ 400 W continuous, ≥ 600 W peak.
 - **Specific converter used:**
-- The project uses a SUPERNIGHT DC 12 V → 24 V boost converter, rated 24 V fixed output, advertised up to 20 A / 480 W, in a sealed aluminum waterproof enclosure (vendor listings specify IP67–IP68 style waterproofing depending on seller).
-
+  - The project uses a SUPERNIGHT DC 12 V → 24 V boost converter, rated 24 V fixed output, advertised up to 20 A / 480 W, in a sealed aluminum waterproof enclosure (vendor listings specify IP67–IP68 style waterproofing depending on seller).
+- **Why thermal planning matters:**
+  - At hundreds of watts, even high efficiency produces significant heat (e.g., at 300–400 W, a few percent loss is tens of watts of dissipation). Waterproof/potted modules can trap heat internally, so the installation must treat the converter as a heat-generating component that needs a defined heat-removal path.
+- **Thermal strategy:**
+  - **Chassis heat-sinking:**
+      - Mount the converter’s aluminum case to the robot chassis or a dedicated aluminum plate using a flat mating surface and thermal pad/compound to reduce thermal resistance (converter case becomes the primary heat spreader).
+  - **Air exposure:**
+      - Place the module in open air inside the chassis so convection can remove heat from the case.
+  - **Power derating verified by test:**
+      - Because marketplace “480 W” ratings often depend on cooling assumptions, the team will validate sustainable continuous power by running a controlled load test and measuring steady-state case temperature rise; the validated continuous rating will be used for final current limits and fusing.
+  - **Protection coordination:**
+      - Ensure fuse/wiring are sized to protect against prolonged overload, while relying on the motor driver’s current sense and the controller’s limits to prevent sustained stall events that would overheat the boost and drivetrain electronics. (The VNH5019 shield supports high motor current and provides protection features, but thermal behavior still depends on airflow/heatsinking.)
 
 ---
 
