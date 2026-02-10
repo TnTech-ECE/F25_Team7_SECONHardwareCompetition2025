@@ -36,7 +36,7 @@ The Power Subsystem is responsible for storing, converting, distributing, and pr
 
 - **24 V bus (VBUS_HI):**
   - Nominal output: 24 V DC
-  - Regulation: 24 V ± 5% under loads from 0 A to 8 A
+  - Regulation: 24 V ± 5% under loads from 0 A to 12 A (drivetrain stall), with short transient headroom above this for system peaks
   - Continuous power rating: ≥ 192 W
   - Peak power rating (e.g., motor stall / acceleration): ≥ 576 W
 
