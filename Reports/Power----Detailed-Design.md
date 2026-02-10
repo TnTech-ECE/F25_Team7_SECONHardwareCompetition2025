@@ -284,9 +284,15 @@ Zeee 3S LiPo (11.1 V) → Main Fuse → E-Stop → 24 V Boost Converter (VBUS_HI
 ### 3) Boost converter stresses
 
 - **Output power:**  
-  - At 24 V and 16 A, output power is 384 W.
-  
-- **Battery current needed:**  
+  - 24 V × 12 A = 288 W (motor stall only)
+
+- **System-level peak planning condition:**  
+  - For short-duration transients, the 24 V bus is conservatively budgeted at up to ~16 A, which includes drivetrain stall current plus transient input current drawn by downstream buck converters (Jetson, servo rails, and auxiliary loads).
+ 
+- **Worst-case peak output power:**  
+  - 24 V × 16 A = 384 W
+ 
+- **Battery current at peak:**  
   Assuming 90% converter efficiency:
    - Battery current ≈ 384 / (0.9 × 11.1) ≈ 38.4 A.
   
