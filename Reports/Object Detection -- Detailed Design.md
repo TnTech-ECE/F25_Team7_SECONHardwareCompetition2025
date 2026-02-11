@@ -8,13 +8,6 @@ The function of this subsystem is for objects and objectives to be detected thro
 
 ## Specifications and Constraints
 
-This section should provide a list of constraints applicable to the subsystem, along with the rationale behind these limitations. For instance, constraints can stem from physics-based limitations or requirements, subsystem prerequisites, standards, ethical considerations, or socio-economic factors.
-
-The team should set specifications for each subsystem. These specifications may require modifications, which must be authorized by the team. It could be necessary to impose additional constraints as further information becomes available.
-
-Every subsystem must incorporate at least one constraint stemming from standards, ethics, or socio-economic factors.
-
-
 ### Specifications:
 
 1. The drone and robot shall create a SLAM map of the competition within 20 seconds
@@ -40,7 +33,7 @@ In order to meet the specifications and constraints, object detection is broken 
 
 ##### Drone Object Detection:
 
-To meet the listed specification and constraints above, the drone shall use the ESP32-S3 Sense. This camera is capable of detecting the crater edges, antenna-tower location, duck-like shapes, colored objects, and AprilTags. The ESP32-S3 allows the drone and robot to create a rough SLAM map of the competition field within the first 20 seconds (Specification #1), locate the robot using AprilTag detection (Specification #2), locate the Astro-Ducks and antennas (Specification #3), and the color of the antennas' LED (Specification #5). The camera is very lightweight with a weight of 6.6 grams to help stay within 250 grams limit of the drone (Constraint #1).
+To meet the listed specification and constraints above, the drone shall use the ESP32-S3 Sense. The drone will be used primarily for image capture, while all object detection and image processing will be performed on the ground robot after the images are transmitted wirelessly. This approach reduces the computational workload and power consumption on the drone while allowing the robot to use higher processing capability. The camera is capable of capturing imagery sufficient for detecting crater edges, antenna-tower locations, duck-like shapes, colored objects, and AprilTags once processed on the robot. The combined drone-robot system enables creation of a rough SLAM map of the competition field within the first 20 seconds (Specification #1), robot localization using AprilTag detection (Specification #2), locating Astro-Ducks and antennas (Specification #3), and determining the color of the antennas’ LED (Specification #5). The camera is very lightweight with a weight of 6.6 grams to help stay within the 250-gram limit of the drone (Constraint #1).
 
 The image below is of the ESP32-S3 Sense:
 
@@ -337,7 +330,7 @@ The proposed object detection subsystem combines a lightweight aerial sensing pl
 ### **Satisfaction of Functional Specifications:**
 
 #### Specification #1 -- The drone and robot shall create a SLAM map of the competition within 20 seconds
-The drone-mounted ESP32-S3 Sense provides rapid overhead imagery of the field, including crater edges, antenna towers, and arena boundaries. By streaming compressed frames to the robot, the global controller can initialize a coarse SLAM map using known arena geometry and detected fiducial features (e.g., crater center, wall lines, antenna bases). The robot’s Intel RealSense camera and LiDAR sensors then refine this initial map as it moves, adding depth data and feature points. This two-stage approach, fast aerial initialization followed by ground-level refinement, supports generating a usable SLAM map in the first ~20 seconds while remaining within the computational capabilities of the hardware.
+The drone-mounted ESP32-S3 Sense provides rapid overhead imagery of the field, including crater edges, antenna towers, and arena boundaries. By streaming compressed, low-resolution frames (approximately 320×240 at 5–10 FPS) to the robot, the global controller can initialize a coarse map using known arena geometry and detected fiducial features such as crater centers, wall lines, and antenna bases. This process follows a hybrid visual-LiDAR SLAM approach, where the drone imagery provides fast landmark initialization while the robot’s Intel RealSense camera and LiDAR sensors refine the map as the robot moves, adding depth data and feature points. Because the initialization stage focuses on coarse feature extraction rather than dense reconstruction, the computational load remains within the robot hardware’s capabilities. This two-stage approach—fast aerial initialization followed by ground-level refinement—supports generating a usable preliminary SLAM map in approximately 20 seconds while remaining realistic for the available processing resources.
 
 
 #### Specification #2 -- Drone shall locate and navigate the robot
