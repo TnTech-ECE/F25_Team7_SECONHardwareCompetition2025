@@ -173,7 +173,7 @@ This figure depicts the Romi magnetic quadrature encoder used to provide real-ti
 
 
 
-##BOM (Bill of Materials)
+## BOM (Bill of Materials)
 | Component	| Manufacturer| Qty | Part| Unit |	Total	| Reference |
 | --- | --- | --- | --- | --- | --- | --- |
 |Microcontroller – Arduino Mega 2560 Rev3 |	Arduino |	1	| A000067 |	$49.90 |	$49.90| [5] |
