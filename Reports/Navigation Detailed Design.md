@@ -16,6 +16,41 @@ An essential component of the Navigation subsystem is Autonomous Navigation and 
 
 
 
+## Overview of Software and Build Procedure
+   ROS 2 Nav2 operates on Linux software. Linux computers rented from Tennessee Tech Volpe Library IT have limitations and restrictions on what can be installed. For this reason a breakdown below is provided to show the software that will be used to run ROS 2 through Windows operating system
+
+
+### Desired Solution:
+
+* **Middleware**
+    * <ins>ROS 2</ins>
+* **Default Distro Type**
+    * <ins>_Window Subsystem for Linux 2 (WSL2)_</ins> - Runs linux environment
+        * **Operating system: Ubuntu 24** - Open source operating system
+    * ROS 2 version:
+        * **Kilted** - Latest version of ROS 2
+* **SLAM (Simultaneous Localization and Mapping) Package**
+    * <ins>_SLAM Toolbox_</ins>
+        * Uses data from LiDAR sensors and robot/ camera drones
+* **3D Simulated Software** (Optional)
+    * <ins>_Gazebo_</ins> - Can run/ practice simulation of ROS 2
+
+
+### Alternative Solutions:
+
+* **Default Distro Type**
+    * <ins>_Native Installation_</ins>
+        * Install ROS 2 binaries **(<ins>ROS2 Humble</ins>)**
+        * Install <ins>**Visual Studio**</ins>
+        * Build navigation stack from the source
+    * ROS 2 version:
+        * <ins>**Jazzy**</ins> - Older version of ROS 2 previous to Kilted
+* **SLAM (Simultaneous Localization and Mapping) Package**
+    * <ins>_Cartographer_</ins>
+
+
+
+
 ## Specifications and Constraints
 There are various constraints that are applicable to the Autonomous Navigation subsystem. These constraints include: Static vs. Dynamic Environments, Sensor Limitations, Odometry Drift, Robotic Hardware Kinematic Ability and Obstacle Avoidance.
 
@@ -44,6 +79,32 @@ There are various constraints that are applicable to the Autonomous Navigation s
 
 #### 4. Obstacle Avoidance: 
 * This constraint set by IEEE on the robot is intended for the robot to navigate the board autonomously without hitting any obstacles such as the antennas.
+
+
+
+
+#### 5. Socio-Economic: 
+* ROS 2 Nav2 was chosen for its free and open-source nature. This increased financial availability in the budget allows for widespread accessibility and adaptation of the software. It also funds to be allocated to other subsystems to create a robust profile of the autonomous robot.
+
+
+#### 6. Ethical: 
+* The importance of safety in an autonomous system is to avoid harm to humans. Any machine without a human operator is subject to error in navigation which can cause collision with pedestrians or animals and result in injury. The team desires to avoid aggressive path planning of the navigation system. To avoid this, an autonomous vehicle will need to see humans as a priority and yield to them. This can be done by using social navigation plug-ins in the open source code. Another alternative is to create an environment that prevents humans from wandering into the space of the robot. As per the IEEE requirement to build a board where the tasks will take place, our team shall create an area with borders that allows the robot to move without the interference of people.
+
+
+#### 7. Standards: 
+* <ins> IEC 62443 - Industrial Cybersecurity:</ins> Secures Industrial Automation and Control Systems and Operational Technology against cyber threats
+    * **ROS 2 Security (SROS2):** Our team shall use ROS 2 Nav2 due to its use of DDS-Security standard (Data Distribution Service) which provides encryption, authentication and access control to prevent insertion of malicious code or data.
+
+* <ins>ISO/IEC 25010 - Software Quality Model:</ins> Provides quality model for software products
+    * **ISO/IEC 25010** is a standard that ensures:
+        * <ins>Reliability</ins> - No crashes in runtime
+            * Troubleshooting code for errors
+        * <ins>Performance efficiency</ins> - Real-time obstacle avoidance
+            * Handled by path planning, localization, inflation radius clearance and the Object Detection subsystem SLAM map
+        * <ins>Security</ins> - Protected communication
+            * Implemented and supported by SROS2
+        * <ins>Maintainability</ins> - Modular plugin architecture
+            * ROS 2 Nav2 open-source code allows for modularity
 
 
 
