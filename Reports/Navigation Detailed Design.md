@@ -54,13 +54,13 @@ Specifications applicable to the Autonomous Navigation subsystem are Inflation R
 
 
 #### 1. Inflation Radius
-* Higher safety buffers around obstacles reduce the risk of collision but also reduce maneuverability
+* During navigation the ground robot needs space to move between and around objects on the board. This space is called clearance and is handled by providing an inflation radius which acts as a safety buffer. Higher safety buffers around obstacles reduce the risk of collision but also reduce maneuverability
 
 
 
 
 #### 2. Timing
-* High frequency recalculation of velocity commands from the local planner makes obstacle avoidance and responsiveness more efficient but increases CPU load
+* Timing affects the rate that velocity commands are calculated by the local trajectory planner. A higher frequency (update rate) will lead to more frequent velocity command calculations. A higher frequency/ update rate makes obstacle avoidance and responsiveness more efficient but increases CPU load
 
 
 
@@ -71,10 +71,14 @@ Specifications applicable to the Autonomous Navigation subsystem are Inflation R
 
 
 
-#### 4. Localization
-* Higher numbers of particles used by AMCL for localization increase accuracy but reduce speed
+#### 4. Localization and Error
+* Defined as the robot’s estimated position in relation to its actual position on the board. Higher numbers of particles used by Adaptive Monte Carlo Localization (AMCL) for localization decrease localization error by increasing accuracy but reduce speed.
 
 
+
+
+#### 5. Latency
+* The concept of latency refers to the time delay between when data is produced and when it is processed. The sensors will produce data relating to the location of the objects on the board. The Low-Level Controller Subsystem will give data on the position of the robot on the board and the positive relative to objects detected on the board (via the Object Detection subsystem). All of this data produced will be processed by the ROS 2 so that the robot can successfully navigate.
 
 
 ## Overview of Proposed Solution
@@ -82,19 +86,20 @@ A solution to the constraints and specifications listed will be created by utili
 
 
 ### <ins>Constraints</ins>:
-One proposition to work around Static vs. Dynamic Environments, Sensor Limitations and Odometry Shift is to create a static environment with low complexity and utilize ROS 2 Nav2’s eternal localization methods to correct Odometry shift. 
+One proposition to work around Static vs. Dynamic Environments, Sensor Limitations and Odometry Shift is to create a static environment with low complexity and utilize ROS 2 Nav2’s internal localization methods to correct Odometry shift. 
 
 
 
 
 #### 1. Odometry Shift: 
-Though ROS 2 can’t entirely cure the physical limitation of Odometry shift, it can use external localization methods to correct and override it.
+Localization error is handled via global localization algorithms which in our case is AMCL. AMCL is used to correct odometry shifts and realign the robots positioning with the real coordinates. Though ROS 2 can’t entirely cure the physical limitation of Odometry shift, it can use its internal localization methods to correct and override it.
 
 
 
 
 #### 2. Static vs. Dynamic Environments and and Sensor Limitations:
-ROS 2 NAV2 particularly is best suited for static and semi-static indoor environments and by creating a static environment on the board where there is minimal movement, a flat board and minimal dynamic obstacles - the team can ensure Navigation Stack’s ability to perceive its surroundings and send this data to the local controller.
+* ROS 2 NAV2 particularly is best suited for static and semi-static indoor environments and by creating a static environment on the board where there is minimal movement, a flat board and minimal dynamic obstacles - the team can ensure Navigation Stack’s ability to perceive its surroundings and send this data to the local controller.
+* This static environment with minimal obstacles places the odds in our favor for the navigation system. With a repetitive environment, ROS 2 can lose track of its positioning due to the lack of landmarks to help establish itself. Due to the placement of the antennas, crater, Earth, and start-zone the board will have enough landmarks to convey relative-surroundings and decrease localization error.
 
 
 
@@ -105,29 +110,39 @@ ROS 2 Nav2 can avoid static and dynamic obstacles through continuous updates to 
 
 
 
-### <ins>Specifications:</ins>
+### <ins>Specifications and Measureability:</ins>
 
-#### 5. Inflation Radius
-* The inflation radius of ROS 2 Nav2 will be set within a range of 0.076 m to 0.1524m which translates to 3-6 inches in order to give robot a safe buffer and approach the antennas without reducing maneuverability
+#### Measurability
+
+* The measures that will be used to determine the success of the navigation subsystem are the ranges set for Latency, Inflation Radius, Timing, Path Planning, and Localization. Our team shall shoot for a success rate of 70% meaning; when conducting 10 trail runs for the robot, for 7 trials our team will strive to achieve the ranges defined below for the navigation system in order to ensure quickness and efficiency.
+
+
+#### 6. Inflation Radius / Clearance
+* The inflation radius of ROS 2 Nav2 will be set within a range of 0.076 m to 0.1524m which translates to a clearance of 3-6 inches in order to give robot a safe buffer and approach the antennas without reducing maneuverability
 
 
 
 
-#### 6. Timing
+#### 7. Timing
 * For timing, due to the low complexity of the environment, a frequency range between 20 Hz to 50 Hz will be used. This will update the motion command 20-50 times per sec in order to increase responsiveness without requesting more CPU power.
 
 
 
 
-#### 7. Path Planning
+#### 8. Path Planning
 * The map resolution for path planning will be set to 0.05 m per pixel instead of 0.01 m to allow for decreased computational demands while creating a standardized detail of the map.
 
 
 
 
-#### 8. Localization
-* A particle number range of 750-1,000 will be used to ensure the certainty of the robot’s positioning on the board. The maximum range for particles is 2,000-5,000 which would lower the robot’s speed. Using 750-1,000 will allow for a balance between increased speed and accuracy.
+#### 9. Localization
+* To reduce localization error a particle number range of 750-1,000 will be used to ensure the certainty of the robot’s positioning on the board. The maximum range for particles is 2,000-5,000 which would lower the robot’s speed. Using 750-1,000 will allow for a balance between increased speed and accuracy.
 
+
+
+
+#### 10. Latency
+* It is within our Team’s best interest to seek a low latency time in order to complete our tasks within 3 minutes. Latency will be measured by using - ros2_tracing to achieve a minimum latency range of 1ms - 10ms.
 
 
 
@@ -141,7 +156,7 @@ Through ROS 2’s “subscribe and publish” system - data is communicated and 
 
 ### Interface with the Global Controller System (GC)
 
-The navigation subsystem works alongside the Global Controller which retrieves and processes sensor and camera data in order to make decisions. These cameras will be mounted on the robot and the UAV, the sensors will be mounted on the robot. The imagery and data retrieved from these cameras and sensors allow for the navigation substack to create an inflation layer around the obstacles in order to avoid accidental collision by moving too close to it.
+The navigation subsystem works alongside the Global Controller which retrieves and processes sensor and camera data in order to make decisions. These cameras will be mounted on the robot and the UAV, the sensors will be mounted on the robot. The imagery and data retrieved from these cameras and sensors allow for the navigation substack to create a clearance called an inflation layer around the obstacles in order to avoid accidental collision by moving too close to it.
 
 ### Interface with the Object Detection System
 
@@ -324,6 +339,7 @@ ROS 2 Nav2’s design allows for customization and configuration that can increa
 
 #### Map and transforms: 
 * The map server provides an OccupancyGrid used by the global costmap. Transforms (tf) and odometry supply the robot pose in the global frame for planning and in the base frame for control, ensuring consistent coordinates across nodes.
+    * In the event of a transform frame issue ROS 2 will run a planner recovery and clear the costmap to reduce localization error.
 
 
 ### Actions, Topics, Services, and Rates
@@ -334,8 +350,22 @@ ROS 2 Nav2’s design allows for customization and configuration that can increa
 #### Topics: 
 * cmd_vel (Twist) to the base, path publication for visualization and monitoring, sensor topics for costmaps, tf and odom for pose. Topic names and QoS (Quality of Service) are configured to balance reliability and latency.
 
-#### Typical rates: 
-* Global planning runs at lower frequency (around 1 Hz or on-demand) while local control runs at higher frequency (~10 Hz or more). This supports immediate obstacle avoidance and smooth motion tracking.
+#### Typical update rates: 
+* Costmap and Planner Frequency Update Rate:
+    * Global planning runs at a lower update frequency (which our team shall set to ~1 Hz or on-demand).
+        * Global planner frequency input: planner_frequency
+  
+* The local costmap runs at higher update frequency (which our team shall set between 5-10+ Hz).
+    * Local and Global Costmap (environmental awareness) update frequency input: update_frequency
+        * These ranges support immediate obstacle avoidance and smooth motion tracking without wasting energy through computing.
+     
+* Controller Server Frequency Update Rate:
+    * Timing frequency (update rate) is the frequency in which the velocity commands from the local planner are calculated. As outlined above our team shall strive for a frequency range between 20 Hz to 50 Hz.
+        * Controller frequency input: controller_frequency
+
+* Odometry Rate:
+    * Odometry rate shall be set at a minimum value of 20Hz+. This high frequency allows our robot to get a smooth and accurate approximate position.
+        * Odometer Parameters: frequency, rate, publish_rate
 
 
 
@@ -382,3 +412,28 @@ http://www.youtube.com/playlist?list=PLgG0XDQqJckkSJDPhXsFU_RIqEh08nG0V (accesse
 
 [14] “Navigation ROS 2,” YouTube.    
 http://www.youtube.com/playlist?list=PLgG0XDQqJcknP8fhdAXxYv6AYnfqjP6WU (accessed Dec. 08, 2025).
+
+[15]“Understanding IEC 62443,” www.iec.ch, Feb. 26, 2021. 
+https://www.iec.ch/blog/understanding-iec-62443
+
+‌[16]“ISO/IEC 25010 - Systems and Software Quality,” arc42 Quality Model, Aug. 31, 
+2025. https://quality.arc42.org/standards/iso-25010
+
+[17]“ROS 2 Security — ROS 2 Documentation: Iron documentation,” Ros.org, 2025. 
+https://docs.ros.org/en/iron/Concepts/Intermediate/About-Security.html (accessed Feb. 12, 2026).
+
+[18]“ROS 2 DDS-Security integration,” design.ros2.org. 
+https://design.ros2.org/articles/ros2_dds_security.html
+
+‌[19]T. Schworer, J. E. Schmidt, and D. Chrysostomou, “Nav2CAN: Achieving Context  
+Aware Navigation in ROS2 Using Nav2 and RGB-D sensing,” 2021, doi: 
+https://doi.org/10.1109.
+
+[20]“Running Your First ROS Node on Ubuntu, macOS, or Windows,” Foxglove.dev, 
+2021. https://foxglove.dev/blog/running-your-first-ros-node (accessed Feb. 12, 2026).
+
+[21]TUM-AVS, “GitHub - TUM-AVS/ros2_latency_analysis,” GitHub, Mar. 03, 2023. 
+https://github.com/TUM-AVS/ros2_latency_analysis (accessed Feb. 12, 2026).
+
+[22]“ROS 2 Composition: Intra-Process Comms, Zero-Copy And Latency,” Patsnp 
+Eureka, 2017. https://eureka.patsnap.com/report-ros-2-composition-intra-process-communications-zero-copy-and-latency (accessed Feb. 12, 2026).
