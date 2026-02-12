@@ -10,13 +10,16 @@ The Earth uses a library called IRremote that is compatible with certain microco
 The UAV lets us control it through the Crazyradio PA [2]
 The UAV has to transmit the satellite data to the Earth [1]
 All communication between the UAV, robot, and Earth has to be wireless
+The range for each wireless system needs to reach across the longest part of the arena
+The Wifi is capable of supporting a 20fps video data stream using a standard video stream (5-8 Mbps) [7]
+While using radio frequencies, we will avoid using frequencies deemed within the illegal range  from the FCC and ITU-R[8]
 
 # Overview of proposed Solution:
-The robot will connect with the UAV in 2 ways: sending flight controls and satellite data through the Crazyradio PA, and collecting camera data through WiFi (hosted on the camera). When the Jetson sends info about the satellite data over the PA, the UAV will send that data through IR LEDs that are attached and pointed at the earth. We will use the IRremote library [3] on the UAV to transmit the data, ensuring that we are sending to register 0xBB and using the 4-bit codes provided by the game document. [1] There will be 5 IR LEDs pointed in the direction Earth will be in 10-degree deviations to maximize the area covered in light to ensure that the information gets through. We will use the IO1 pin to turn on/off the transistor and have all 5 IR LEDs wired in parallel. This will require a capacitor connected to the system to have enough current to last the data transfer.
+The robot will connect with the UAV in 2 ways: sending flight controls and satellite data through the Crazyradio PA, and collecting camera data through WiFi (hosted on the camera). The connection will run with HTTP protocol in mind (here is an example with it in action) [9].  When the Jetson sends info about the satellite data over the PA, the UAV will send that data through IR LEDs that are attached and pointed at the earth. We will use the IRremote library [3] on the UAV to transmit the data, ensuring that we are sending to register 0xBB and using the 4-bit codes provided by the game document. [1] There will be 5 IR LEDs pointed in the direction Earth will be in 10-degree deviations to maximize the area covered in light to ensure that the information gets through. We will use the IO1 pin to turn on/off the transistor and have all 5 IR LEDs wired in parallel. This will require a capacitor connected to the system to have enough current to last the data transfer. We will test this design using the test arena that we are building for this project.  However, there is no way for the UAV to know whether or not the data was sent successfully, so we will shoot for a 95% success rate when testing.
 
 # Interface:
 
-This subsystem interfaces directly with the Global Controller through the wifi module and Crazyradio PA on the Jetson computer through USB. We will be using the UAV's given API to control its position (Flight Control).  This subsystem also communicates with Earth through IR LEDs that are connected to the UAV.
+This subsystem interfaces directly with the Global Controller through the wifi module with an HTTP connection, and Crazyradio PA on the Jetson computer through USB 3.2 Type A. We will be using the UAV's given API to control its position (Flight Control).  This subsystem also communicates with Earth through IR LEDs that are connected to the UAV through the Vcc (3V) pin for power and the IO8 pin for control using the IRRemote Library.
 
 # Schematics:
 
@@ -26,6 +29,10 @@ This subsystem interfaces directly with the Global Controller through the wifi m
 # Flowchart:
 
 <img width="866" height="467" alt="Communication_Flowchart" src="https://github.com/user-attachments/assets/10ee9e35-9636-4338-9a71-4acc65f4118b" />
+
+# Pseudocode:
+
+<img width="932" height="410" alt="DDC PseudoCode" src="https://github.com/user-attachments/assets/e97bb30f-3ce0-4e62-bb8c-809f71e5c147" />
 
 # BOM:
 
@@ -39,6 +46,10 @@ This subsystem interfaces directly with the Global Controller through the wifi m
 | Crazyradio PA | Bitcraze | Bitcraze | 114990112 | 114990112 | 1 | $38.00 | https://store.bitcraze.io/products/crazyradio-pa | N/A |
 
 Total: $43.84
+
+# Software Prototyping:
+
+Prototyping will start with getting a WiFi connection with the UAV and Jetson and sending data between them. When we get photos, next will be testing the IRremote library on the UAV.  This can be done using the test arena, which can give us feedback on how the data transmission is working. Finally, we will test flight control communication using flight control data from the navigation subsystem.
 
 # Analysis:
 
@@ -56,3 +67,8 @@ References:
 [5] Vishay, “High Speed Infrared Emitting Diode, 890 nm, Surface Emitter Technology,” 91000, 01-Jan-2005, Available: https://www.vishay.com/docs/81313/tshf5210.pdf 
 
 [6] STMicro, “STM32F405xx STM32F407xx,” DS8626 Rev 10, 2024, Available: https://www.st.com/resource/en/datasheet/dm00037051.pdf 
+
+[7] K. Fann, “What Streaming Bandwidth Do You Need? How to Calculate,” BroadbandNow, Sep. 17, 2025. https://broadbandnow.com/guides/streaming-bandwidth 
+
+[8] G. Hardesty, “Legal & Illegal Frequencies & Channels In the United States,” Data-alliance.net, Dec. 29, 2025. https://www.data-alliance.net/blog/legal-illegal-frequencies?srsltid=AfmBOoqBw0Xxdx2-uO0sYl1e4qBVuz7ditVThJeH2fmH4tndBrsy5nIl 
+[9]“Camera Usage for Sense Version | Seeed Studio Wiki,” Seeedstudio.com, 2025. https://wiki.seeedstudio.com/xiao_esp32s3_camera_usage/ 
