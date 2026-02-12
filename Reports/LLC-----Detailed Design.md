@@ -1,5 +1,4 @@
 # **DETAILED DESIGN**
-
 ## Function of the Subsystem
 The Low-Level Controller (LLC) subsystem is responsible for generating and executing real-time motion control for the ground unit robot during the IEEE 2026 SoutheastCon (SECON) Hardware Competition. Unlike the high-level perception and decision-making performed by the Global Controller subsystem, the LLC prioritizes direct control of electrical components relevant to the real-time movement and safety protocols of the ground robot. 
 The inclusion of a local controller reduces both the electrical and computational strain on the Global controller. By utilizing a microcontroller-based solution, the LLC can provide stable operation of motor circuitry, rapid fault response through continuous sensor sampling, and consistent safety protocol enforcement. Assigning these features to the LLC allows the Global Controller to focus on accurate higher-level autonomy and processing. 
@@ -10,7 +9,7 @@ The LLC controls the robot’s drive system by receiving high-level motion comma
 This section of the detailed design outlines the different operational, navigational, electrical, ethical, and professional constraints that significantly impact and direct the design of the LLC subsystem. These constraints are derived from physical and electrical limitations, SECON Hardware Competition rules, IEEE standards, and ethical expectations. 
 
 **Autonomous Operation Constraints**
- * The LLC shall fully support autonomous operation after the start state is initiated, in accordance with the SECON General Vehicle Requirements.
+* The LLC shall fully support autonomous operation after the start state is initiated, in accordance with the SECON General Vehicle Requirements.
 * The LLC shall remain autonomous for the entire three-minute duration allotted for each team during the competition [2].
 * Through a closed feedback loop, the LLC shall provide reliable sensor data to support autonomous motion correction or emergency stop (E-stop) activation, if necessary [2].
 
@@ -48,7 +47,6 @@ This section of the detailed design outlines the different operational, navigati
 
 ## Overview of Proposed Solution
 The proposed LLC subsystem solution implements a microcontroller-based architecture centered around an Arduino Mega 2560 Rev3 to receive, translate, and execute high-level motion commands from the Jetson, while simultaneously monitoring actuator feedback from the local shaft-mounted sensors.  The LLC bridges the gap between high-level autonomy and low-level actuation by enabling real-time motor control, closed-loop feedback, and safety logic independent of the Global Controller’s computational load. 
-
 For efficiency, the Arduino Mega is connected directly to the Jetson via a wired USB Type A to Type B cable. This interface provides both a 5V logic power supply and bidirectional data transmission. It is imperative to note that while the Jetson is viable to power the Arduino, it is electrically isolated from all high-current components in the LLC. High-level motion parameters, such as speed and direction, are transmitted over the USB. Once received, the LLC translates the instructions into pulse-width modulation (PWM) and direction (DIR) signals that drive the motor circuitry in real time. The Arduino Mega can also send telemetry and fault status updates back to the Global Controller. If the Jetson is found to be insufficient, a DC Drok Voltage Regulator connected directly to the Power Subsystem has been chosen as a fallback solution. 
 Motor actuation and control is achieved through two Pololu Dual VNH5019 motor drivers. The dual motor drivers interface the Arduino with the four DC Gearmotors that comprise the robot’s drivetrain. The Arduino issues PWM and DIR signals to the motor drivers, which then switch the high-current battery voltage (VBAT) supplied by the Power subsystem through H-bridge circuits. This protects the lower powered components, while also providing sufficient and steady power for safe operation. 
 High-torque 172:1 DC gearmotors are implemented to satisfy the electrical and mechanical requirements of the Pololu Dual motor drivers. The DC gearmotors also comfortably support the torque performance required for the robot’s weight and crater traversal tasks. The selected gearmotors prioritize controllability and torque over maximum speed in order to comply with SECON safety objectives, especially while navigating through uneven terrain. Selecting drivetrain components from the same manufacturer was an intentional design decision to reduce integration risk and increase system compatibility. Although this component selection limits top speed, it provides improved closed loop-control and aligns with safety and reliability requirements. 
@@ -103,19 +101,26 @@ provides high-level motion commands calculated using the Navigation and Object D
 
 
 ## Buildable Schematic
+<img width="2000" height="1000" alt="LLC Schm" src="https://github.com/user-attachments/assets/696325ed-738e-4e6f-83bf-88c524a18195" />
+
 
 <p align = "center">
 Figure 1- Electrical Interconnections and Motor Control Diagram (LLC)</p>
 
 <p align = "center">
 This figure illustrates the interfaces within the LLC and with other relevant subsystems. This includes power and common ground from the Power subsystem and the command-report data exchange with the Global’s Jetson. The figure goes in-depth on the signal types and data transfer between different components such as the motor drivers, motors, and sensors. Dashed lines represent connections of alternate design solutions. An incomplete Mechanical Engineering Subsystem is also referenced. The Arduino will directly connected with components in the Mechanical subsystem, such as servos. </p>
- 
+
+ <img width="978" height="755" alt="F2_MegaPinOut" src="https://github.com/user-attachments/assets/baa1a661-e62f-46aa-81d9-64cc226a2e23" />
+
+
 <p align = "center">
 Figure 2 – Arduino Mega 2560 Rev3 Pinout Diagram [5]</p>
 
 <p align = "center"> 
 This figure is an official Arduino diagram that identifies the pin locations and electrical characteristics of the digital I/O, PWM, and power rails used by the LLC to interface with the encoder sensors, motor drivers, and Global Controller subsystem. 
 </p>
+
+<img width="897" height="518" alt="F3_DualDgrm" src="https://github.com/user-attachments/assets/dc3520d0-f192-4209-ac87-5f3c9dd102e7" />
 
 <p align = "center">
 Figure 3 – Pololu Dual VNH5019 Motor Driver Shield Interface Diagram [6]</p>
@@ -124,12 +129,16 @@ Figure 3 – Pololu Dual VNH5019 Motor Driver Shield Interface Diagram [6]</p>
 This figure shows the manufacturer-provided interface diagram, which illustrates required logic and power connections between the motor driver shield and the LLC’s Arduino Mega microcontroller.
 </p>
 
+<p align = "center"><img width="551" height="547" alt="F4_MotorImg" src="https://github.com/user-attachments/assets/563263e8-0921-4d77-9fe7-2fc02887b5f3" /></p>
+
 <p align = "center">
 Figure 4 – Pololu DC Metal Gearmotor (172:1 Reduction) [7]</p>
 
 <p align = "center">
 This figure depicts the high-torque brushed DC gearmotor selected for the robot’s drivetrain. The 172:1 gear ratio prioritizes safe autonomous operation, controllability, and reliable task execution during the SECON.   
 </p> 
+
+<p align = "center"><img width="657" height="528" alt="F5_RomiImg" src="https://github.com/user-attachments/assets/c22c16f0-4202-4238-b69e-d490460d4575" /></p>
 
 <p align = "center">
 Figure 5 – Pololu Romi Encoder Pair Kit [8]</p>
@@ -140,7 +149,8 @@ This figure depicts the Romi magnetic quadrature encoder used to provide real-ti
 
 
 ## Flowchart
-  
+  <p align = "center"><img width="297" height="792" alt="F6_FullFlow" src="https://github.com/user-attachments/assets/8e1419ad-f1db-4936-9a1a-4787ec4fd45f" /></p>
+
 <p align = "center">Figure 6 - Full Microcontroller Operational Flowchart (LLC)</p>
 
 *Flowchart Walkthrough:*
@@ -151,9 +161,13 @@ This figure depicts the Romi magnetic quadrature encoder used to provide real-ti
 * LLC computes PWM/DIR from feedback data
 * If unsafe conditions are discovered, LLC reduces motor output or triggers E-stop
 * Motor commands are continuously updated until stop command or fault occurs
-     
+
+ <p align = "center"><img width="473" height="762" alt="F7_FlowPt1" src="https://github.com/user-attachments/assets/8afee441-da67-47d8-bbec-0ea020659af1" /></p>
+    
 <p align = "center">Figure 7 - Microcontroller Operational Flowchart (LLC) Close Up Part 1</p>
-  
+
+<p align = "center"><img width="435" height="767" alt="F8_FlowPt2" src="https://github.com/user-attachments/assets/46794e0e-5465-4254-94ac-15e768c88705" /></p>
+
 <p align = "center">Figure 8 - Microcontroller Operational Flowchart (LLC) Close Up Part 2</p>
 
 
@@ -203,23 +217,33 @@ The modular nature of the LLC design supports incremental testing, allowing for 
 ## References
 [1]
 IEEE, “IEEE Code of Ethics | IEEE,” Ieee.org, 2020. Available: https://www.ieee.org/about/corporate/governance/p7-8
+
 [2]
-IEEE, “2026 IEEE SoutheastCon Hardware Competition Ruleset,” Jun. 15, 2025. Available: http://www.tech-uofm.info/announcements/2026%20IEEE+SoutheastCon+Hardware+Competition+Ruleset_Draft_upload.pdf
+IEEE, “2026 IEEE SoutheastCon Hardware Competition Ruleset,” Jun. 15, 2025. Available: http://www.techuofm.info/announcements/2026%20IEEE+SoutheastCon+Hardware+Competition+Ruleset_Draft_upload.pdf
+
 [3]
 NVIDIA, “NVIDIA Jetson AGX Orin,” NVIDIA. Available: https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+
 [4]
-“Conceptual Design,” Github.com, 2026. Available: https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Team%207%20Conceptual%20Design.md.
+“Conceptual Design,” Github.com, 2026. Available: https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Conceptual_Design/Reports/Team%207%20Conceptual%20Design.
+
 [5]
 Arduino, “Arduino Mega 2560 Rev3,” Arduino Official Store, 2021. Available: https://store.arduino.cc/products/arduino-mega-2560-rev3
+
 [6]
 “Pololu Dual VNH5019 Motor Driver Shield for Arduino,” Pololu.com, 2025. Available: https://www.pololu.com/product/2507
+
 [7]
 “172:1 Metal Gearmotor 25Dx56L mm HP 6V,” Pololu.com, 2026. Available: https://www.pololu.com/product/1577/.
+
 [8]
 “Romi Encoder Pair Kit, 12 CPR, 3.5-18V,” Pololu.com, 2017. Available: https://www.pololu.com/product-info-merged/3542
+
 [9]
 Addicore, “Addicore LM2596 Adjustable DC-DC Switching Buck Converter,” Addicore. Available: https://www.addicore.com/products/lm2596-step-down-adjustable-dc-dc-switching-buck-converter
+
 [10]
 DigiKey, “SS-5GL | DigiKey Electronics,” DigiKey Electronics, 2026. Available: https://www.digikey.com/en/products/detail/omron-electronics-inc-emc-div/SS-5GL/272367?gclid=53c6f457a2cd1c91fd799d26b90be633&gclsrc=3p.ds&msclkid=53c6f457a2cd1c91fd799d26b90be633. 
+
 [11]
 M. Duvall, “Guarding requirements for 50 volts or more DC. | Occupational Safety and Health Administration,” www.osha.gov, Sep. 04, 2015. Available: https://www.osha.gov/laws-regs/standardinterpretations/2015-09-04
