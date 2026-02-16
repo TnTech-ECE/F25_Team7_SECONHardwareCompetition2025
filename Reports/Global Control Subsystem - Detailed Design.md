@@ -10,20 +10,20 @@ The IEEE SECON rules handbook contains the specifications and contraints for the
  
 1.  Both the robot and UAV shall be completely autonomous.
 2.  The robot and UAV shall have a clearly labeled start switch. 
-3.  Teams shall have a maximum of 3 minutes to earn points. 
-  a.  The robot shall have the ability to quickly process sensor data.
-  b.  The robot shall have the ability to quickly process AI workloads.
-  c.  The robot shall have the ability to quickly make decisions and communicate them.
-4.  Teams shall rescue a total of 6 Astro-Ducks and shall return them to the “Lunar Landing Area.” 
-  a.  The robot shall be able to identify, locate, and navigate to the Astro-Ducks.
-  b.  The robot shall be able to identify and navigate to the Lunar Landing Area.
+3.  Teams shall have a maximum of 3 minutes to earn points.
+  * The robot shall have the ability to quickly process sensor data.
+  * The robot shall have the ability to quickly process AI workloads.
+  * The robot shall have the ability to quickly make decisions and communicate them.
+4.  Teams shall rescue a total of 6 Astro-Ducks and shall return them to the “Lunar Landing Area.”
+  * The robot shall be able to identify, locate, and navigate to the Astro-Ducks.
+  * The robot shall be able to identify and navigate to the Lunar Landing Area.
 5. Teams shall establish power to the 4 antennas throughout the course. Power shall be restored differently for each antenna. Once power is restored to the antenna, a randomly colored LED shall light up (red, blue, green, and purple).
-  a.  The robot shall be able to identify, locate, and navigate to the antenna towers.
-  b.  The robot must identify and complete the task located on each tower.
+  * The robot shall be able to identify, locate, and navigate to the antenna towers.
+  * The robot must identify and complete the task located on each tower.
 6.  Two starting white LED bars shall be placed on top of the arena wall, one on each side of the 12” x 12” starting area. 
-  a.  The robot shall be able to sense the starting white LEDs in order to begin operation.
+  * The robot shall be able to sense the starting white LEDs in order to begin operation.
 7.  Points shall be lost every time the robot or UAV has an unintentional collision 
-  a.  The robot and UAV shall be able to detect and avoid obstacles.
+  * The robot and UAV shall be able to detect and avoid obstacles.
 
 In addition to the listed specifications and constrains, socio-economic and ethecal contraints will be implemented.
 
