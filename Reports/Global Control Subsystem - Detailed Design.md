@@ -59,8 +59,6 @@ Outputs:
   * Launch and Land Commands over a radio signal via USB adaptor
   * LED Information over Wifi.
 
-
-
 #### Figure 1 - Jeston Orin Top View
 <img width="1058" height="466" alt="son" src="https://github.com/user-attachments/assets/aae0ed3f-2c23-46a3-91c5-4c845903eb94" />
 
@@ -151,17 +149,11 @@ Specification 6 requires that the robot begin operation without human interventi
 <img width="1556" height="893" alt="code" src="https://github.com/user-attachments/assets/11362feb-4e52-4cfd-8547-82c2fc4be446" />
 
 #### Navigation Sensors
-The robot shall use multiple sensors in order to determine its exact location on the gameboard. These sensors shall also be used to pinpoint the robot on a virtual SLAM map and be used to improve that map. The robot's SLAM map and how it is used is discussed in both the object detection and navigation design documents [object detection] [navigation]. To summarize, the robot's SLAM map will allow it to navigate its envirment effiecntly and without collisions. The navigation subsystem will be passed the data that is collected form the navigation sensors so that the NAV2 stack can process it [navigation]. Three LiDAR and one IMU sensor will be used for this task. The robot and UAV mounted cameras will help with navigation as described in the object detection document [object detection].
+The robot shall use multiple sensors in order to determine its exact location on the gameboard. These sensors shall also be used to pinpoint the robot on a virtual SLAM map and be used to improve that map. The robot's SLAM map and how it is used is discussed in both the object detection and navigation design documents [object detection] [navigation]. To summarize, the robot's SLAM map will allow it to navigate its envirment effiecntly and without collisions. The navigation subsystem will be passed the data that is collected form the navigation sensors so that the NAV2 stack can process it [navigation]. Three LiDAR and one IMU sensor will be used for this task. The robot and UAV mounted cameras will help with navigation as described in the object detection document [object detection]. Theses sensor shall be connected to a single I2C bus using SparkFun QWIIC cables and an intermediate bus ciruit board.
 
 The LiDAR sensors shall be able to measure the robot's distance from the gameboard walls or obsticals during the robot's operation, aiding the navigation system with obstical avoidence and position mapping. Garmin LIDAR-Lite V4 sensors will be used. These sensors have an effective range of 5 cm (1.97 in) to 10 m (32.8 ft) with a 1 cm resolution. They also have an error of +-1 cm at 2 m [lidar data sheet]. The gameboard is 4 ft by 8 ft (2.4 m), and with the robot being aproximately 1 ft, these sensor will be operating in their optimal range during the robot's operation [game rules]. The LiDAR sensor shall transmitt their data over an I2C bus. The I2C addresses of these sensor can be set through software, ensuring address confilcts do not acure [Lidar data sheet] [I2C adressing]. They also have an update rate from 200 Hz to 400 kHz (2.5 microseconds) over I2C allowing them to transmitt data in a suffieciently quick maner. Two sensors will be placed on the side of the robot with one being placed on the rear. A pre-excisting software library exist for these sensor and shall be used/modified for the robot.   
 
-The IMU sensor shall be used to meassure the angular velocity and accelereation of the robot in order to help track its orientation and it position. The SparkFun 9Dof breakout IMU will be used for this application.
-
-
-
-
-
-
+The IMU sensor shall be used to meassure the angular velocity and accelereation of the robot in order to help track its orientation and it position. The SparkFun 9Dof breakout IMU will be used for this application. It contains a 3-axis gyroscope, accelometer, and magnitomitor. The magnitomitor shall not be used, as it is not needed for this application. The 3-Axis gyroscope has a programable range (in degrees per second) ranging from ±250 dps, ±500 dps, ±1000 dps, and ±2000 dps. The 3-Axis accelerometer has a programable range of ±2g, ±4g, ±8g, and ±16g. The chip these sensors are located in can transmitt data over I2C at 400 kHz, allow the data to be transmitted in a suffieciently quick maner. This sensor can have two unqine I2C adrresses. Since the LiDAR sensors can be assigned an I2C address programaticly, and only one IMU is used, no additional steps are needed to prevent a duplicate address issue. The IMU will be located at the center of the robot's chasis.
 
 #### Figure 12 - Gameboard Layout
 <img width="1563" height="831" alt="gameboard" src="https://github.com/user-attachments/assets/41f29d79-6af9-4110-9df1-bf07185edc72" />
