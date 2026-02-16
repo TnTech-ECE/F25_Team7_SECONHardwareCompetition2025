@@ -35,29 +35,31 @@ The robot shall also use a combination of sensors that will allow the robot to p
 
 ## Interface with Other Subsystems
 
-The Jetson Orin has access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, GPIO, PWM, DMIC, and DSPK protocols. The development board comes with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power [2]. The robot mounted camera will connect to the global computer using a USB connection. The UAV comes with a USB adaptor that will allow the global control computer to communicate with the UAV flight controller. Details for the USB adaptor can be found in the communication detailed design document. The UAV mounted camera will connect to the global computer over a WiFi connection. The Low Level Controller will connect to the global computer over USB. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be GPIO signals.
+The Jetson Orin has access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, GPIO, PWM, DMIC, and DSPK protocols. The development board comes with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power [2]. The robot mounted camera will connect to the global computer using a USB connection. The UAV comes with a USB adaptor that will allow the global control computer to communicate with the UAV flight controller. Details for the USB adaptor can be found in the communication detailed design document[comms detailed]. The UAV mounted camera will connect to the global computer over a WiFi connection. The Jetson Orin does not come with built in WiFi, so an adaptor will need to be purchased. The Low Level Controller will connect to the global computer over USB. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be GPIO signals.
 
 Inputs:
 * Autonomous Start Signals
- * GPIO Analog Signal
+  * GPIO Analog Signal
 * Manual Start Signal
- * GPIO Digital Signal
+  * GPIO Digital Signal
 * LiDAR Sensors
- * Distance Data over I2C
+  * Distance Data over I2C
 * IMU
- * Acceleration and Orientation Data over I2C
+  * Acceleration and Orientation Data over I2C
 * Robot Mounted Camera
- * Image and Distance Data over USB
+  * Image and Distance Data over USB
 * Drone Mounted Camera
- * Image Data over WiFi
+  * Image Data over WiFi
 Outputs:
 * Command Signals to Low Level Controller
- * Motion and Actuation commands over USB
+  * Motion and Actuation commands over USB
 * Navigation Commands (Coordinates of the designated path to follow)
- * These shall be transmitted over USB
+  * These shall be transmitted over USB
 * UAV Command and Data Signals
- * Launch and Land Commands over a radio signal via USB adaptor
- * LED Information over Wifi.
+  * Launch and Land Commands over a radio signal via USB adaptor
+  * LED Information over Wifi.
+
+
 
 Figure 1 - Jeston Orin Top View
 <img width="1058" height="466" alt="son" src="https://github.com/user-attachments/assets/aae0ed3f-2c23-46a3-91c5-4c845903eb94" />
@@ -102,16 +104,17 @@ Figure 10 - Sofrware Flowchart 4
 ## BOM
 | Part        | Manufacturer| Part Number | Distributor | Distributo Part Number | Quantity | Price | Total Price | Website URL |
 | ----------- | ----------- | ----------- | ----------- | ---------------------- | -------- | ----- | ----------- | ----------- |
-| Jetson Orin | NVIDIA | N/A | Amazon | 945-137766-0000-000 | 1 | $249.00 | $249.00 | https://www.amazon.com/dp/B0BZJTQ5YP?utm_source=nvidia&th=1 | 
-| Garmin LIDAR-Lite V4 | Garmin | N/A | SparkFun | SEN-18009 | 3 | $119.95 | $359.85 | https://www.sparkfun.com/garmin-lidar-lite-v4-led-distance-measurement-sensor-qwiic.html |
-| 9Dof IMU Breakout | SparkFun | SEN-15335 | SparkFun | SEN-15335 | 1 | $21.95 | $21.95 | https://www.sparkfun.com/sparkfun-9dof-imu-breakout-icm-20948-qwiic.html |
-| GL12528 Photoresistor (10 pack) | Juried Engineering | N/A | Amazon | B08F3WPNPF | 1 | $22.98 | $22.98 | https://www.amazon.com/Juried-Engineering-Photoresistor-GL12528-Sensitive/dp/B08F3WPNPF |
-| Auxiliary Start Switch | Judco Manufacturing Inc. | 40-4325-00 | Digikey | 512PB-ND | 1 | $2.55 | $2.55 | https://www.digikey.com/en/products/detail/judco-manufacturing-inc/40-4325-00/254287 |
-| Flexible Qwiic Cable - 200mm | Spark | PRT-17258 | SparkFun | PRT-17258 | 4 | $1.95 | $7.80 | https://www.sparkfun.com/flexible-qwiic-cable-200mm.html |
-| Flexible Qwiic Cable - Female Jumper | SparkFun | CAB-17261 | SparkFun | CAB-17261 | 2 | $1.95 | $3.90 | https://www.sparkfun.com/flexible-qwiic-cable-female-jumper-4-pin.html |
-| QWiic MultiPort | SparkFun | BOB-18012 | SparkFun | BOB-18012 | 1 | $2.50 | $2.50 | ttps://www.sparkfun.com/sparkfun-qwiic-multiport.html |
-| Jumper Wire Kit | SparkFun | PRT-00124 | SparkFun | PRT-00124 | 1 | $8.95 | $8.95 | https://www.sparkfun.com/jumper-wire-kit-140pcs.html |
-| Right Angle Header - Male | SparkFun | PRT-30218 | SparkFun | PRT-30218 | 4 | $0.75 | $3.00 | https://www.sparkfun.com/right-angle-header-male-pth-0-1in-6-pin.html |
+| Jetson Orin | NVIDIA | N/A | Amazon | 945-137766-0000-000 | 1 | $249.00 | $249.00 | [Store Link](https://www.amazon.com/dp/B0BZJTQ5YP?utm_source=nvidia&th=1) | 
+| Garmin LIDAR-Lite V4 | Garmin | N/A | SparkFun | SEN-18009 | 3 | $119.95 | $359.85 | [Store Link](https://www.sparkfun.com/garmin-lidar-lite-v4-led-distance-measurement-sensor-qwiic.html) |
+| 9Dof IMU Breakout | SparkFun | SEN-15335 | SparkFun | SEN-15335 | 1 | $21.95 | $21.95 | [Store Link](https://www.sparkfun.com/sparkfun-9dof-imu-breakout-icm-20948-qwiic.html) |
+| GL12528 Photoresistor (10 pack) | Juried Engineering | N/A | Amazon | B08F3WPNPF | 1 | $22.98 | $22.98 | [Store Link](https://www.amazon.com/Juried-Engineering-Photoresistor-GL12528-Sensitive/dp/B08F3WPNPF) |
+| Auxiliary Start Switch | Judco Manufacturing Inc. | 40-4325-00 | Digikey | 512PB-ND | 1 | $2.55 | $2.55 | [Store Link](https://www.digikey.com/en/products/detail/judco-manufacturing-inc/40-4325-00/254287) |
+| Flexible Qwiic Cable - 200mm | Spark | PRT-17258 | SparkFun | PRT-17258 | 4 | $1.95 | $7.80 | [Store Link](https://www.sparkfun.com/flexible-qwiic-cable-200mm.html) |
+| Flexible Qwiic Cable - Female Jumper | SparkFun | CAB-17261 | SparkFun | CAB-17261 | 2 | $1.95 | $3.90 | [Store Link](https://www.sparkfun.com/flexible-qwiic-cable-female-jumper-4-pin.html) |
+| QWiic MultiPort | SparkFun | BOB-18012 | SparkFun | BOB-18012 | 1 | $2.50 | $2.50 | [Store Link](https://www.sparkfun.com/sparkfun-qwiic-multiport.html) |
+| Jumper Wire Kit | SparkFun | PRT-00124 | SparkFun | PRT-00124 | 1 | $8.95 | $8.95 | [Store Link](https://www.sparkfun.com/jumper-wire-kit-140pcs.html) |
+| Right Angle Header - Male | SparkFun | PRT-30218 | SparkFun | PRT-30218 | 4 | $0.75 | $3.00 | [Store Link](https://www.sparkfun.com/right-angle-header-male-pth-0-1in-6-pin.html) |
+| USB WiFi Adapter | BrosTrend | N/A | Amazon | B0F6N1H84N | 1 | $23.99 | $23.99 | [Store Link](https://www.amazon.com/BrosTrend-AX900-Linux-WiFi-Adapter/dp/B0F6N1H84N/ref=sr_1_14?dib=eyJ2IjoiMSJ9.78-l3ki-Cdgk66rHmmKHe5qLTTbS9eqaGMqy-N1vxuT9ts6YpoDAxhiYgS5h9aVn9VTi9ZNJwANd-MHeNQAX7OxGamrVIyeR2zN0ZvEaOG2p-lf7OJzYmn8SxOmwP3koahc9B50WKRfAQRArUsQ7JJ-P3BLRCqjkE8z_S6lf0qjZg05xnagBSqaYgHQ1IOcmqJOAubb61hBmwY1hpaqUG-YNwDHtmeGyrqFnx_kKe4M.lKWOEbYNy6bvYiR4wKm4y_ric09EUjYlcziARQIoZ6I&dib_tag=se&keywords=linux+compatible+wifi+adapter&qid=1771211949&sr=8-14) |
 
 ## Analysis
 ### Global Controller
