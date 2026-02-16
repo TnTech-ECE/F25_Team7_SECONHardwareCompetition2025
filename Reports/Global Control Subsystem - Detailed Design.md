@@ -61,43 +61,43 @@ Outputs:
 
 
 
-Figure 1 - Jeston Orin Top View
+#### Figure 1 - Jeston Orin Top View
 <img width="1058" height="466" alt="son" src="https://github.com/user-attachments/assets/aae0ed3f-2c23-46a3-91c5-4c845903eb94" />
 
 
-Figure 2 - Jetson Orin Bottom View
+#### Figure 2 - Jetson Orin Bottom View
 <img width="1084" height="559" alt="jet" src="https://github.com/user-attachments/assets/519fdd8c-3f3a-483f-9307-66d0a9f6ad4d" />
 
 
-Figure 3 - Jetson Orin Block Diagram
+#### Figure 3 - Jetson Orin Block Diagram
 <img width="1053" height="833" alt="diagram" src="https://github.com/user-attachments/assets/ed7d0934-27cd-4a91-8047-55d0931bcecf" />
 
-Figure 4 - Jetson Orin Header Pinout Diagram
+#### Figure 4 - Jetson Orin Header Pinout Diagram
 <img width="709" height="1161" alt="pinhead" src="https://github.com/user-attachments/assets/52d15e0d-a1ab-4c2d-a1e2-e43f5689db09" />
 
 ## Buildable Schematic
 
-Figure 5 - Connections to Jetson IO
+#### Figure 5 - Connections to Jetson IO
 <img width="2255" height="1597" alt="scheme" src="https://github.com/user-attachments/assets/5f8a4f5e-36fc-445c-891e-f3fbe23f0a7e" />
 
 ## Flowchart
 
-Figure 6 - System Block Diagram
+#### Figure 6 - System Block Diagram
 <img width="2064" height="1377" alt="Full Block Diagram" src="https://github.com/user-attachments/assets/4c4f986b-03d7-48fe-b823-53fa32cf9fdf" />
 
-Figure 7- Software Flowchart 1
+#### Figure 7- Software Flowchart 1
 
 <img width="665" height="722" alt="soft 4" src="https://github.com/user-attachments/assets/07d74887-c5e6-4381-9261-d96a6c396d7c" />
 
-Figure 8 - Software Flowchart 2
+#### Figure 8 - Software Flowchart 2
 
 <img width="608" height="1118" alt="soft 3" src="https://github.com/user-attachments/assets/445299ef-aabc-4988-a97b-d758c968ee33" />
 
-Figure 9 - Software Flowchart 3
+#### Figure 9 - Software Flowchart 3
 
 <img width="417" height="1043" alt="soft 2" src="https://github.com/user-attachments/assets/ff4a76a4-f36e-4c28-b0d3-370891e4bf1a" />
 
-Figure 10 - Sofrware Flowchart 4
+#### Figure 10 - Sofrware Flowchart 4
 
 <img width="677" height="917" alt="soft 1" src="https://github.com/user-attachments/assets/310cf1e4-0754-43c7-b672-4b84cfc72ddd" />
 
@@ -122,6 +122,7 @@ In order to meet specifications 1, 5, and 6; the robot shall have a computer tha
 
 The Jetson Orin is listed as having an AI performance of 67 tera-operation per second (TOPS) [2]. The Nano and the TX2 have an AI performance of 0.472 and 1.33 tera floating point operation per second (TFLOPS) respectively [4] [5]. TOPS and TFLOPS are both metrics that are used to describe AI performance [6] [7], though they are different, with TOPS referring to 8 bit integer operations while TFLOPS refers to floating point operation [8]. However, a general case conversion can be made to compare the two [9]. An exact conversion is hardware architecture dependent, however, using the general case the Orin is shown to be the most powerful of the three listed computers. The previous competition’s robot was able to utilize the Jetson Nano, however, the 2026 competition’s robot will need to handle more AI loads than the previous competition’s robot. Thus the more powerful Jetson Orin shall allow the robot the ability to process all of its AI loads quickly, allowing the robot to complete all of its required task within the 3 minute time limit. Table 1.A shows a list of the AI process that the global computer shall be able to handle. 
 
+#### Table 1
 | Single Board Computer | AI Processing Power (TOPS) | AI Processing Power (TFLOPS)|
 |-|-|-|
 | Jetson Orin | 67 | apox 16.75 |
@@ -138,21 +139,21 @@ The team shall use a NVIDIA Jestion single board computer to handle the sensor i
 
 
 
-General Sensors
+### General Sensors
 In order to complete specifications 1, 2, 4, 5, 6,and 7 the robot shall need an array of different sensors that will allow the robot to perceive its environment. The robot shall know its position, its orientation, and have an effective method of tracking its location on the game board. The robot shall also have a means of starting autonomously as defined in specification 6, but also have an auxiliary start switch in case the robot fails to start autonomously.
 
-Starting the Robot
+#### Starting the Robot
 In order for the robot to start autonomously as defined in specification 6, the robot shall use a set of photoresistors. Two photoresistors shall be placed toward the front of the robot and will be used to measure the ambient light of the environment. An additional photoresistor will be placed near the rear of the robot. The start LEDs will be placed along the walls of the starting area, thus the rear photoresistor will be facing one of the two start LEDs. These photoresistors will be connected from 5 V power to analog GPIO pins on the Arduino Mega. A program will then compare the ambient light of the environment to the light detected by the rear photoresistor. If the rear photoresistor detects more light than the two ambient light photoresistors, that means that the start LEDs have been turned on and the robot may begin operation [10]. The GL12528 photoresistors can handle up to 250 V and 200 mW of power which is sufficient for this implementation [11].
 
-Figure 11 - Gameboard Layout
+#### Figure 11 - Gameboard Layout
 <img width="1563" height="831" alt="gameboard" src="https://github.com/user-attachments/assets/41f29d79-6af9-4110-9df1-bf07185edc72" />
 
-Figure 12 - Screenshot of Automatic Start Code
+#### Figure 12 - Screenshot of Automatic Start Code
 <img width="1556" height="893" alt="code" src="https://github.com/user-attachments/assets/11362feb-4e52-4cfd-8547-82c2fc4be446" />
 
 Specification 6 requires that the robot begin operation without human intervention, however, the inclusion of a manual start switch shall allow the robot to begin operation in the event it fails to start autonomously. Having a manual start switch also satisfies specification 2. The manual start switch will be a push button located near the top of the robot’s chassis. It will be connected from 5 V power to a digital GPIO pin on the Arduino Mega. This signal shall be used as an interrupt that will start the robot’s operation regardless of whether the robot detects the start LEDs. The push button can handle up to 14 VDC and 10 A which is sufficient for this implementation [12]. 
 
-Navigation Sensors
+#### Navigation Sensors
 The robot shall use multiple sensors in order to determine its exact location on the game board. These sensors shall also be used to pinpoint the robot on a virtual SLAM map and be used to improve that map. The concept of a SLAM map shall be discussed in a later section. A common technique that the team shall utilize will be sensor fusion. This technique shall allow the robot to combine the data from different types of sensors in order to create a more accurate representation of the robot's location. A common sensor fusion combination includes the use of LiDAR and IMU sensors which the team plans to utilize.
 
 
