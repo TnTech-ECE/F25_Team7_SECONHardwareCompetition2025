@@ -41,11 +41,11 @@ The global control system is divided into multiple major components: The Global 
 
 The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. This computer will be the device that makes all of the control decisions for the robot. It will also host the processes for object detection and navigation. Based on the data that is received and computed, it will make decisions and send the necessary commands to the low-level controller that will coordinate the robot’s motion and actuators. The robot shall use an NVIDIA Jetson Orin for this task. This single board computer was designed to efficiently run AI loads which will be essential for the robot’s object detection and navigation processes.
 
-The robot shall also use a combination of sensors that will allow the robot to perceive its location on the gameboard, and be able to identify the objects on it. LiDAR sensors and an IMU will be used to pinpoint the robot’s location on the game board. The robot shall also utilize photoresistors which will be used to start the robot autonomously. The robot will also have a manual start button. The robot and the UAV will have cameras that will send image data to the global computer over USB and WiFi respectively. More detail about the cameras can be found in the object detection detailed design document [object detection doc].
+The robot shall also use a combination of sensors that will allow the robot to perceive its location on the gameboard, and be able to identify the objects on it. LiDAR sensors and an IMU will be used to pinpoint the robot’s location on the game board. The robot shall also utilize photoresistors which will be used to start the robot autonomously. The robot will also have a manual start button. The robot and the UAV will have cameras that will send image data to the global computer over USB and WiFi respectively. More detail about the cameras can be found in the object detection detailed design document [2].
 
 ## Interface with Other Subsystems
 
-The Jetson Orin has access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, GPIO, PWM, DMIC, and DSPK protocols. The development board comes with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power [2]. The robot mounted camera will connect to the global computer using a USB connection. The UAV comes with a USB adaptor that will allow the global control computer to communicate with the UAV flight controller. Details for the USB adaptor can be found in the communication detailed design document[comms detailed]. The UAV mounted camera will connect to the global computer over a WiFi connection. The Jetson Orin does not come with built in WiFi, so an adaptor will need to be purchased. The Low Level Controller will connect to the global computer over USB. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be GPIO signals.
+The Jetson Orin has access to video encodes, video decoders, CSI camera support, PCIe, USB, 1 gigabit ethernet, display ports, UART, SPI, I2S, I2C, GPIO, PWM, DMIC, and DSPK protocols. The development board comes with a 40-pin header for IO, 2 CSI camera connectors, 4 USB type A connectors, a display port, an ethernet port, and a barrel jack for power [3]. The robot mounted camera will connect to the global computer using a USB connection. The UAV comes with a USB adaptor that will allow the global control computer to communicate with the UAV flight controller. Details for the USB adaptor can be found in the communication detailed design document[4]. The UAV mounted camera will connect to the global computer over a WiFi connection. The Jetson Orin does not come with built in WiFi, so an adaptor will need to be purchased. The Low Level Controller will connect to the global computer over USB. Both the IMU and the LiDAR sensors will connect to the global computer using I2C. Both the autonomous and manual start signals will be GPIO signals.
 
 Inputs:
 * Autonomous Start Signals
@@ -126,9 +126,23 @@ Outputs:
 
 ## Analysis
 ### Global Controller
-In order to meet specifications 1, 5, and 6; the robot shall have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer shall send the needed instructions to the low level controller in order to execute those decisions. The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [3]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power. 
+The global controller is the single board computer that will be responsible for the high level control of the robot. It will host the processes navigation, object detection, and the robot's behavior scheme. 
 
-The Jetson Orin is listed as having an AI performance of 67 tera-operation per second (TOPS) [2]. The Nano and the TX2 have an AI performance of 0.472 and 1.33 tera floating point operation per second (TFLOPS) respectively [4] [5]. TOPS and TFLOPS are both metrics that are used to describe AI performance [6] [7], though they are different, with TOPS referring to 8 bit integer operations while TFLOPS refers to floating point operation [8]. However, a general case conversion can be made to compare the two [9]. An exact conversion is hardware architecture dependent, however, using the general case the Orin is shown to be the most powerful of the three listed computers. The previous competition’s robot was able to utilize the Jetson Nano, however, the 2026 competition’s robot will need to handle more AI loads than the previous competition’s robot. Thus the more powerful Jetson Orin shall allow the robot the ability to process all of its AI loads quickly, allowing the robot to complete all of its required task within the 3 minute time limit. Table 1.A shows a list of the AI process that the global computer shall be able to handle. 
+* Connect to the UAV using the CrazyFly PA USB adaptor to administor commands
+* Connect to the UAV cammera using WiFi to recieve image data of the gameboard 
+* Connect to and send motor control commands to the Low Level Controller over USB
+* Process the object detection algorithm accossiated with the UAV camera
+* Process the object detection algorithm accossiated with the robot mounted camera
+* 
+* Process the ROS2 NAV2 stack that controls the robots pathfinding and navigation
+* Intake
+* imu ic2.
+
+The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [5]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power.
+
+In order to meet specifications 1, 5, and 6; the robot shall have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer shall send the needed instructions to the low level controller in order to execute those decisions. The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [5]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power. 
+
+The Jetson Orin is listed as having an AI performance of 67 tera-operation per second (TOPS) [2]. The Nano and the TX2 have an AI performance of 0.472 and 1.33 tera floating point operation per second (TFLOPS) respectively [6] [7]. TOPS and TFLOPS are both metrics that are used to describe AI performance [8] [9], though they are different, with TOPS referring to 8 bit integer operations while TFLOPS refers to floating point operation [8]. However, a general case conversion can be made to compare the two [10]. An exact conversion is hardware architecture dependent, however, using the general case the Orin is shown to be the most powerful of the three listed computers. The previous competition’s robot was able to utilize the Jetson Nano, however, the 2026 competition’s robot will need to handle more AI loads than the previous competition’s robot. Thus the more powerful Jetson Orin shall allow the robot the ability to process all of its AI loads quickly, allowing the robot to complete all of its required task within the 3 minute time limit. 
 
 #### Table 1
 | Single Board Computer | AI Processing Power (TOPS) | AI Processing Power (TFLOPS)|
@@ -136,12 +150,6 @@ The Jetson Orin is listed as having an AI performance of 67 tera-operation per s
 | Jetson Orin | 67 | apox 16.75 |
 | Jetson TX2 | apox 5.32 | 1.33 |
 | Jetson Nano | apox 1.88 | 0.472 |
-
-
-The robot shall also need a software architecture that will allow the robot to handle all its AI loads and sensor integration. The team has the option to continue developing the architecture designed by the previous team. There is a foundation that the team can use to build upon and add on to, including computer vision algorithms [8] [9]. The team can also build a new software architecture using the Robot Operating System (ROS). This architecture is open source and has a set of prebuilt tools for common robot applications. NVIDIA has also built a ROS distribution called Issac which is designed for using AI tools such as object detection and navigation algorithms [10]. This ROS library also makes using a Jetson board more appealing.
-
-The team shall use a NVIDIA Jestion single board computer to handle the sensor intake, AI processing, and decision making for the robot. The team shall utilize ROS as a tool to help implement AI work loads and to control the robot. As the team approaches the detailed design phase, they shall decide which Jeston single board computer will be used. This decision will depend on the computers ability to process the robots AI loads fast enough to meet specification 3. ROS has the capability to run both C++ and Python programs, so the team will consider salvaging programs from the previous team’s robot.
-
 
 
 
@@ -173,24 +181,28 @@ All sources that have contributed to the detailed design and are not considered 
 
 [1] “2026 IEEE+SoutheastCon+Hardware+Competition+Ruleset_8_15_2025.” IEEE, Aug. 15, 2025 
 
-[2] NVIDIA, “NVIDIA Jetson AGX Orin,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+[2]TnTech-ECE, “F25_Team7_SECONHardwareCompetition2025/Reports/Object Detection -- Detailed Design.md at Object-Detection----Detailed-Design · TnTech-ECE/F25_Team7_SECONHardwareCompetition2025,” GitHub, 2025. https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Object-Detection----Detailed-Design/Reports/Object%20Detection%20--%20Detailed%20Design.md
+‌
+[3] NVIDIA, “NVIDIA Jetson AGX Orin,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
 
-[3] J. Vassar et al., “F25_Team7_SECONHardwareCompetition2025/reports/team 7 conceptual Design.md at main · tntech-ECE/F25_TEAM7_SECONHARDWARECOMPETITION2025,” GitHub, https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/main/Reports/Team%207%20Conceptual%20Design.md (accessed Nov. 10, 2025). 
+[4] A. Mullins, “Detailed_Design_Communication,” GitHub, Dec. 03, 2025. https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/Detailed_Design_Communications/Reports/Detailed_Design_Communication.md
+‌
+[5] J. Vassar et al., “F25_Team7_SECONHardwareCompetition2025/reports/team 7 conceptual Design.md at main · tntech-ECE/F25_TEAM7_SECONHARDWARECOMPETITION2025,” GitHub, https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/main/Reports/Team%207%20Conceptual%20Design.md (accessed Nov. 10, 2025). 
 
-[4] NVIDIA, “NVIDIA Jetson TX2: High Performance AI at the Edge,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/
+[6] NVIDIA, “NVIDIA Jetson TX2: High Performance AI at the Edge,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/
 
-[5] NVIDIA, “NVIDIA jetson nano,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-nano/product-development/
+[7] NVIDIA, “NVIDIA jetson nano,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-nano/product-development/
 
-[6] “What is Ai Tops? how it differs from teraflops.,” C&T Solution Inc. | 智愛科技股份有限公司, https://www.candtsolution.com/news_events-detail/tops-and-teraflops-in-AI/ (accessed Nov. 12, 2025).
+[8] “What is Ai Tops? how it differs from teraflops.,” C&T Solution Inc. | 智愛科技股份有限公司, https://www.candtsolution.com/news_events-detail/tops-and-teraflops-in-AI/ (accessed Nov. 12, 2025).
 
-[7] GeeksforGeeks, “Floating-point operations per second (flops),” GeeksforGeeks, https://www.geeksforgeeks.org/computer-organization-architecture/what-is-floating-point-operations-per-second-flops/ (accessed Nov. 12, 2025).
+[9] GeeksforGeeks, “Floating-point operations per second (flops),” GeeksforGeeks, https://www.geeksforgeeks.org/computer-organization-architecture/what-is-floating-point-operations-per-second-flops/ (accessed Nov. 12, 2025).
 
-[8] P. Burns, “A guide to ai tops and NPU Performance Metrics,” Wireless Technology & Innovation, https://www.qualcomm.com/news/onq/2024/04/a-guide-to-ai-tops-and-npu-performance-metrics (accessed Nov. 12, 2025).
+[10] P. Burns, “A guide to ai tops and NPU Performance Metrics,” Wireless Technology & Innovation, https://www.qualcomm.com/news/onq/2024/04/a-guide-to-ai-tops-and-npu-performance-metrics (accessed Nov. 12, 2025).
 
-[9] “What is the relationship between the units of Tops and flops? - genspark,” What Is The Relationship Between The Units Of Tops And Flops?, https://www.genspark.ai/spark/what-is-the-relationship-between-the-units-of-tops-and-flops/466c318f-635c-30a6-90f2-594f3fe1b1d1 (accessed Nov. 12, 2025).
+[11] “What is the relationship between the units of Tops and flops? - genspark,” What Is The Relationship Between The Units Of Tops And Flops?, https://www.genspark.ai/spark/what-is-the-relationship-between-the-units-of-tops-and-flops/466c318f-635c-30a6-90f2-594f3fe1b1d1 (accessed Nov. 12, 2025).
 
-[10] D. Moye, A. Cruz, S. Hunter, and S. Borchers, “F24_Team1_SECON/reports/experimental analysis.md at Main · tntech-ECE/F24_TEAM1_SECON,” GitHub, https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/Experimental%20Analysis.md (accessed Nov. 5, 2025).
+[12] D. Moye, A. Cruz, S. Hunter, and S. Borchers, “F24_Team1_SECON/reports/experimental analysis.md at Main · tntech-ECE/F24_TEAM1_SECON,” GitHub, https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/Experimental%20Analysis.md (accessed Nov. 5, 2025).
 
-[11]“Juried Engineering Photoresistor GL12528 12528 Photo Light Sensitive Resistor Light Dependent Resistor 12 mm GM12528 (Pack of 10): Amazon.com: Industrial & Scientific,” Amazon.com, 2025. https://www.amazon.com/Juried-Engineering-Photoresistor-GL12528-Sensitive/dp/B08F3WPNPF (accessed Nov. 20, 2025).
+[13]“Juried Engineering Photoresistor GL12528 12528 Photo Light Sensitive Resistor Light Dependent Resistor 12 mm GM12528 (Pack of 10): Amazon.com: Industrial & Scientific,” Amazon.com, 2025. https://www.amazon.com/Juried-Engineering-Photoresistor-GL12528-Sensitive/dp/B08F3WPNPF (accessed Nov. 20, 2025).
 
 [12] 40-4325-00 JUDCO Manufacturing Inc. | switches | DigiKey, https://www.digikey.com/en/products/detail/judco-manufacturing-inc/40-4325-00/254287 (accessed Nov. 20, 2025). 
