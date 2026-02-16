@@ -6,7 +6,7 @@ The global control system is designed to function as the robot's data collection
 
 ## Specifications and Constraints
 
-Listed below are the specifications and constraints for this subsystem as derived from the SECON 2026 rules manual [1].
+The IEEE SECON rules handbook contains the specifications and contraints for the robot's operation and function. These specifications and constraints are listed bellow [1].
  
 1.  Both the robot and UAV shall be completely autonomous.
 2.  The robot and UAV shall have a clearly labeled start switch. 
@@ -24,6 +24,16 @@ Listed below are the specifications and constraints for this subsystem as derive
   a.  The robot shall be able to sense the starting white LEDs in order to begin operation.
 7.  Points shall be lost every time the robot or UAV has an unintentional collision 
   a.  The robot and UAV shall be able to detect and avoid obstacles.
+
+In addition to the listed specifications and constrains, socio-economic and ethecal contraints will be implemented.
+
+#### Socio-Economic
+
+In order to ensure that the project remain on budget and does not produce unneccesary waste, priority will be placed on using parts that can be salvaged from previous SECON robots. Reusing pervious parts will allow the team to cut down on parts cost.
+
+#### Ethical
+
+As well as using salvaged parts, the team shall utilized salvaged programs and utilies predeveloped tools to aid in the programing of robot and UAV. It is the team's priority to ensure proper liciensing of used softwares and to disclose when such resources are used.
 
 ## Overview of Proposed Solution
 
