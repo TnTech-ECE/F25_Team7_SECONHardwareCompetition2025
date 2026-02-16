@@ -141,11 +141,18 @@ The global controller is the single board computer that will be responsible for 
 * Run an internal 3 minute clock
 * Launch drone
 * Use drone to collect slam data
+* object detection data to put task in queue
 * navigation uses nav data to run
 * priority on duck collection
 * then towers
-* once collected
+* return home after 30 seconds
+* transmitt led data
+* land drone
 
+  talk about how the robot will operate.
+  the ai part is still a good metric - add metrics about the cpu and gpu
+ no good metrics on software load.
+  
 The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [5]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power.
 
 In order to meet specifications 1, 5, and 6; the robot shall have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer shall send the needed instructions to the low level controller in order to execute those decisions. The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [5]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power. 
