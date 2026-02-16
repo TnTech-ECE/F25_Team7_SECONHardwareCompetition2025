@@ -129,14 +129,22 @@ Outputs:
 The global controller is the single board computer that will be responsible for the high level control of the robot. It will host the processes navigation, object detection, and the robot's behavior scheme. 
 
 * Connect to the UAV using the CrazyFly PA USB adaptor to administor commands
-* Connect to the UAV cammera using WiFi to recieve image data of the gameboard 
+* Connect to the UAV cammera using WiFi to recieve image data of the gameboard
 * Connect to and send motor control commands to the Low Level Controller over USB
 * Process the object detection algorithm accossiated with the UAV camera
 * Process the object detection algorithm accossiated with the robot mounted camera
-* 
+* Process the object detcion post-processing and object estimation
 * Process the ROS2 NAV2 stack that controls the robots pathfinding and navigation
-* Intake
-* imu ic2.
+* Intake and feed the LiDAR data into the NAV2 stack
+* Intake and feed the IMU data into the NAV2 stack
+
+* Run an internal 3 minute clock
+* Launch drone
+* Use drone to collect slam data
+* navigation uses nav data to run
+* priority on duck collection
+* then towers
+* once collected
 
 The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [5]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power.
 
