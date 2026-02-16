@@ -2,7 +2,7 @@
 
 ## Function of the Subsystem
 
-The function of the global control system is to allow the robot to collected and process data about its environment. It will host the AI processes, ROS middleware, and decision algorithms needed for the robot and UAV to complete their tasks.   
+The global control system is designed to function as the robot's data collection and control center. This subsystem consist of a single board computer that will be used to compute and process the robot's high level control processes, such as its navigation, object detection, and decision making behaviors. The single board computer will use these processes to send instructions to the low level controller that is responsible for controlling the robot's motors. It will also send commands to the robot's companion UAV. The Global control system also includes the senors that will be used to help collect position data that will be feed to the navigation subsystem.    
 
 ## Specifications and Constraints
 
@@ -25,15 +25,13 @@ Listed below are the specifications and constraints for this subsystem as derive
 7.  Points shall be lost every time the robot or UAV has an unintentional collision 
   a.  The robot and UAV shall be able to detect and avoid obstacles.
 
-NOTE: Camera Related specs, constraints, and details have been relocated to the object detection subsystem. It was found to be more productive to have those components listed under that section as the cameras play a critical part of that subsystem.
-
 ## Overview of Proposed Solution
 
-The Global control system is divided into two major components: The Global controller itself and the sensors that it relies on in order to collect the data the robot needs to make decisions. 
+The global control system is divided into multiple major components: The Global controller itself and the sensors that it relies on in order to collect the data the robot needs to make decisions. 
 
-The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. This computer will be the device that makes all of the control decisions for the robot. It will also host the processes for object detection and navigation and based on the data the Jetson receives and computes, it will make decisions and send the necessary commands to the low-level controller that will coordinate the robot’s motion and actuators. The robot shall use an NVIDIA Jetson Orin for this task. This single board computer was designed to efficiently run AI loads which will be essential for the robot’s object detection and navigation processes.
+The global controller will act as the central computer that will be used for collecting data, processing data, and making decisions based on that data. This computer will be the device that makes all of the control decisions for the robot. It will also host the processes for object detection and navigation. Based on the data that is received and computed, it will make decisions and send the necessary commands to the low-level controller that will coordinate the robot’s motion and actuators. The robot shall use an NVIDIA Jetson Orin for this task. This single board computer was designed to efficiently run AI loads which will be essential for the robot’s object detection and navigation processes.
 
-The robot shall also use a combination of sensors that will allow the robot to perceive its location on the game board and be able to identify objects on it. Using the technique of sensor fusion, LiDAR sensors and an IMU will be used to pinpoint the robot’s location on the game board. The robot shall also utilize photoresistors which will be used to start the robot autonomously. The robot will also have a manual start button.The robot and the UAV will have cameras that will send image data to the global computer over USB and WiFi respectively. More detail about the cameras can be found in the object detection detailed design document.
+The robot shall also use a combination of sensors that will allow the robot to perceive its location on the gameboard, and be able to identify the objects on it. LiDAR sensors and an IMU will be used to pinpoint the robot’s location on the game board. The robot shall also utilize photoresistors which will be used to start the robot autonomously. The robot will also have a manual start button. The robot and the UAV will have cameras that will send image data to the global computer over USB and WiFi respectively. More detail about the cameras can be found in the object detection detailed design document [object detection doc].
 
 ## Interface with Other Subsystems
 
@@ -119,13 +117,23 @@ Figure 10 - Sofrware Flowchart 4
 ### Global Controller
 In order to meet specifications 1, 5, and 6; the robot shall have a computer that is capable of receiving incoming data from its sensors, processing that data, and making decisions with that data. The robot shall be able to identify objects like the Astro Ducks and antenna towers and then plan an efficient route to navigate to those objects. Finally the computer shall send the needed instructions to the low level controller in order to execute those decisions. The robot’s ability to detect objects and handle navigation tasks shall depend on its ability to effectively utilize artificial intelligence algorithms. A single board computer would be more suited for managing the robot’s high level control. The robot shall use a Jetson Orin, more specifically a Jetson Orin Nano Super Developer Kit, for this function as it was designed with AI processing in mind. Using a Jeston single board computer over a similar option like a Raspberry Pi was discussed in a previous document [3]. The robot shall use a Jeston Orin instead of the Nano or the TX2 because of its processing power. 
 
-The Jetson Orin is listed as having an AI performance of 67 tera-operation per second (TOPS) [2]. The Nano and the TX2 have an AI performance of 0.472 and 1.33 tera floating point operation per second (TFLOPS) respectively [4] [5]. TOPS and TFLOPS are both metrics that are used to describe AI performance [6] [7], though they are different, with TOPS referring to 8 bit integer operations while TFLOPS refers to floating point operation [8]. However, a general case conversion can be made to compare two [9]. An exact conversion is hardware architecture dependent, however, using the general case the Orin is shown to be the most powerful of the three listed computers. The previous competition’s robot was able to utilize the Jetson Nano, however, the 2026 competition’s robot will need to handle more AI loads than the previous competition’s robot. Thus the more powerful Jetson Orin shall allow the robot the ability to process all of its AI loads quickly, allowing the robot to complete all of its required task within the 3 minute time limit. Table 1.A shows a list of the AI process that the global computer shall be able to handle. 
+The Jetson Orin is listed as having an AI performance of 67 tera-operation per second (TOPS) [2]. The Nano and the TX2 have an AI performance of 0.472 and 1.33 tera floating point operation per second (TFLOPS) respectively [4] [5]. TOPS and TFLOPS are both metrics that are used to describe AI performance [6] [7], though they are different, with TOPS referring to 8 bit integer operations while TFLOPS refers to floating point operation [8]. However, a general case conversion can be made to compare the two [9]. An exact conversion is hardware architecture dependent, however, using the general case the Orin is shown to be the most powerful of the three listed computers. The previous competition’s robot was able to utilize the Jetson Nano, however, the 2026 competition’s robot will need to handle more AI loads than the previous competition’s robot. Thus the more powerful Jetson Orin shall allow the robot the ability to process all of its AI loads quickly, allowing the robot to complete all of its required task within the 3 minute time limit. Table 1.A shows a list of the AI process that the global computer shall be able to handle. 
 
 | Single Board Computer | AI Processing Power (TOPS) | AI Processing Power (TFLOPS)|
 |-|-|-|
 | Jetson Orin | 67 | apox 16.75 |
 | Jetson TX2 | apox 5.32 | 1.33 |
 | Jetson Nano | apox 1.88 | 0.472 |
+
+
+The robot shall also need a software architecture that will allow the robot to handle all its AI loads and sensor integration. The team has the option to continue developing the architecture designed by the previous team. There is a foundation that the team can use to build upon and add on to, including computer vision algorithms [8] [9]. The team can also build a new software architecture using the Robot Operating System (ROS). This architecture is open source and has a set of prebuilt tools for common robot applications. NVIDIA has also built a ROS distribution called Issac which is designed for using AI tools such as object detection and navigation algorithms [10]. This ROS library also makes using a Jetson board more appealing.
+
+The team shall use a NVIDIA Jestion single board computer to handle the sensor intake, AI processing, and decision making for the robot. The team shall utilize ROS as a tool to help implement AI work loads and to control the robot. As the team approaches the detailed design phase, they shall decide which Jeston single board computer will be used. This decision will depend on the computers ability to process the robots AI loads fast enough to meet specification 3. ROS has the capability to run both C++ and Python programs, so the team will consider salvaging programs from the previous team’s robot.
+
+
+
+
+
 
 General Sensors
 In order to complete specifications 1, 2, 4, 5, 6,and 7 the robot shall need an array of different sensors that will allow the robot to perceive its environment. The robot shall know its position, its orientation, and have an effective method of tracking its location on the game board. The robot shall also have a means of starting autonomously as defined in specification 6, but also have an auxiliary start switch in case the robot fails to start autonomously.
@@ -145,18 +153,40 @@ Navigation Sensors
 The robot shall use multiple sensors in order to determine its exact location on the game board. These sensors shall also be used to pinpoint the robot on a virtual SLAM map and be used to improve that map. The concept of a SLAM map shall be discussed in a later section. A common technique that the team shall utilize will be sensor fusion. This technique shall allow the robot to combine the data from different types of sensors in order to create a more accurate representation of the robot's location. A common sensor fusion combination includes the use of LiDAR and IMU sensors which the team plans to utilize.
 
 
+
+
+The robot shall use multiple sensors in order to determine its exact location on the game board. These sensors shall also be used to pinpoint the robot on a virtual SLAM map and be used to improve that map. The concept of a SLAM map shall be discussed in a later section. A common technique that the team shall utilize will be sensor fusion. This technique shall allow the robot to combine the data from different types of sensors in order to create a more accurate representation of the robot's location. A common sensor fusion combination includes the use of LiDAR and IMU sensors which the team plans to utilize.
+
+LiDAR, or Light Detection and Ranging, sensors use laser pulses to measure distance. They can be used for detecting obstacles, and be used to create virtual maps of the robots surroundings. Their ability to gather high volumes of accurate data in a short time frame makes these sensors a good option. They are also well known for their ability to create three dimensional maps, which shall be integral for our navigational strategy as defined in its own subsystem [14] [15].
+
+IMUs, or Inertial Measurement Units, are devices that contain an array of sensors like accelerometers, gyroscopes, and potentially magnetometers [16]. These devices are able to track changes in velocity and rotational orientation. These measurements shall allow the robot to know its exact orientation at a given time. The velocity data can also be integrated over short periods in order to find the robots position data [17].
+
+Using these two sensor types together shall allow the robot to know its exact position and orientation on the game board. The robot shall use one IMU for position and orientation. As the team continues into the detailed design phase, they shall consider how to implement the LiDAR sensor(s). LiDAR sensors come in various configurations and the team shall consider which configuration is the most cost effective while being able to provide all of the needed information for the robot’s successful operation.
+
+
 ## References
 All sources that have contributed to the detailed design and are not considered common knowledge should be duly cited, incorporating multiple references.
 
 [1] “2026 IEEE+SoutheastCon+Hardware+Competition+Ruleset_8_15_2025.” IEEE, Aug. 15, 2025 
+
 [2] NVIDIA, “NVIDIA Jetson AGX Orin,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-orin/
+
 [3] J. Vassar et al., “F25_Team7_SECONHardwareCompetition2025/reports/team 7 conceptual Design.md at main · tntech-ECE/F25_TEAM7_SECONHARDWARECOMPETITION2025,” GitHub, https://github.com/TnTech-ECE/F25_Team7_SECONHardwareCompetition2025/blob/main/Reports/Team%207%20Conceptual%20Design.md (accessed Nov. 10, 2025). 
+
 [4] NVIDIA, “NVIDIA Jetson TX2: High Performance AI at the Edge,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-tx2/
+
 [5] NVIDIA, “NVIDIA jetson nano,” NVIDIA. https://www.nvidia.com/en-us/autonomous-machines/embedded-systems/jetson-nano/product-development/
+
 [6] “What is Ai Tops? how it differs from teraflops.,” C&T Solution Inc. | 智愛科技股份有限公司, https://www.candtsolution.com/news_events-detail/tops-and-teraflops-in-AI/ (accessed Nov. 12, 2025).
+
 [7] GeeksforGeeks, “Floating-point operations per second (flops),” GeeksforGeeks, https://www.geeksforgeeks.org/computer-organization-architecture/what-is-floating-point-operations-per-second-flops/ (accessed Nov. 12, 2025).
+
 [8] P. Burns, “A guide to ai tops and NPU Performance Metrics,” Wireless Technology & Innovation, https://www.qualcomm.com/news/onq/2024/04/a-guide-to-ai-tops-and-npu-performance-metrics (accessed Nov. 12, 2025).
+
 [9] “What is the relationship between the units of Tops and flops? - genspark,” What Is The Relationship Between The Units Of Tops And Flops?, https://www.genspark.ai/spark/what-is-the-relationship-between-the-units-of-tops-and-flops/466c318f-635c-30a6-90f2-594f3fe1b1d1 (accessed Nov. 12, 2025).
+
 [10] D. Moye, A. Cruz, S. Hunter, and S. Borchers, “F24_Team1_SECON/reports/experimental analysis.md at Main · tntech-ECE/F24_TEAM1_SECON,” GitHub, https://github.com/TnTech-ECE/F24_Team1_SECON/blob/main/Reports/Experimental%20Analysis.md (accessed Nov. 5, 2025).
+
 [11]“Juried Engineering Photoresistor GL12528 12528 Photo Light Sensitive Resistor Light Dependent Resistor 12 mm GM12528 (Pack of 10): Amazon.com: Industrial & Scientific,” Amazon.com, 2025. https://www.amazon.com/Juried-Engineering-Photoresistor-GL12528-Sensitive/dp/B08F3WPNPF (accessed Nov. 20, 2025).
+
 [12] 40-4325-00 JUDCO Manufacturing Inc. | switches | DigiKey, https://www.digikey.com/en/products/detail/judco-manufacturing-inc/40-4325-00/254287 (accessed Nov. 20, 2025). 
