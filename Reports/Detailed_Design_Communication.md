@@ -7,11 +7,17 @@ This subsystem deals with wireless data transfer between the robot, UAV, and Ear
 # Specifications and Constraints:
 
 The Earth uses a library called IRremote that is compatible with certain microcontrollers [1]
+
 The UAV lets us control it through the Crazyradio PA [2]
+
 The UAV has to transmit the satellite data to the Earth [1]
+
 All communication between the UAV, robot, and Earth has to be wireless
+
 The range for each wireless system needs to reach across the longest part of the arena
+
 The Wifi is capable of supporting a 20fps video data stream using a standard video stream (5-8 Mbps) [7]
+
 While using radio frequencies, we will avoid using frequencies deemed within the illegal range  from the FCC and ITU-R[8]
 
 # Overview of proposed Solution:
