@@ -1,0 +1,6 @@
+Updates:
+Jetson Orin is up and running
+Power PCB needs to be soldered, missing some parts (Jetson Converter) - we could potentially use other parts as a replacement
+LLC needs some clarification on the data passed between LLC and Jetson Orin (we have a skeleton for code from last year)
+Got the drone's camera working, but the drone is not here :(
+The ME team wants to meet us on Monday. 
