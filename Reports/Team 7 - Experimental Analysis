@@ -1,1 +1,183 @@
-d
+# Introduction
+
+What is this doc for?
+Talk about messures of Sucess
+Talk about the point system.
+
+
+# Global Controller
+1. Both the robot and UAV shall be completely autonomous [Vehicle Spec 1]
+2. Teams shall have a maximum of 3 minutes to earn points. [Objective Spec 3]
+     - The robot shall have the ability to quickly make decisions and communicate them.
+3. Teams shall rescue a total of 6 Astro-Ducks and shall return them to the “Lunar Landing Area.” [Objective Specs 4/5]
+     - The robot shall be able to identify, locate, and navigate to the Astro-Ducks.
+     - The robot shall be able to identify and navigate to the Lunar Landing Area.
+4. Teams shall establish power to the 4 antennas throughout the course. Power shall be restored differently for each antenna. Once power is restored to the antenna, a randomly colored LED shall light up (red, blue, green, and purple). [Objective Spec 6]
+     - The robot shall be able to identify, locate, and navigate to the antenna towers.
+     - The robot must identify and complete the task located on each tower.
+     - The UAV shall identify the color of the LED on each antenna tower.
+     - The UAV shall know which area each antenna tower and their LEDs are located in.
+5. Two starting white LED bars shall be placed on top of the arena wall, one on each side of the 12” x 12” starting area. [Board Spec 5]
+     - The robot shall be able to sense the starting white LEDs in order to begin operation.
+6. Points shall be lost every time the robot or UAV has an unintentional collision [Objective Constrain 2]
+     - The robot and UAV shall be able to detect and avoid obstacles
+
+Above are the listed specifications and contrants that the global control subsystem encompasses. Specifactions 1 and 5 are 
+achieved by the use of a photoresistor that will detect the light of the starting LED. This will be tested by using the starting LED on the practice board
+to determine if the photoresistor will allow the robot to start autonomously. Specifications 2, 4, and 6 are accompleted by the robot's Master program and will be tested
+by allowing the master program .......
+
+What cound we not test
+
+
+## Photoresistor
+
+The photoresistor is used in order to start the robot's autonimous operation. It will detect the light emitted from the starting LED and use that signal to begin
+the robot's operation. This will meet specifications 2 and 5.
+
+Purpose and Justification:
+The photoresistor is used to autonomously start the robot, which is a critical function in order for the robot to operate successfully.
+The robot's ability to start autonomously will secure the team a total of 15 points during the competition, and allow the robot to complete other task to score
+more points.
+This test is to ensure that the photoresistor will be able to reliably start the robot, using the starting LED.
+
+Detailed Procedure:
+
+The robot uses a single photoresistor that is located at its rear. It is connected from 3.3 V power to the robot's Arduino Mega. As the photoresistor is
+exposed to more light, the analog value that is recorded by the Ardunio decreases as the photoresistor's resistance increases. The Arduino will dectect the starting
+LED if the analog value of the photoresister is under a predefined threshold, at which the robot will being to move forward. A successful test is defined by the robot
+moving forward after being exposed to the starting LED.
+
+Figure X - Robot Photoresistor
+
+Expected Results:
+
+The photoresistor will be able to detect the starting LED repetaedly and realiably.
+
+Actual Results:
+
+Bellow is a table of the testing results. These test where conducted at the IEEE SECON competition during the quailifying and semi-final rounds.
+
+Interpretation and Conclusions:
+
+The photoresistor was able to successefully detect the starting LED during all of the team's competition runs. While the team was testing the photoresistor's
+functionality the robot was found to start prematuarly if the robot was not handled carefully. It is believed that the threshold for detecting the starting LED was likely
+too low, resulting it the photoresistor being too sensitive to the point where the robot could be triggered by a team member walking by the robot. The high sensitivity was required
+in order for the photoresister to detect the starting LED. Thus using the ambient light solution that was perviouly dicussed would have likely produced more consistant 
+results with less permature starts.
+
+## Arduino Master Program
+Purpose and Justification:
+Detailed Procedure:
+Expected Results:
+Actual Results:
+Interpretation and Conclusions:
+
+## Jeston Orin to Arduino Communication
+Purpose and Justification:
+Detailed Procedure:
+Expected Results:
+Actual Results:
+Interpretation and Conclusions:
+
+
+# Object Detection
+# Navigation
+# Communication
+# Power 
+# Low-Level Control
+
+- **Purpose**:
+
+  - Clearly state the exact criteria you intend to measure.
+  - Criteria should align directly with your project's critical requirements or detailed design objectives.
+  - Consider the customer's viewpoint: what features or performance attributes are most important from their perspective?
+  - Anticipate that your instructor may require additional criteria for comprehensive evaluation.
+
+- **Procedure**:
+
+  - Provide detailed, step-by-step instructions outlining how the experiment will be conducted.
+  - Include specifics such as required equipment, environmental conditions, and preparation steps.
+  - Procedures should be detailed enough to ensure repeatability and clarity.
+
+- **Data Collection**:
+
+  - Identify exactly what data will be recorded during the experiment.
+  - Clearly specify units, methods of measurement, and formats for recording.
+  - Include how frequently data points should be taken and how they will be documented (e.g., in tables, spreadsheets, video recordings).
+
+- **Trials**:
+
+  - Determine and justify how many repetitions of each experiment are necessary.
+  - Multiple trials (e.g., N ≥ 3) are highly recommended to ensure statistical significance and reliability.
+  - Consider using multiple copies or prototypes of your device to facilitate efficient testing and improve the robustness of your data.
+
+- **Potential Biases**:
+
+  - Identify potential sources of bias or errors that may impact experimental results.
+  - Develop clear strategies to mitigate or control these biases (e.g., randomized trials, controlled environments, calibration of instruments).
+
+
+
+## Conducting Experiments
+
+When carrying out experiments:
+
+- Carefully adhere to the established experimental procedures.
+- Conduct each trial consistently to ensure reliable and comparable results.
+- Record all data accurately and methodically.
+- Organize your data clearly, using appropriate formats such as tables, charts, or graphs for ease of analysis.
+
+
+
+## Analyzing Results and Drawing Conclusions
+
+After completing experiments:
+
+- Thoroughly analyze all collected data, paying close attention to consistency and patterns.
+- Evaluate your data to identify potential sources of error, bias, or abnormalities, and address their implications.
+- Clearly articulate conclusions derived from the data, emphasizing evidence-based insights and interpretations.
+- Identify correlations or suggest causal relationships, if supported by data.
+
+If analysis uncovers questions or uncertainties, consider designing and executing additional targeted experiments to refine your understanding.
+
+
+
+## Writing the Report
+
+Your deliverable should be a comprehensive markdown document, clearly organized, and uploaded to your project's GitHub repository.
+
+
+
+For each documented experiment, you must include:
+
+1. **Purpose and Justification**:
+
+   - Explain why the experiment was designed, and how it relates to your critical success criteria.
+
+2. **Detailed Procedure**:
+
+   - Outline clearly the methods used, ensuring another team could reproduce your experiment.
+
+3. **Expected Results**:
+
+   - State your initial hypothesis or expectations clearly before conducting experiments.
+
+4. **Actual Results**:
+
+   - Present data collected during the experiments in an organized, easy-to-interpret format (tables, graphs, charts).
+
+5. **Interpretation and Conclusions**:
+
+   - Provide a detailed analysis explaining the significance of the results.
+   - State whether results matched your expectations and explain any discrepancies.
+
+
+
+When you have complete all of the experiments: clearly summarize whether your experiments demonstrated that your project meets the original success criteria outlined in your conceptual design. If success criteria were not met, discuss the reasons and outline steps for improvement.
+
+
+
+## Statement of Contributions
+
+Each team member must contribute meaningfully to the experimental analysis and document their contributions clearly in this section. Contributions should be recorded individually, and one team member may not document contributions on behalf of another. Each team member must clearly outline their involvement in experiment design, execution, data analysis, and reporting. By submitting this report, the team collectively certifies the accuracy and completeness of each member's stated contributions.
