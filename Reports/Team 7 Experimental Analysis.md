@@ -6,16 +6,26 @@ This is the experiment analysis document for the IEEE SECON 2026 hardware compet
 
 # Communication
 
-The communications subsystem's most critical component, the UAV, did not arrive before the competition deadline, thus that subsystem can not preform any tests to vailid its measures of success. However, if the UAV did arrive on time there are a few experiments that could have been conducted for it.
+The communications subsystem's most critical component, the UAV, did not arrive before the competition deadline, thus that subsystem cannot perform any tests to validate its measures of success. However, if the UAV did arrive on time, there are a few experiments that could have been conducted for it. 
 
-## Relevant Success Criteria
+## Relevant Success Criteria 
 
-2. The UAV lets us control it through the Crazyradio PA
-3. The UAV has to transmit the satellite data to the Earth
-4. All communication between the UAV, robot, and Earth has to be wireless
-5. The range for each wireless system needs to reach across the longest part of the arena
-6. The Wifi is capable of supporting a 20fps video data stream using a standard video stream (5-8 Mbps)
-7. While using radio frequencies, we will avoid using frequencies deemed within the illegal range from the FCC and ITU-R
+1. The UAV shall be completely autonomous 
+     a. it shall be able to take off and land 
+     b. it shall be controlled by the Carzyradio PA USB radio adaptor 
+     c. While using radio frequencies, we will avoid using frequencies deemed within the illegal range from the FCC and ITU-R 
+2. The UAV Shall transmit Antenna tower LED data to the Earth using an IR transmitter 
+3. The UAV camera shall transmit data over WiFi to the Jetson Orin 
+     a. The WiFi is capable of supporting a 20fps video data stream using a standard video stream (5-8 Mbps) 
+     b. While using radio frequencies, we will avoid using frequencies deemed within the illegal range from the FCC and ITU-R 
+
+## Potential experiments 
+
+Frist, the UAV shall be able to operate autonomously. This requires that the UAV is able to launch, land, and navigate the area above the gameboard. This can be accomplished by using the Jetson Orin to administer commands to the UAV using the Crazyradio PA. An experiment to test this criteria could involve sending various commands to the UAV from the Jetson and recording the UAV's response. 
+
+Second, the UAV shall transmit the Antenna Tower LED data to the Earth using IR transmitters. Specifications for the Earth and how it receives transmissions were included with the game rules packet, but to summarize it contains a small microcontroller that can record the data transmitted to it. An experiment to test this feature would be to transmit a set of sample data to the earth and record the data that the earth received. 
+
+Third, The UAV's camera shall transmit data to the Jetson Orin using WiFi. The UAV's camera comes with a small microcontroller that can be used to store and transmit data and is WiFi capable. Some experiments to test this feature would involve testing the camera's connection to the Jetson Orin and to test if the camera can send data to the Jetson. 
 
 # Global Controller 
 
@@ -59,7 +69,6 @@ For each test, the Starting LED will be activated and the robot's response will 
 
 Figure 1 - The Robot’s Rear Mounted Photoresistor  
 <img width="1530" height="2040" alt="20260424_183324" src="https://github.com/user-attachments/assets/e2653fca-f131-40a5-ae52-c1e0c1c889dd" />
-
 
 ### Expected Results: 
 
@@ -374,6 +383,15 @@ Table 12 -
 
 # Conclusion 
 
+Despite some of the project's components not being operational for the competition deadline, the components that the team were able to successfully implement function as intended. 
+
 #Statement of Contributions 
+
+Jane Vassar - Introduction, Global Control Section, Communication Section, General Formating
+Aiden Mullins - Global Control Section, Communication Section
+Atra-Niese Jones - Object Detection Section, Navigation Section
+Trevor Snyder - Object Detection Section, Navigation Section
+Angela Nde - Low Level Control Section, Power Section
+Torstan Land - Low Level Control Section, Power Section
 
  
