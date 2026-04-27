@@ -6,10 +6,6 @@ Talk about messures of Sucess
 
 Talk about the point system. 
 
- 
-
-# Global Controller and Communication Subsystems 
-
 # Global Controller 
 
 ## Relevant Success Criteria 
@@ -30,65 +26,67 @@ Talk about the point system.
 6. Points shall be lost every time the robot or UAV has an unintentional collision [Objective Constrain 2] 
      a. The robot and UAV shall be able to detect and avoid obstacles 
 
-Above are the listed specifications and constraints that the global control subsystem encompasses. Specifications 1 and 5 are achieved by the use of a photoresistor that will detect the light of the starting LED. This will be tested by using the starting LED on the practice board to determine if the photoresistor will allow the robot to start autonomously. Specifications 2, 4, and 6 are accomplished by the robot's master program that is hosted on the Arduino Mega. These specifications will be tested by allowing the robot to conduct a competition run and monitoring the tasks that the robot is able to complete and how long it takes for the robot to complete operation. 
+Above are the listed specifications and constraints that the global control subsystem encompasses. Specifications 1 and 5 are achieved by the use of a photoresistor that will detect the light of the starting LED. This will be tested by using the starting LED on the practice board to determine if the photoresistor will allow the robot to start autonomously. Specifications 2, 4, and 6 are accomplished by the robot's master program that is hosted on the Arduino Mega. These specifications will be tested by allowing the robot to conduct a competition run and monitoring the tasks that the robot is able to complete and how long it takes for the robot to complete operation.  
 
-Specification 3 cannot be properly tested, as the astro duck collecting functions of the robot were not completely developed. The systems needed in order to collect the astro ducks were developed but not fully integrated by the competition deadline. The UAV that was ordered for the project did not arrive before the competition deadline, thus any success critria involving it could not be tested.
+Specification 3 cannot be properly tested, as the astro duck collecting functions of the robot were not completely developed. The systems needed in order to collect the astro ducks were developed but not fully integrated by the competition deadline. The UAV that was ordered for the project did not arrive before the competition deadline, thus any success critria involving it could not be tested. 
 
 ## Photoresistor – Autonomous Start Device 
 
-The photoresistor is used in order to start the robot's autonomous operation. It will detect the light emitted from the starting LED and use that signal to begin the robot's operation. This will meet specifications 1 and 5. 
+The photoresistor is used in order to start the robot's autonomous operation. It will detect the light emitted from the starting LED and use that signal to begin the robot's operation. This will meet specifications 1 and 5.  
 
 The robot was originally intended to use three photoresistors, two mounted on the front part of the chassis, and one mounted on the rear of the chassis. The two front-mounted photoresistors would be used to detect the ambient light of the environment around the robot while the rear-mounted photoresistor would be used to detect the starting LED. However, during the assembly and testing of the robot, the two front-mounted photoresistors were not functional and removed.  
 
-### Purpose and Justification:  
+### Purpose and Justification: 
 
-The photoresistor is used to autonomously start the robot, which is a critical function in order for the robot to operate successfully. The robot's ability to start autonomously will secure the team a total of 15 points during the competition and allow the robot to complete other tasks to score more points. This test is to ensure that the photoresistor will be able to reliably start the robot, using the starting LED. 
+The photoresistor is used to autonomously start the robot, which is a critical function in order for the robot to operate successfully. The robot's ability to start autonomously will secure the team a total of 15 points during the competition and allow the robot to complete other tasks to score more points. This test is to ensure that the photoresistor will be able to reliably start the robot, using the starting LED.  
 
 ### Detailed Procedure: 
 
-The robot uses a single photoresistor that is located at its rear. It is connected to both 3.3 V power and the robot's Arduino Mega. As the photoresistor is exposed to more light, the analog value that is recorded by the Arduino decreases as the photoresistor's resistance increases. The Arduino will detect the starting LED if the analog value of the photoresistor is under a predefined threshold, at which the robot will being to move forward. 
+The robot uses a single photoresistor that is located at its rear. It is connected to both 3.3 V power and the robot's Arduino Mega. As the photoresistor is exposed to more light, the analog value that is recorded by the Arduino decreases as the photoresistor's resistance increases. The Arduino will detect the starting LED if the analog value of the photoresistor is under a predefined threshold, at which the robot will being to move forward.  
 
-For each test, the Starting LED will be activated and the robot's resopnce will be recorded. A successful test is defined by the robot moving forward after being exposed to the starting LED. A failed test is defined by the robot not moving forward after being exposed to the starting LED. 
+For each test, the Starting LED will be activated and the robot's response will be recorded. A successful test is defined by the robot moving forward after being exposed to the starting LED. A failed test is defined by the robot not moving forward after being exposed to the starting LED.  
 
-Figure 1 - The Robot’s Rear Mounted Photoresistor 
+Figure 1 - The Robot’s Rear Mounted Photoresistor  
 
-(Insert image here) 
+(Insert image here)  
 
-### Expected Results: 
+Expected Results: 
 
-The photoresistor will be able to detect the starting LED repeatedly and reliably. 
+The photoresistor will be able to detect the starting LED repeatedly and reliably.  
 
-### Actual Results: 
+Actual Results: 
 
-Below is a table containing the testing results. These tests were conducted at the IEEE SECON competition during the qualifying and semi-final rounds. During the robot’s competition runs, the photoresistor was able to repeatably detect the starting LED allowing the robot to begin operation. 
+Below is a table containing the testing results. These tests were conducted at the IEEE SECON competition during the qualifying and semi-final rounds. 
 
-Table 1 – Photoresistor Testing Results 
+Table 1 – Photoresistor Testing Results
 
-| Competition Run | Did The Robot Start Autonomusly? |
-|-----------------|----------------------------------|
-| 1               | Yes                              |
-| 2               | Yes                              |   
-| 3               | Yes                              |
-| 4               | Yes                              |
-| 5               | Yes                              |
+| Competition Run | Did The Robot Start Autonomously? |
+|-----------------|-----------------------------------|
+| 1               | Yes                               |
+| 2               | Yes                               |   
+| 3               | Yes                               |
+| 4               | Yes                               |
+| 5               | Yes                               |
 
 ### Interpretation and Conclusions: 
 
-The photoresistor was able to successfully detect the starting LED during all of the team's competition runs. While the team was testing the photoresistor's functionality, the robot was found to start prematurely if the robot was not handled carefully. It is theorized that the threshold for detecting the starting LED was likely too low, resulting in the photoresistor being too sensitive to the point where the robot could be triggered by a team member walking by the robot. The high sensitivity was required in order for the photoresistor to detect the starting LED. Using a single photoresistor worked during the competition, however, using the ambient light solution that was previously discussed would have likely produced more consistent results with less premature starts. 
+ 
 
-## Arduino Master Program 
+The photoresistor was able to successfully detect the starting LED during all of the team's competition runs. While the team was testing the photoresistor's functionality, the robot was found to start prematurely if the robot was not handled carefully. It is theorized that the threshold for detecting the starting LED was likely too low, resulting in the photoresistor being too sensitive to the point where the robot could be triggered by a team member walking by the robot. The high sensitivity was required in order for the photoresistor to detect the starting LED. Using a single photoresistor worked during the competition, however, using the ambient light solution that was previously discussed would have likely produced more consistent results with less premature starts.  
 
-The robots master program determines what actions the robot makes during the course of its operation. This program is hosted on the robots Arduino Mega and controls how the robot’s motors move in order to complete specific tasks. This will meet specifications 2, 4, and 6. 
+Arduino Master Program 
 
-The master program was originally intended to be hosted on the Jetson Orin. The Jetson Orin would act as the central computer that would make the decisions during the robot’s operation. This version of the master program would track different events that the robot encountered during its operation and based on the type of event encountered, entered the robot into the appropriate state required to resolve it. These states would be predefined but would allow the robot to move as needed in order to resolve events as they occurred. Both the Jeston Orin and its master program were not completed in time for the competition deadline. Instead, the master program that the robot uses was simplified so it could be programed onto the Arduino. This version of the program would execute predefined paths and actions once the robot received the autonomous start signal. This change forced the robot to become less flexible in its operation but allowed it to complete simple yet high-point earning tasks reliably. 
+The robots master program determines what actions the robot makes during the course of its operation. This program is hosted on the robots Arduino Mega and controls how the robot’s motors move in order to complete specific tasks. This will meet specifications 2, 4, and 6.  
 
-### Purpose and Justification:  
+The master program was originally intended to be hosted on the Jetson Orin. The Jetson Orin would act as the central computer that would make the decisions during the robot’s operation. This version of the master program would track different events that the robot encountered during its operation and based on the type of event encountered, entered the robot into the appropriate state required to resolve it. These states would be predefined but would allow the robot to move as needed in order to resolve events as they occurred. Both the Jeston Orin and its master program were not completed in time for the competition deadline. Instead, the master program that the robot uses was simplified so it could be programed onto the Arduino. This version of the program would execute predefined paths and actions once the robot received the autonomous start signal. This change forced the robot to become less flexible in its operation but allowed it to complete simple yet high-point earning tasks reliably.  
 
-The robot’s master program controls how the robot operates during a competition run, thus ensuring that the program functions as intended is critically important to the robot’s success. The tasks that the robot will need to complete during a competition run are preprogramed, and if these tasks are not programed properly, it could result in unintended collisions and damage to both the robot and the game board. 
+Purpose and Justification: 
 
-### Detailed Procedure: 
+The robot’s master program controls how the robot operates during a competition run, thus ensuring that the program functions as intended is critically important to the robot’s success. The tasks that the robot will need to complete during a competition run are preprogramed, and if these tasks are not programed properly, it could result in unintended collisions and damage to both the robot and the gameboard.  
 
-The robot’s master program can be broken down into the individual task that the robot needed to complete during a competition run. These parts of the program were tested individually to ensure that each part of the program operated as expected. Using the "DoActionRange()" function, the values for speed and position were set for each of the robots motors. Below is a list of programed task and what how each task was to be executed. Figure 2 shows a screenshot of the program required to complete task 1. The programs for the remaining tasks follow a similar structure of writing speed and position values to the motors, letting the motors run for a given amount of time, and taking a half second pause before writing a new set of speed and position values.
+Detailed Procedure: 
+
+The robot’s master program can be broken down into the individual task that the robot needed to complete during a competition run. These parts of the program were tested individually to ensure that each part of the program operated as expected. Using the "DoActionRange()" function, the values for speed and position were set for each of the robot's motors. Below is a list of programed tasks and how each task was to be executed. Figure 2 shows a screenshot of the program required to complete task 1. The programs for the remaining tasks follow a similar structure of writing speed and position values to the motors, letting the motors run for a given amount of time, and taking a half second pause before writing a new set of speed and position values. 
 
 1. Task 1 - Activate The Antenna with The Pushbutton Task
      - The Robot will move forward and hit the Antenna pushbutton
@@ -107,24 +105,23 @@ The robot’s master program can be broken down into the individual task that th
      - The robot will extend its robotic arm
      - The claw of the roboitc arm will open, reliesing the beacon
 6. Task 6 - Loop Around The Crater.
-     - The robot will move toward the crater after it alligns with crater
+     - The robot will move toward the crater after it aligns with the crater
      - The robot will turn slightly to the right before entering the crater
      - The robot will move forward and left simultaneously to circle the crater
 
-All of the six task will be tested in a similar way. Testing will invole observing the robot during its operation and recording if it completes each of the listed task exactly as they are described. A Successful test is defined as the the robot completing a given task. A failed test is defined as the robot not completing a given task.
+All of the six task will be tested in a similar way. Testing will involve observing the robot during its operation and recording if it completes each of the listed task exactly as they are described. A Successful test is defined as the robot completing a given task. A failed test is defined as the robot not completing a given task. 
 
-Figure 2 – Screenshot Showing The Program for Task 1
-(Insert Image here)
+Figure 2 – Screenshot Showing The Program for Task 1 (Insert Image here) 
 
-Firgue 3 - Screenshot of The Gameboard for Reference
-(Insert Image here)
+Firgue 3 - Screenshot of The Gameboard for Reference (Insert Image here) 
 
-### Expected Results:  
-Assuming the robot does not encounter hardware issues during the testing, the robot will be able to complete the above defined task without unintentional collisions. The robot's path is hard coded based on the layout of the gameboard and were design with its opsticals in mind. 
+Expected Results: 
 
-### Actual Results:  
+Assuming that the robot does not encounter hardware issues during testing, the robot will be able to complete the above defined task without unintentional collisions. The robot's path is hard coded based on the layout of the gameboard and was designed with its obstacles in mind.  
 
-Below are the tables containing the testing result. These tests were conducted at the IEEE SECON competition during the qualifying and semi-final rounds. 
+Actual Results: 
+
+Below are the tables containing the testing result. These tests were conducted at the IEEE SECON competition during the qualifying and semi-final rounds.  
 
 Table 2 – Task 1 Testing Results 
 | Competition Run | Did The Robot Reach The Antenna? | Number Antenna Button Presses |
@@ -180,23 +177,25 @@ Table 7 – Task 6 Testing Results
 | 4               | No                               |
 | 5               | Yes                              |
 
-### Interpretation and Conclusions: 
+Interpretation and Conclusions: 
 
-The Robot was able to complete Tasks 1, 2, and 5 repeatably as expected. Task 6 was only successful once. This is because task 6 was not attempted until the fifth competition run after the robot had successfully secured 100 points by completing Tasks 1, 2, 3, 4, and 5 during the fourth competition run. Task 6 was successfully completed during competition run five, however, The robot was not able to successful exit the crater after completely circling around it. Becuase the robot could not exit the crater, it would not be able to return to the starting area.
+The Robot was able to complete Tasks 1, 2, and 5 repeatably as expected. Task 6 was only successful once. This is because task 6 was not attempted until the fifth competition run after the robot had successfully secured 100 points by completing Tasks 1, 2, 3, 4, and 5 during the fourth competition run. Task 6 was successfully completed during competition run five, however, The robot was not able to successful exit the crater after completely circling around it. Because the robot could not exit the crater, it would not be able to return to the starting area. 
 
-## Jeston Orin to Arduino Communication 
+Jeston Orin to Arduino Communication 
 
-The Jetson Orin was not developed and integrated in time for the compitition deadline, however, after the competition some time was alicated to continue working on the Jetson's programs. The master program would still remain unfunctional, however, the Jetson was able to communicate commands to the Arduino.
+The Jetson Orin was not developed and integrated in time for the competition deadline, however, after the competition some time was allocated to continue working on the Jetson's programs. The master program would still remain unfunctional, however, the Jetson was able to communicate commands to the Arduino. 
 
-### Purpose and Justification:  
+Purpose and Justification: 
 
-The original consept for the robot would require the Jetson Orin to transmitt speed and position values to the Ardino in order for the robot to operate successfully. If the Jetson Orin was part of the final robot's implementation, its ability to communicate and send commands to the arduino would be critical for the robot's successful operation. 
+The original concept for the robot would require the Jetson Orin to transmit speed and position values to the Arduino in order for the robot to operate successfully. If the Jetson Orin was part of the final robot's implementation, its ability to communicate and send commands to the Arduino would be critical for the robot's successful operation.  
 
-### Detailed Procedure:  
+Detailed Procedure: 
 
-The two functioning programs the Jetson had were its communication and motor control programs. The former is responsible for the conecting to the arduino and transmitting and recieve the serial data between the arduino and the Jetson. The Latter program is responsible for determining the speed and position values for the robot's motors. By manually entering in the speed and position values of the motors in the motor control program, the communication program would then transmitt that data to the arduino. 
+The two functioning programs the Jetson had were its communication and motor control programs. The former is responsible for connecting to the Arduino and transmitting and receiving the serial data between the Arduino and the Jetson. The Latter program is responsible for determining the speed and position values for the robot's motors. By manually entering the speed and position values of the motors in the motor control program, the communication program would then transmit that data to the Arduino.  
 
-For each test, The speed and position values of the motors where manualy set in the motor control program. Then the program was complied and ran while being connected to the Arduino. The responce of the robot's motors were then recorded. A successful test is defined by the robot's motors moving at the speed set, and moving to the position set by the motor control program. A failed test is defined by the robot's motors not responding to the input speed and position values. The robot's drive motors speed ranges from a value of -225 to 225. The robotic arm's base and joint motors can be set to a position ranging from 0 to 180 degrees from there zero position. The robotic arm's claw functions as an on/off device. It is either fully open (a command value of 1) or fully closed (a command value of 0). Below is a table that contains the speed and position values that were sent to the ardunio during testing.
+For each test, The speed and position values of the motors where manually set in the motor control program. Then the program was compiled and ran while being connected to the Arduino. The response of the robot's motors was then recorded. A successful test is defined by the robot's motors moving at the speed set and moving to the position set by the motor control program. A failed test is defined by the robot's motors not responding to the input speed and position values. The robot's drive motors speed ranges from a value of -225 to 225. The robotic arm's base and joint motors can be set to a position ranging from 0 to 180 degrees from their zero positions. The robotic arm's claw functions as an on/off device. It is either fully open (a command value of 1) or fully closed (a command value of 0). Below is a table that contains the speed and position values that were sent to the Arduino during testing. 
+
+Table 8 – Motor Speed and Position Setpoints 
 
 Table 8 – Motor Speed and Position Setpoints
 | Trial | Drive Motor 1 Speed | Drive Motor 2 Speed | Drive Motor 3 Speed | Drive Motor 4 Speed | Arm Base Position | Arm Joint Position | Claw Position |
@@ -208,14 +207,15 @@ Table 8 – Motor Speed and Position Setpoints
 | 5     | 100                 | 100                 | 100                 | 100                 | 0                 | 0                  | 0             |
 | 6     | -100                | -100                | -100                | -100                | 0                 | 0                  | 0             |
 
-### Expected Results:  
+Expected Results: 
 
 The Arduino will be able to respond to the Jetson's speed and position commands. During the programing phase, the Jetson's logger function confirmed that it was able to connect to the Arduino. This indicated that the Jetson should be able to send motor and position commands to the Arduino.  
 
-### Actual Results:  
+Actual Results: 
 
-Below is a table contating the testing results. These test were conducted after the IEEE SECON competition in the Capstone Lab.
+Below is a table contating the testing results. These test were conducted after the IEEE SECON competition in the Capstone Lab. 
 
+Table 9 – Motor Speed and Position Results 
 Table 9 – Motor Speed and Position Results
 | Trial | Drive Motor 1 Speed | Drive Motor 2 Speed | Drive Motor 3 Speed | Drive Motor 4 Speed | Arm Base Position | Arm Joint Position | Claw Position |
 |-------|---------------------|---------------------|---------------------|---------------------|-------------------|--------------------|---------------|
@@ -227,10 +227,9 @@ Table 9 – Motor Speed and Position Results
 | 6     | 0                   | 0                   | 0                   | 0                   | 0                 | 0                  | 0             |
 
 
-### Interpretation and Conclusions: 
+Interpretation and Conclusions: 
 
-Base on the collected data, the Jetson was parcially successful with transmiting data to the arduino. The Jetson was able to command the robotic arm's motors to a given position, however, it was not able to command the drive motors to move a given speed. It is unclear as to what is causing this issue. Two potential theories emerged during testing. The first being that the e-stop may have be pressed during testing. This was not the case, given that the e-stop would remove power from all of the robot's motors when pressed, including the robotic arm's motors. The second theory was that the robot's battery was not charged fully. This could have caused the drive motors to not recieve the power that they needed to operate. After leting the battery charge to full, the same experiment was conducted again to similar results. With these two theories ruled out, the likely cause of the issue may be due to a hiden programing mistake with the ardino's communication progrm, given that the Jetson was able to successful send commands and manipulate the robotic arm but not the drive motors. 
-
+Based on the collected data, the Jetson was partially successful with transmitting data to the Arduino. The Jetson was able to command the robotic arm's motors to a given position; however, it could not command the drive motors to move at a given speed. It is unclear as to what is causing this issue. Two potential theories emerged during testing. The first being that the e-stop may have been pressed during testing. This was not the case, given that the e-stop would remove power from all of the robot's motors when pressed, including the robotic arm's motors. The second theory was that the robot's battery was not charged fully. This could have caused the drive motors to not receive the power that they needed to operate. After letting the battery charge to full, the same experiment was conducted again to similar results. With these two theories ruled out, the likely cause of the issue may be due to a hidden programing mistake with the Arduino's communication program, given that the Jetson was able to successful send commands and manipulate the robotic arm but not the drive motors. 
 # Navigation and Object Detection Subsystems 
 
 ### Purpose and Justification: 
