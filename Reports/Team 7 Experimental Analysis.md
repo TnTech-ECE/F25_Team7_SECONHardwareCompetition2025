@@ -2,7 +2,7 @@
 
 This is the experiment analysis document for the IEEE SECON 2026 hardware competition team. The purpose of this document is to properly document the experimental finds of the project and compare them to the team's intial measures of success as defined in the project's original preposal and the conseptutal design. This document is divided into 3 section; one for the global control and Communication subsystems, one for the object detection and naviagtion subsystems, and one for the power and low-level control subsystem. Each section contains the measures of success and the experiemetns used to vaidate them.
 
-#Global Controller and Communication
+# Global Controller and Communication
 
 # Communication
 
