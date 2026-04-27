@@ -128,10 +128,10 @@ The robot’s master program can be broken down into the individual task that th
 
 All of the six task will be tested in a similar way. Testing will involve observing the robot during its operation and recording if it completes each of the listed task exactly as they are described. A Successful test is defined as the robot completing a given task. A failed test is defined as the robot not completing a given task. 
 
-Figure 2 – Screenshot Showing The Program for Task 1 (Insert Image here) 
+Figure 2 – Screenshot Showing The Program for Task 1
 <img width="995" height="1245" alt="Screenshot 2026-04-26 190541" src="https://github.com/user-attachments/assets/a4ef9814-7f15-4b06-8872-2515286309ae" />
 
-Firgue 3 - Screenshot of The Gameboard for Reference (Insert Image here) 
+Firgue 3 - Screenshot of The Gameboard for Reference
 <img width="1001" height="533" alt="image" src="https://github.com/user-attachments/assets/b0e28000-90af-4e93-9d2f-d5e732bf6fd8" />
 
 ### Expected Results: 
@@ -332,6 +332,15 @@ The procedure established to determine if our robot accomplished its purpose was
 - Identification of the crater and successful navigation into and out of the crater. 
 - Navigation back to the start zone 
 
+Figure 4 - Screenshot of ROS Nodes Communicating
+<img width="1059" height="935" alt="Screenshot 2026-04-27 130459" src="https://github.com/user-attachments/assets/97112081-b473-4f39-9605-7f1f3d069f71" />
+
+Figure 5 - Photo of The Robot's Camera Pointed at an Astro-Duck
+<img width="272" height="447" alt="Screenshot 2026-04-27 130604" src="https://github.com/user-attachments/assets/66521cc7-e196-4f15-b676-f45fbd5b871a" />
+
+Figure 6 - Photo of Computer Screen Showing The Object Detection System Identifying an Astro-Duck
+<img width="286" height="444" alt="Screenshot 2026-04-27 130723" src="https://github.com/user-attachments/assets/215c0cff-d1a2-4dbf-ba37-843efca993b6" />
+
 # Low-Level Controller and Power Subsystems 
 
 ### Purpose and Justification: 
@@ -349,7 +358,13 @@ The second test was to identify the proper activation of the Emergency-stop butt
  A third test would be testing the communication of Jetson encoder data to the Jetson in the Global Controller for self-correcting navigation. This test was not conducted as the intended UAV did not come on time, and therefore the AI-detection software initially planned for robot movement was rendered obsolete.  
 
 During all tests, the current was noted to ensure that the power subsystem was not overloaded, as it would also be providing power to all other subsystems of the robot.  
- 
+
+Figure 7 - Photo of The Robot's E-Stop
+<img width="1530" height="2040" alt="20260424_183254" src="https://github.com/user-attachments/assets/ab20abc3-c531-4ffb-9e25-008a945abb1f" />
+
+Figure  8 - Photo of The Robot's Motor Drives Connected to a Power Supply
+<img width="2040" height="1530" alt="20260424_183044" src="https://github.com/user-attachments/assets/54dcc5c2-de78-4a57-ae8f-49248291cd2e" /> 
+
 ### Expected Results: 
 
 For the first test, it is expected that the motor can run on 12 volts continuously as that was what was specified by the manufacturer. The competition’s max time was 3 minutes, so the motor had to withstand that length of time. When directional instructions were added, it was expected that the motor would rotate forward and backward for the specified amount of time written in the Arduino’s code.  
